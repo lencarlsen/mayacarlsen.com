@@ -1,0 +1,93 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<div class="row">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+		    <!-- Login -->
+		    <!--div class="col-sm-6 col-md-4 col-md-offset-4"-->
+		        <h1>$msg.get("LOGIN_HEADING")</h1>
+		        <p class="text-primary">$msg.get("LOGIN_INSTRUCTIONS", $WebPath.getINDEX())</p>
+                    #if($authenticationSucceeded)
+                        <p class="text-success"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> $msg.get("LOGIN_AUTH_SUCCEEDED", $currentUser)</p>
+					#elseif($authenticationFailed)
+					    <p class="text-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> $msg.get("LOGIN_AUTH_FAILED")</p>
+					#elseif($loggedOut)
+					    <p class="text-info">$msg.get("LOGIN_LOGGED_OUT")</p>
+					#end
+		        <div class="account-wall">
+					<form id="loginForm" action="$WebPath.getLOGIN()" method="post" class="form-signin">
+					    <label>$msg.get("LOGIN_LABEL_USERNAME")</label>
+					    <input type="text" name="username" size="20" placeholder="$msg.get("LOGIN_LABEL_USERNAME")" value="" required autofocus class="form-control">
+		                <br>
+					    <label>$msg.get("LOGIN_LABEL_PASSWORD")</label>
+					    <input type="password" name="password" placeholder="$msg.get("LOGIN_LABEL_PASSWORD")" value="" required class="form-control">
+					    #if($loginRedirect)
+					        <input type="hidden" name="loginRedirect" value="$loginRedirect">
+					    #end
+					    <br>
+			            <div class="row">
+			                <div class="col-sm-6">
+							    <input type="submit" value="$msg.get("LOGIN_BUTTON_LOGIN")" class="btn btn-lg btn-primary btn-block">
+						    </div>
+						    <div class="col-sm-6">
+				                <button type="submit" class="btn btn-link">$msg.get("LOGIN_BUTTON_FORGOT_PASSWORD")</button>
+			                </div>
+		                </div>
+					</form>
+				</div>
+			</div>
+            <div class="col-sm-4 col-md-4 col-lg-4"></div>
+	        <div class="col-sm-4 col-md-4 col-lg-4">
+			    <!-- Register -->
+			    <!--div class="col-sm-6 col-md-4 col-md-offset-4"-->
+			        <h1>$msg.get("REGISTER_HEADING")</h1>
+                <p class="text-primary">$msg.get("REGISTRATION_INSTRUCTIONS", $WebPath.getINDEX())</p>
+                    #if($registrationSucceeded)
+                        <p class="text-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> $msg.get("REGISTRATION_SUCCESS", $user.getFirstName())</p>
+                    #elseif($usernameExist)
+                        <p class="text-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> $msg.get("REGISTRATION_USERNAME_EXIST")</p>
+                    #elseif($registrationFailed)
+                        <p class="text-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> $msg.get("REGISTRATION_FAILED")</p>
+                    #end
+			        <div class="account-wall">
+			            <form id="registrationForm" action="$WebPath.getREGISTER()" method="post" class="form-signin">
+			                <label>$msg.get("REGISTER_LABEL_USERNAME")</label>
+			                <input type="text" name="username" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" value="" required autofocus class="form-control">
+			                <br>
+			                <label>$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+			                <input type="text" name="firstname" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" value="" required class="form-control">
+			                <br>
+                            <label>$msg.get("REGISTER_LABEL_LAST_NAME")</label>
+                            <input type="text" name="lastname" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" value="" required class="form-control">
+                            <br>
+                            <label>$msg.get("REGISTER_LABEL_ALIAS")</label>
+                            <input type="text" name="alias" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" value="" required class="form-control">
+                            <br>
+                            <label>$msg.get("REGISTER_LABEL_AVITAR")</label>
+                            <input type="text" name="alias" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" value="" required class="form-control">
+                            <br>
+                            <label>$msg.get("REGISTER_LABEL_EMAIL")</label>
+                            <input type="email" name="email" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" value="" required class="form-control">
+                            <br>
+			                <label>$msg.get("REGISTER_LABEL_PASSWORD")</label>
+			                <input type="password" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" required class="form-control">
+			                <br>
+			                <label>$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
+			                <input type="password" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" required class="form-control">
+			                <br>
+	                        <div class="row">
+	                            <div class="col-sm-6">
+    				                <input type="submit" value="$msg.get("REGISTER_BUTTON")" class="btn btn-lg btn-primary btn-block">
+	                            </div>
+	                            <div class="col-sm-6">
+	                                <button type="reset" class="btn btn-link">$msg.get("REGISTRATION_FORM_BUTTON_RESET")</button>
+	                            </div>
+                            </div>
+			            </form>
+			        </div>
+			    <!--/div-->
+		    </div>
+        </div>
+    </div>
+</div>
+#end
