@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.mindrot.jbcrypt.*;
 
-import com.mayacarlsen.index.Path;
-import com.mayacarlsen.index.RequestUtil;
-import com.mayacarlsen.index.ViewUtil;
 import com.mayacarlsen.login.LoginController;
+import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.RequestUtil;
+import com.mayacarlsen.util.ViewUtil;
 
 import spark.Request;
 import spark.Response;

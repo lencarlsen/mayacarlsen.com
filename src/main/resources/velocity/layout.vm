@@ -24,6 +24,9 @@
     <!-- Chat styles for this template -->
     <link href="/chat.css" rel="stylesheet">
 
+    <!-- Chat styles for this template -->
+    <link href="/custom-styles.css" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
@@ -38,8 +41,9 @@
   <body>
 
     <!-- Fixed navbar -->
+    <!--nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('../img/20170409_134012.jpg');"-->
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -47,7 +51,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Len's Web Site</a>
+          <a class="navbar-brand" href="#">MayaCarlsen.com</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -68,9 +72,9 @@
               <ul class="dropdown-menu">
                   <li class="dropdown-header">Language</li>
                   <form>
-                      <li><button name="locale" value="jp"><img src="/img/jp.png"></button></li>
-                      <li><button name="locale" value="dk"><img src="/img/dk.png"></button></li>
-                      <li><button name="locale" value="en"><img src="/img/england.png"></button></li>
+					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="jp"><img src="/img/jp.png"></img> Japanese</button></li>
+					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="dk"><img src="/img/dk.png"></img> Danish</button></li>
+					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="en"><img src="/img/england.png"></img> English</button></li>
                   </form>
                   #if($currentUser)
                     <li role="separator" class="divider"></li>
@@ -83,7 +87,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid">
 	    $bodyContent
     </div>
 

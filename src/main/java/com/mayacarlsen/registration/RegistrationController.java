@@ -3,12 +3,12 @@ package com.mayacarlsen.registration;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mayacarlsen.index.Path;
-import com.mayacarlsen.index.RequestUtil;
-import com.mayacarlsen.index.ViewUtil;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
 import com.mayacarlsen.user.UserDao;
+import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.RequestUtil;
+import com.mayacarlsen.util.ViewUtil;
 
 import spark.Request;
 import spark.Response;

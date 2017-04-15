@@ -3,6 +3,9 @@ package com.mayacarlsen.index;
 import spark.*;
 import java.util.*;
 
+import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.ViewUtil;
+
 public class IndexController {
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();

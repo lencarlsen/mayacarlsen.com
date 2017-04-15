@@ -1,4 +1,5 @@
 package com.mayacarlsen;
+
 import org.eclipse.jetty.websocket.api.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,13 +7,13 @@ import org.json.JSONObject;
 
 import com.mayacarlsen.chat.ChatController;
 import com.mayacarlsen.chat.ChatWebSocketHandler;
-import com.mayacarlsen.index.Filters;
 import com.mayacarlsen.index.IndexController;
-import com.mayacarlsen.index.Path;
 import com.mayacarlsen.login.LoginController;
 import com.mayacarlsen.registration.RegistrationController;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
+import com.mayacarlsen.util.Filters;
+import com.mayacarlsen.util.Path;
 
 import java.text.*;
 import java.util.*;
