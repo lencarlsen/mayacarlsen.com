@@ -92,29 +92,7 @@
     </nav>
 
     <div class="container-fluid">
-
-        <!-- Main component for a primary marketing message or call to action -->
-        <!--div class="jumbotron"-->
-        <div class="row">
-            <div class="col-sm-10">
-        	    $bodyContent
-            </div>
-            <div class="col-sm-2">
-                <dl>
-                    <dt>Short Stories</dt>
-	                <ol>
-		                <li>
-		                    <dd><a href="$WebPath.getSTORIES()">Luna</a></dd>
-		                </li>
-	                </ol>
-                </dl>                
-                <dl>
-                    <dt>Pictures</dt>
-                    <dd>My Pictures - Coming soon...</dd>
-                </dl>                
-            </div>
-        </div> <!-- /jumbotron -->
-
+        $bodyContent
     </div>
 
     <!-- Bootstrap core JavaScript

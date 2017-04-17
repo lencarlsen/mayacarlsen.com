@@ -4,7 +4,7 @@
 
 	<groupId>mayacarlsen.com</groupId>
 	<artifactId>mayacarlsen.com</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<name>mayacarlsen.com</name>
 	<url>http://maven.apache.org</url>
@@ -41,7 +41,7 @@
 	                </descriptorRefs>
 	                <archive>
 	                    <manifest>
-	                        <mainClass>Main</mainClass>
+	                        <mainClass>com.mayacarlsen.MayaCarlsen</mainClass>
 	                    </manifest>
 	                </archive>
 	            </configuration>
@@ -54,12 +54,13 @@
 			    <configuration>
 			        <jdkVersion>1.8</jdkVersion>
 			        <!-- Use your own application name -->
-			        <appName>mayacarlsen.com</appName> 
+			        <appName>mayacarlsen</appName> 
 			        <processTypes>
 			            <!-- Tell Heroku how to launch your application -->
 			            <!-- You might have to remove the ./ in front   -->
 			            <!--web>java -jar ./target/mayawebchat-1.0-SNAPSHOT-jar-with-dependencies.jar</web-->
-                        <web>java -Dfile.encoding=UTF-8 ./target/resources\logging.properties -cp ./target/mayacarlsen.com-1.0-SNAPSHOT-jar-with-dependencies.jar com.mayacarlsen.MayaCarlsen</web>
+                        <!--web>java -Dfile.encoding=UTF-8 ./target/resources/logging.properties -cp ./target/mayacarlsen.com-1.0-SNAPSHOT-jar-with-dependencies.jar com.mayacarlsen.MayaCarlsen</web-->
+                        <web>java -Dfile.encoding=UTF-8 -cp ./target/mayacarlsen.com-1.0.0-jar-with-dependencies.jar com.mayacarlsen.MayaCarlsen</web>
 			        </processTypes>
 			    </configuration>
 			</plugin>

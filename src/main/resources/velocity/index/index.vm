@@ -1,24 +1,8 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-        <!-- Main component for a primary marketing message or call to action -->
-        <!--div class="jumbotron"-->
-        <div class="row">
-            <div class="col-sm-10">
-	            <h1 >Welcome to my Web Site</h1>
-	            <p>Come play with me here...</p>
-	            <p>
-	              <a class="btn btn-lg btn-primary" href="$WebPath.getCHAT()" role="button">Let's Play NOW &raquo;</a>
-	            </p>
-            </div>
-            <div class="col-sm-2">
-				<dl>
-					<dt>Short Stories</dt>
-					<dd>Scary Story</dd>
-                </dl>                
-                <dl>
-                    <dt>Pictures</dt>
-                    <dd>My Pictures</dd>
-				</dl>                
-            </div>
-        </div> <!-- /jumbotron -->
+	<h1 class="text-primary">Welcome to my Web Site</h1>
+	<p>Come play with me here...</p>
+	<p>
+		<a class="btn btn-lg btn-primary" href="$WebPath.getCHAT()" role="button">Let's Play NOW &raquo;</a>
+	</p>
 #end

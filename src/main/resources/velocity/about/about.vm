@@ -1,0 +1,8 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	<div class="jumbotron">
+		<h2 class="text-primary">Maya's Web Application</h2>
+		<hr class="m-y-2">
+        <p>This web site and application was developed by <a href="#">lencarlsen.com</a></p> 
+	</div>
+#end
