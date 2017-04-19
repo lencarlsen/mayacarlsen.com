@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
-import com.mayacarlsen.user.UserDao;
+import com.mayacarlsen.user.UserDAO;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
@@ -33,14 +33,14 @@ public class RegistrationController {
             return ViewUtil.render(request, model, Path.Template.LOGIN);
         }
 
-        if(UserDao.usernameExist(username)) {
+        if(UserDAO.usernameExist(username)) {
             model.put("registrationFailed", true);
             model.put("usernameExist", true);
             return ViewUtil.render(request, model, Path.Template.LOGIN);
         }
         
         String hashedPassword = UserController.createHashedPassword(password, salt);
-        User user = UserDao.createUser(new User(null, username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null));
+        User user = UserDAO.createUser(new User(null, username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null));
         
         if(!UserController.authenticate(username, password)) {
             model.put("registrationFailed", true);

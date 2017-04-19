@@ -8,7 +8,7 @@ import org.eclipse.jetty.websocket.api.annotations.*;
 
 import com.mayacarlsen.MayaCarlsen;
 import com.mayacarlsen.user.User;
-import com.mayacarlsen.user.UserDao;
+import com.mayacarlsen.user.UserDAO;
 
 @WebSocket
 public class ChatWebSocketHandler {
@@ -23,7 +23,7 @@ public class ChatWebSocketHandler {
 	    	String username = (String) list.get(0);
 	        
 			if (username != null) {
-		    	User user = UserDao.getUserByUsername(username);
+		    	User user = UserDAO.getUserByUsername(username);
 		
 				if (user != null) {
 			    	MayaCarlsen.chatuserUsernameMap.put(userSession, user);

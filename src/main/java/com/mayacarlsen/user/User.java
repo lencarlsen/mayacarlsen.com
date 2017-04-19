@@ -1,5 +1,7 @@
 package com.mayacarlsen.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.*;
@@ -31,4 +33,14 @@ public class User {
     	return (this.alias == null || this.alias.trim().isEmpty() 
     			? this.first_name + " " + this.last_name : this.alias);
     }
+
+	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+	public String getCreated_dttm_string() {
+		return (create_dttm == null ? null : format.format(create_dttm));
+	}
+
+	public String getUpdated_dttm_string() {
+		return (update_dttm == null ? null : format.format(update_dttm));
+	}
 }

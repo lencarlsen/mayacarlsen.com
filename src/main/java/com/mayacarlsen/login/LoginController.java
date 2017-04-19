@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mayacarlsen.user.UserController;
-import com.mayacarlsen.user.UserDao;
+import com.mayacarlsen.user.UserDAO;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
@@ -34,7 +34,7 @@ public class LoginController {
         }
         model.put("authenticationSucceeded", true);
         request.session().attribute("currentUser", username);
-        request.session().attribute("user", UserDao.getUserByUsername(username));
+        request.session().attribute("user", UserDAO.getUserByUsername(username));
 
         if (RequestUtil.getQueryLoginRedirect(request) != null) {
             response.redirect(RequestUtil.getQueryLoginRedirect(request));

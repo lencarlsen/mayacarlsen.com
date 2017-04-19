@@ -10,9 +10,9 @@ import org.sql2o.Sql2o;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.util.DaoUtil;
 
-public class UserDao {
+public class UserDAO {
 
-	private static final Logger logger = Logger.getLogger(UserDao.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(UserDAO.class.getCanonicalName());
 
 	private final static Sql2o sql2o = DaoUtil.getSql2o();
 

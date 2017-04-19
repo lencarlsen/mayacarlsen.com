@@ -66,15 +66,19 @@
         <!--div class="jumbotron"-->
         <div class="row">
             <div class="col-sm-10">
-$bodyContent
+                $bodyContent
             </div>
             <div class="col-sm-2">
                 <dl>
                     <dt>Short Stories</dt>
 	                <ol>
-		                <li>
-		                    <dd><a href="$WebPath.getSTORIES()">Luna</a></dd>
-		                </li>
+	                #if($articleList)
+	                    #foreach( $article in $articleList )
+			                <li>
+			                    <dd><a href="/article/$!article.getArticle_id()">$!article.getArticle_title()</a></dd>
+			                </li>
+	                    #end
+                    #end
 	                </ol>
                 </dl>                
                 <dl>
@@ -86,7 +90,7 @@ $bodyContent
 
     </div>
 
-#parse("/velocity/bootstrap_core_js.vm")
+    #parse("/velocity/bootstrap_core_js.vm")
 
   </body>
 </html>

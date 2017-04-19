@@ -6,12 +6,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mayacarlsen.about.AboutController;
+import com.mayacarlsen.article.ArticleController;
 import com.mayacarlsen.chat.ChatController;
 import com.mayacarlsen.chat.ChatWebSocketHandler;
 import com.mayacarlsen.index.IndexController;
 import com.mayacarlsen.login.LoginController;
 import com.mayacarlsen.registration.RegistrationController;
-import com.mayacarlsen.story.StoryController;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
 import com.mayacarlsen.util.Filters;
@@ -68,7 +68,8 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_USER_SETTINGS, UserController.handleUserSettingsPost);
         //get("*",              ViewUtil.notFound);
 
-        get(Path.Web.STORIES, StoryController.serveStoryPage);
+//        get(Path.Web.STORIES, ArticleController.serveStoryPage);
+        get(Path.Web.ARTICLE, ArticleController.serveStoryPage);
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);
 	}

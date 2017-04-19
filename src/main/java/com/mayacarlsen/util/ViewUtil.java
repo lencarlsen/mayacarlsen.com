@@ -3,6 +3,9 @@ package com.mayacarlsen.util;
 import org.apache.velocity.app.*;
 import org.eclipse.jetty.http.*;
 
+import com.mayacarlsen.article.Article;
+import com.mayacarlsen.article.ArticleDAO;
+
 import spark.*;
 import spark.template.velocity.*;
 
@@ -18,6 +21,8 @@ public class ViewUtil {
         model.put("user", request.session().attribute("user"));
         model.put("currentUser", RequestUtil.getSessionCurrentUser(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
+		model.put("articleList", ArticleDAO.getAllArticles());
+        
         return strictVelocityEngine().render(new ModelAndView(model, templatePath));
     }
 

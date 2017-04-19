@@ -26,7 +26,7 @@ public class UserController {
         if (username.isEmpty() || password.isEmpty()) {
             return false;
         }
-        User user = UserDao.getUserByUsername(username);
+        User user = UserDAO.getUserByUsername(username);
         if (user == null) {
             return false;
         }
@@ -69,7 +69,7 @@ public class UserController {
     	}
     	
         User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null);
-        User newUser = UserDao.updateUser(user);
+        User newUser = UserDAO.updateUser(user);
         
         request.session().attribute("user", newUser);
         
@@ -82,7 +82,7 @@ public class UserController {
             String newSalt = BCrypt.gensalt();
             String newHashedPassword = BCrypt.hashpw(newSalt, newPassword);
             // Update the user salt and password
-            User user = UserDao.getUserByUsername(username);
+            User user = UserDAO.getUserByUsername(username);
             user.setSalt(newSalt);
             user.setPassword(newHashedPassword);
         }

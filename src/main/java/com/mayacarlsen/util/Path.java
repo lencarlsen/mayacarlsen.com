@@ -18,6 +18,7 @@ public class Path {
         @Getter public static final String USER_SETTINGS = "/user_settings/";
         @Getter public static final String SAVE_USER_SETTINGS = "/save_user_settings/";
         @Getter public static final String STORIES = "/stories/";
+        @Getter public static final String ARTICLE = "/article/:articleId";
 
 		@Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }

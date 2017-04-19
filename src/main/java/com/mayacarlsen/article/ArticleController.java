@@ -1,4 +1,4 @@
-package com.mayacarlsen.story;
+package com.mayacarlsen.article;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +10,18 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class StoryController {
+public class ArticleController {
+
     public static Route serveStoryPage = (Request request, Response response) -> {
-        Map<String, Object> model = new HashMap<>();
+		String articleId = request.params("articleId");
+        
+    	Map<String, Object> model = new HashMap<>();
+
+		Article article = ArticleDAO.getArticle(Integer.valueOf(articleId));
+		if (article != null) {
+			model.put("article", article);
+		}
+		
         return ViewUtil.render(request, model, Path.Template.STORIES);
     };
 }
