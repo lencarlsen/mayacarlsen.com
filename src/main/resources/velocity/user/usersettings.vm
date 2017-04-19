@@ -1,85 +1,80 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
         <!-- Main component for a primary marketing message or call to action -->
-        <div class="jumbotron">
-            <h2>Settings</h2>
-    
-            <div class="panel panel-info">
-                <div class="panel-heading">User Settings</div>
-                    <div class="panel-body">
+        <div class="panel panel-info">
+            <div class="panel-heading">User Settings</div>
+                <div class="panel-body">
 
-		                <div class="account-wall">
-		                    <form id="userSettingsForm" action="$WebPath.getSAVE_USER_SETTINGS()" method="post" class="">
-		                        <div class="form-group row">
-		                            <label for="username" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
-		                            <div class="col-sm-4">
-		                                <input type="text" id="username" name="username" value="$!user.getUsername()" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
-		                            </div>
-                                    <label for="create_dttm" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
-                                    <div class="col-sm-3">
-                                        <input readonly="readonly" type="text" id="create_dttm" name="create_dttm" value="$!user.getCreated_dttm_string()" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
-                                    </div>
-		                        </div>
-		                        <div class="form-group row">
-		               			    <label for="firstname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
-		                            <div class="col-sm-4">
-		                                <input type="text" id="firstname" name="firstname" value="$!user.getFirst_name()" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
-		                            </div>
-                                    <label for="update_dttm" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
-                                    <div class="col-sm-3">
-                                        <input readonly="readonly" type="text" id="update_dttm" name="update_dttm" value="$!user.getUpdated_dttm_string()" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
-                                    </div>
-  		                        </div>
-		                        <div class="form-group row">
-		                            <label for="lastname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
-		                            <div class="col-sm-4">
-		                                <input type="text" id="lastname" name="lastname" value="$!user.getLast_name()" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <label for="alias" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
-		                            <div class="col-sm-4">
-		                                <input type="text" id="alias" name="alias" value="$!user.getAlias()" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <label for="avitar" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
-		                            <div class="col-sm-4">
-		                                <input type="text" id="avitar" name="avitar" value="$!user.getAvitar()" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <label for="email" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
-		                            <div class="col-sm-3">
-		                                <input type="email" id="email" name="email" value="$!user.getEmail()" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <label for="password" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
-		                            <div class="col-sm-3">
-		                                <input type="password" id="password" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <label for="confirmpassword" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
-		                            <div class="col-sm-3">
-		                                <input type="password" id="confirmpassword" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
-		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                            <div class="col-sm-3">
-		                                <input type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
-		                            </div>
-		                            <div class="col-sm-3">
-		                                <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
-		                            </div>
-		                        </div>
-		                   </form>
-		               </div>
+	              <div class="account-wall">
+	                  <form id="userSettingsForm" action="$WebPath.getSAVE_USER_SETTINGS()" method="post" class="">
+	                      <div class="form-group row">
+	                          <label for="username" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
+	                          <div class="col-sm-4">
+	                              <input type="text" id="username" name="username" value="$!user.getUsername()" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
+	                          </div>
+	                                <label for="create_dttm" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
+	                                <div class="col-sm-3">
+	                                    <input readonly="readonly" type="text" id="create_dttm" name="create_dttm" value="$!user.getCreated_dttm_string()" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
+	                                </div>
+	                      </div>
+	                      <div class="form-group row">
+	             			    <label for="firstname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+	                          <div class="col-sm-4">
+	                              <input type="text" id="firstname" name="firstname" value="$!user.getFirst_name()" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
+	                          </div>
+	                                <label for="update_dttm" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
+	                                <div class="col-sm-3">
+	                                    <input readonly="readonly" type="text" id="update_dttm" name="update_dttm" value="$!user.getUpdated_dttm_string()" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
+	                                </div>
+	                        </div>
+	                      <div class="form-group row">
+	                          <label for="lastname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
+	                          <div class="col-sm-4">
+	                              <input type="text" id="lastname" name="lastname" value="$!user.getLast_name()" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <label for="alias" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
+	                          <div class="col-sm-4">
+	                              <input type="text" id="alias" name="alias" value="$!user.getAlias()" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <label for="avitar" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
+	                          <div class="col-sm-4">
+	                              <input type="text" id="avitar" name="avitar" value="$!user.getAvitar()" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <label for="email" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
+	                          <div class="col-sm-3">
+	                              <input type="email" id="email" name="email" value="$!user.getEmail()" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <label for="password" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
+	                          <div class="col-sm-3">
+	                              <input type="password" id="password" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <label for="confirmpassword" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
+	                          <div class="col-sm-3">
+	                              <input type="password" id="confirmpassword" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
+	                          </div>
+	                      </div>
+	                      <div class="form-group row">
+	                          <div class="col-sm-3">
+	                              <input type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+	                          </div>
+	                          <div class="col-sm-3">
+	                              <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
+	                          </div>
+	                      </div>
+	                 </form>
+	             </div>
 
-                    </div>
             </div>
-    
-        </div> <!-- /jumbotron -->
+        </div>
 #end
     
