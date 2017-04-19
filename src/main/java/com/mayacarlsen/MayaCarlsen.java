@@ -45,23 +45,18 @@ public class MayaCarlsen {
         enableDebugScreen();  // Somehow enableDebugScreen() will cause websocket to fail on heroku
 
         // Set up before-filters (called before each get/post)
-//        before("*",           Filters.addTrailingSlashes);
+        //before("*",           Filters.addTrailingSlashes);
+		// Handle local change
         before("*",           Filters.handleLocaleChange);
-//        before(((request, response) -> {
-//            final String localhostUrl = "http://localhost"; //"https://maya-chat.herokuapp.com/chat";
-//            final String httpUrl = "http://"; //"https://maya-chat.herokuapp.com/chat";
-//            final String httpsUrl = "https://";
-//        	final String url = request.url();
-//        	System.out.println("url="+url);
-//        	if (!url.startsWith(localhostUrl) && url.startsWith(httpUrl)) {
-//                final String[] split = url.split(httpUrl);
-//                final String newUrl = httpsUrl + split[1];
-//                System.out.println("newUrl="+newUrl);
-//                response.redirect(newUrl);
-//            }
-//        }));
+		// Authenticate user
+		before("/*", LoginController.ensureUserIsLoggedIn);
+		// Authorize user
+		//before("/*", SecurityController.authorize);
         
-        get(Path.Web.ROOT,      IndexController.serveIndexPage);
+		// Catch global exceptions
+		exception(Exception.class, IndexController.serveErrorPage);
+
+		get(Path.Web.ROOT,      IndexController.serveIndexPage);
         get(Path.Web.ABOUT,     AboutController.serveAboutPage);
         get(Path.Web.INDEX,     IndexController.serveIndexPage);
         get(Path.Web.LOGIN,     LoginController.serveLoginPage);
@@ -71,7 +66,7 @@ public class MayaCarlsen {
         get(Path.Web.CHAT,      ChatController.serveChatPage);
         get(Path.Web.USER_SETTINGS, UserController.serveUserSettingsPage);
         post(Path.Web.SAVE_USER_SETTINGS, UserController.handleUserSettingsPost);
-//        get("*",              ViewUtil.notFound);
+        //get("*",              ViewUtil.notFound);
 
         get(Path.Web.STORIES, StoryController.serveStoryPage);
         //Set up after-filters (called after each get/post)
@@ -93,8 +88,8 @@ public class MayaCarlsen {
 	    	for(User user: chatuserUsernameMap.values()) {
 	    		JSONObject jsonObj = new JSONObject();
 	    		jsonObj.put("alias", user.getAlias());
-	    		jsonObj.put("firstName", user.getFirstName());
-				jsonObj.put("lastName", user.getLastName());
+	    		jsonObj.put("firstName", user.getFirst_name());
+				jsonObj.put("lastName", user.getLast_name());
 	    		jsonObj.put("username", user.getUsername());
 	    		jsonArray.put(jsonObj);
 	    	}

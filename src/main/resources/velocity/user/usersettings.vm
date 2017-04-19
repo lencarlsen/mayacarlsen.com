@@ -13,37 +13,45 @@
 		                        <div class="form-group row">
 		                            <label for="username" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
 		                            <div class="col-sm-4">
-		                                <input readonly="readonly" type="text" id="username" name="username" value="$username" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" value="" class="form-control">
+		                                <input type="text" id="username" name="username" value="$!user.getUsername()" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
 		                            </div>
+                                    <label for="create_dttm" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
+                                    <div class="col-sm-4">
+                                        <input readonly="readonly" type="text" id="create_dttm" name="create_dttm" value="$!user.getCreate_dttm()" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
+                                    </div>
 		                        </div>
 		                        <div class="form-group row">
-		               			 <label for="firstname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+		               			    <label for="firstname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
 		                            <div class="col-sm-4">
-		                                <input type="text" id="firstname" name="firstname" value="$firstname" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
+		                                <input type="text" id="firstname" name="firstname" value="$!user.getFirst_name()" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
 		                            </div>
+                                    <label for="update_dttm" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
+                                    <div class="col-sm-4">
+                                        <input readonly="readonly" type="text" id="update_dttm" name="update_dttm" value="$!user.getUpdate_dttm()" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
+                                    </div>
   		                        </div>
 		                        <div class="form-group row">
 		                            <label for="lastname" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
 		                            <div class="col-sm-4">
-		                                <input type="text" id="lastname" name="lastname" value="$lastname" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
+		                                <input type="text" id="lastname" name="lastname" value="$!user.getLast_name()" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">
 		                            <label for="alias" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
 		                            <div class="col-sm-4">
-		                                <input type="text" id="alias" name="alias" value="$alias" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
+		                                <input type="text" id="alias" name="alias" value="$!user.getAlias()" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">
 		                            <label for="avitar" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
 		                            <div class="col-sm-4">
-		                                <input type="text" id="avitar" name="avitar" value="$avitar" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
+		                                <input type="text" id="avitar" name="avitar" value="$!user.getAvitar()" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">
 		                            <label for="email" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
 		                            <div class="col-sm-3">
-		                                <input type="email" id="email" name="email" value="$email" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
+		                                <input type="email" id="email" name="email" value="$!user.getEmail()" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">

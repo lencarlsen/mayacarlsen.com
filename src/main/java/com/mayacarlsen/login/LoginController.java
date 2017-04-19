@@ -3,16 +3,13 @@ package com.mayacarlsen.login;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jetty.websocket.api.Session;
-
-import com.mayacarlsen.MayaCarlsen;
-import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
 import com.mayacarlsen.user.UserDao;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
 
+import spark.Filter;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -29,8 +26,9 @@ public class LoginController {
     public static Route handleLoginPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         String username = RequestUtil.getQueryUsername(request);
+        String password = RequestUtil.getQueryPassword(request);
         
-        if (!UserController.authenticate(username, RequestUtil.getQueryPassword(request))) {
+        if (!UserController.authenticate(username, password)) {
             model.put("authenticationFailed", true);
             return ViewUtil.render(request, model, Path.Template.LOGIN);
         }
@@ -54,8 +52,8 @@ public class LoginController {
 
     // The origin of the request (request.pathInfo()) is saved in the session so
     // the user can be redirected back after login
-    public static void ensureUserIsLoggedIn(Request request, Response response) {
-        if (request.session().attribute("currentUser") == null) {
+	public static Filter ensureUserIsLoggedIn = (Request request, Response response) -> {
+        if (!com.mayacarlsen.security.ACL.isPublic(request.pathInfo()) && request.session().attribute("currentUser") == null) {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
         }

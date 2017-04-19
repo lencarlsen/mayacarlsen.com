@@ -1,0 +1,18 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <h1>Oops, somehow something went wrong...</h1>
+    <div class="alert alert-danger" role="alert">
+	    <p>
+		    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  	<span class="sr-only">Error:</span>
+		  	<b>Error: </b>$errorMessage
+	  	</p>
+	  	<p>
+			#if($errorDetails)
+		        $errorDetails
+			#else
+			    No Details found
+			#end
+		</p>
+	</div>
+#end

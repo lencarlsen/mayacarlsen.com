@@ -1,8 +1,10 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-	<h1 class="text-primary">Welcome to my Web Site</h1>
-	<p>Come play with me here...</p>
-	<p>
-		<a class="btn btn-lg btn-primary" href="$WebPath.getCHAT()" role="button">Let's Play NOW &raquo;</a>
-	</p>
+    <div class="jumbotron">
+		<h1 class="text-primary">Welcome to my Web Site</h1>
+		<p>Come play with me here...</p>
+		<p>
+			<a class="btn btn-lg btn-primary" href="$WebPath.getCHAT()" role="button">Let's Play NOW &raquo;</a>
+		</p>
+    </div>
 #end

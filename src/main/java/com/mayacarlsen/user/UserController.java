@@ -2,10 +2,12 @@ package com.mayacarlsen.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.*;
 
 import com.mayacarlsen.login.LoginController;
+import com.mayacarlsen.util.DaoUtil;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
@@ -16,7 +18,9 @@ import spark.Route;
 
 public class UserController {
 	
-    // Authenticate the user by hashing the inputed password using the stored salt,
+	private static final Logger logger = Logger.getLogger(UserController.class.getCanonicalName());
+
+	// Authenticate the user by hashing the inputed password using the stored salt,
     // then comparing the generated hashed password to the stored hashed password
     public static boolean authenticate(String username, String password) {
         if (username.isEmpty() || password.isEmpty()) {
@@ -28,32 +32,23 @@ public class UserController {
         }
         String hashedPassword = BCrypt.hashpw(password, user.getSalt());
 
-        return hashedPassword.equals(user.getHashedPassword());
+		logger.info("username="+username + ", dbsalt="+user.getSalt() + ", hashedPassword="+hashedPassword);
+		logger.info("username="+username + ", dbsalt="+user.getSalt() + ", dbPassword    ="+user.getPassword());
+
+		return hashedPassword.equals(user.getPassword());
     }
 
     public static Route serveUserSettingsPage = (Request request, Response response) -> {
-    	LoginController.ensureUserIsLoggedIn(request, response);
-        
-    	User user = request.session().attribute("user");
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("username", user.getUsername());
-        model.put("firstname", user.getFirstName());
-        model.put("lastname", user.getLastName());
-        model.put("alias", user.getAlias());
-        model.put("avitar", "");
-        model.put("email", (user.getEmailAddress() == null ? "" : user.getEmailAddress()));
-        return ViewUtil.render(request, model, Path.Template.USER_SETTINGS);
+        return ViewUtil.render(request, new HashMap<String, Object>(), Path.Template.USER_SETTINGS);
     };
 
     public static Route handleUserSettingsPost = (Request request, Response response) -> {
-    	LoginController.ensureUserIsLoggedIn(request, response);
-
     	Map<String, Object> model = new HashMap<>();
         String username = RequestUtil.getQueryUsername(request);
         String firstName = request.queryParams("firstname");
         String lastName = request.queryParams("lastname");
         String alias = request.queryParams("alias");
+        String avitar = request.queryParams("avitar");
         String email = request.queryParams("email");
         String newPassword = request.queryParams("password");
         String confirmNewPassword = request.queryParams("confirmpassword");
@@ -67,7 +62,13 @@ public class UserController {
         
     	String salt = getSalt();
     	String hashedPassword = createHashedPassword(newPassword, salt);
-        User user = new User(loggedInUser.getUsername(), firstName, lastName, alias, email, salt, hashedPassword);
+    	
+    	if (newPassword.trim().length() == 0) {
+    		salt = loggedInUser.getSalt();
+    		hashedPassword = loggedInUser.getPassword();
+    	}
+    	
+        User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null);
         User newUser = UserDao.updateUser(user);
         
         request.session().attribute("user", newUser);
@@ -83,7 +84,7 @@ public class UserController {
             // Update the user salt and password
             User user = UserDao.getUserByUsername(username);
             user.setSalt(newSalt);
-            user.setHashedPassword(newHashedPassword);
+            user.setPassword(newHashedPassword);
         }
     }
     

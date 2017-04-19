@@ -22,6 +22,7 @@ public class RegistrationController {
         String firstName = request.queryParams("firstname");
         String lastName = request.queryParams("lastname");
         String alias = request.queryParams("alias");
+        String avitar = request.queryParams("avitar");
         String email = request.queryParams("email");
         String password = request.queryParams("password");
         String confirmpassword = request.queryParams("confirmpassword");
@@ -39,7 +40,7 @@ public class RegistrationController {
         }
         
         String hashedPassword = UserController.createHashedPassword(password, salt);
-        User user = UserDao.createUser(new User(username, firstName, lastName, alias, email, salt, hashedPassword));
+        User user = UserDao.createUser(new User(null, username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null));
         
         if(!UserController.authenticate(username, password)) {
             model.put("registrationFailed", true);

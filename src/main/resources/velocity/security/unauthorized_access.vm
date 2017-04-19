@@ -1,0 +1,18 @@
+#parse("/velocity/basic_layout.vm")
+#@mainLayout()
+    <h1>Unauthorized Access</h1>
+    <div class="alert alert-danger" role="alert">
+        <h3>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <!--span class="sr-only">Error:</span-->
+            $errorMessage
+        </h3>
+        <!--p>
+            #if($errorDetails)
+                $errorDetails
+            #else
+                No Details found
+            #end
+        </p-->
+    </div>
+#end
