@@ -68,8 +68,9 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_USER_SETTINGS, UserController.handleUserSettingsPost);
         //get("*",              ViewUtil.notFound);
 
-//        get(Path.Web.STORIES, ArticleController.serveStoryPage);
-        get(Path.Web.ARTICLE, ArticleController.serveStoryPage);
+        get(Path.Web.VIEW_ARTICLE, ArticleController.serveStoryPage);
+        get(Path.Web.SAVE_ARTICLE, ArticleController.serveArticlePage);
+        post(Path.Web.SAVE_ARTICLE, ArticleController.saveArticlePage);
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);
 	}

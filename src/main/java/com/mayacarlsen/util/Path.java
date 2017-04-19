@@ -15,10 +15,12 @@ public class Path {
         @Getter public static final String LOGOUT = "/logout/";
         @Getter public static final String CHAT = "/chat/";
         @Getter public static final String REGISTER = "/register/";
+
         @Getter public static final String USER_SETTINGS = "/user_settings/";
         @Getter public static final String SAVE_USER_SETTINGS = "/save_user_settings/";
-        @Getter public static final String STORIES = "/stories/";
-        @Getter public static final String ARTICLE = "/article/:articleId";
+
+        @Getter public static final String VIEW_ARTICLE = "/article/:articleId";
+        @Getter public static final String SAVE_ARTICLE = "/save_article/";
 
 		@Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }
@@ -29,8 +31,11 @@ public class Path {
         public final static String LOGIN = "/velocity/login/login.vm";
         public static final String NOT_FOUND = "/velocity/notFound.vm";
         public final static String CHAT = "/velocity/chat/chat.vm";
+
         public final static String USER_SETTINGS = "/velocity/user/usersettings.vm";
-        public final static String STORIES = "/velocity/stories/stories.vm";
+
+        public final static String VIEW_ARTICLES = "/velocity/articles/view_articles.vm";
+        public final static String SAVE_ARTICLE = "/velocity/articles/save_article.vm";
 
 		// Security
 		public final static String UNAUTHORIZED = "/velocity/security/unauthorized_access.vm";

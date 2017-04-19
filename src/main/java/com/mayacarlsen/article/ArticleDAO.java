@@ -25,7 +25,7 @@ public class ArticleDAO {
 
 	private static final String INSERT_ARTICLE_SQL =
 			"INSERT INTO ARTICLES (ARTICLE_TYPE, ARTICLE_TITLE, ARTICLE_DESCRIPTION, ARTICLE, CREATE_DTTM) "
-					+ "VALUES (article_type, article_title, article_description, article, CURRENT_TIMESTAMP) ";
+					+ "VALUES (:article_type, :article_title, :article_description, :article, CURRENT_TIMESTAMP) ";
 
 	private static final String UPDATE_ARTICLE_SQL =
 			"UPDATE ARTICLES SET "
@@ -55,7 +55,7 @@ public class ArticleDAO {
 		}
 	}
 
-	public static Article updateUser(Article article) {
+	public static Article updateArticle(Article article) {
 		try (Connection conn = sql2o.beginTransaction()) {
 			int count = conn.createQuery(UPDATE_ARTICLE_SQL)
 					.addParameter("article_type", article.getArticle_type())
@@ -71,7 +71,7 @@ public class ArticleDAO {
 		return getArticle(article.getArticle_id());
 	}
 
-	public static Article createUser(Article article) {
+	public static void createArticle(Article article) {
 		try (Connection conn = sql2o.beginTransaction()) {
 			Integer count = conn.createQuery(INSERT_ARTICLE_SQL)
 					.addParameter("article_type", article.getArticle_type())
@@ -83,7 +83,6 @@ public class ArticleDAO {
 			logger.info("Insert Article Count: "+count);
 			conn.commit();
 		}
-		return getArticle(article.getArticle_id());
 	}
 
 }
