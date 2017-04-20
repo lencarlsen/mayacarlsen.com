@@ -1,11 +1,3 @@
-#parse("/velocity/layout.vm")
-#@mainLayout()
-        <!-- Main component for a primary marketing message or call to action -->
-        <div class="panel panel-info">
-            <div class="panel-heading">$msg.get("ARTICLE_HEADING")</div>
-            <div class="panel-body">
-
-                <div class="account-wall">
                     <form id="articleForm" action="$WebPath.getSAVE_ARTICLE()" method="post" class="">
                         <div class="form-group row">
                             <label for="article_type" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
@@ -36,10 +28,10 @@
                         <div class="form-group row">
                             <label for="article_text" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
                             <div class="col-sm-12">
-	                <textarea id="article_text" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
-	                <script type="text/javascript" charset="utf-8">
-	                    CKEDITOR.replace( 'article_text' );
-	                </script>
+                            <textarea id="article_text" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                            <script type="text/javascript" charset="utf-8">
+                                CKEDITOR.replace( "article_text" );
+                            </script>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -51,8 +43,3 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-#end
-                                

@@ -10,8 +10,10 @@ import lombok.Getter;
 @AllArgsConstructor // All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
 public class Article {
     final @Getter Integer article_id;
+    final @Getter Integer user_id;
     final @Getter String article_type;
     final @Getter String article_title;
+    final @Getter Boolean publish_article;
     final @Getter String article_description;
     final @Getter String article;
     final @Getter Date create_dttm;

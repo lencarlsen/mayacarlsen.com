@@ -9,3 +9,9 @@
 .jumbotron {
 	background: #F7F7F7;
 }
+
+.tab-pane {
+    border: 1px solid #ddd;
+    border-width: 0px 1px 1px 1px; /* Removes the top border */
+    padding: 5px;
+}

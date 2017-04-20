@@ -2,7 +2,7 @@
 #@mainLayout()
         <!-- Main component for a primary marketing message or call to action -->
         <div class="panel panel-info">
-            <div class="panel-heading">User Settings</div>
+            <div class="panel-heading"><b>User Settings</b></div>
                 <div class="panel-body">
 
 	              <div class="account-wall">

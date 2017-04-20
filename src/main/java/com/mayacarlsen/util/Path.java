@@ -21,6 +21,8 @@ public class Path {
 
         @Getter public static final String VIEW_ARTICLE = "/article/:articleId";
         @Getter public static final String SAVE_ARTICLE = "/save_article/";
+        @Getter public static final String GET_ALL_ARTICLES = "/get_all_articles/";
+        @Getter public static final String GET_ARTICLE = "/get_article/:articleId";
 
 		@Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }
@@ -35,7 +37,7 @@ public class Path {
         public final static String USER_SETTINGS = "/velocity/user/usersettings.vm";
 
         public final static String VIEW_ARTICLES = "/velocity/articles/view_articles.vm";
-        public final static String SAVE_ARTICLE = "/velocity/articles/save_article.vm";
+        public final static String ADMIN = "/velocity/articles/admin.vm";
 
 		// Security
 		public final static String UNAUTHORIZED = "/velocity/security/unauthorized_access.vm";

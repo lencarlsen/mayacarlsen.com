@@ -9,14 +9,20 @@ webSocket.onmessage = function (msg) { updateChat(msg); };
 webSocket.onclose = function () { console.log(url + ": Chat WebSocket connection timed out") };
 
 //Send message if "Send" is clicked
-id("sendMsg").addEventListener("click", function () {
-    sendMessage(id("message").value);
-});
+var sendElementId = id("sendMsg");
+if (sendElementId) {
+	sendElementId.addEventListener("click", function () {
+	    sendMessage(id("message").value);
+	});
+}
 
 //Send message if enter is pressed in the input field
-id("message").addEventListener("keypress", function (e) {
-    if (e.keyCode === 13) { sendMessage(e.target.value); }
-});
+var msgElementID = id("message");
+if (msgElementID) {
+	msgElementID.addEventListener("keypress", function (e) {
+	    if (e.keyCode === 13) { sendMessage(e.target.value); }
+	});
+}
 
 //Send a message if it's not empty, then clear the input field
 function sendMessage(message) {
@@ -28,17 +34,23 @@ function sendMessage(message) {
 
 //Update the chat-panel, and the list of connected users
 function updateChat(msg) {
-    var data = JSON.parse(msg.data);
-    insert("chat", data.userMessage);
-    id("userlist").innerHTML = "";
-    data.userlist.forEach(function (user) {
-        insert("userlist", "<li>" + user.alias + "</li>");
-    });
+	var userlistElementId =id("userlist");
+	if (userlistElementId) {
+	    var data = JSON.parse(msg.data);
+	    insert("chat", data.userMessage);
+	    userlistElementId.innerHTML = "";
+	    data.userlist.forEach(function (user) {
+	        insert("userlist", "<li>" + user.alias + "</li>");
+	    });
+	}
 }
 
 //Helper function for inserting HTML as the first child of an element
 function insert(targetId, message) {
-    id(targetId).insertAdjacentHTML("afterbegin", message);
+    var elementId = id(targetId);
+    if (elementId) {
+    	elementId.insertAdjacentHTML("afterbegin", message);
+    }
 }
 
 //Helper function for selecting element by id

@@ -36,4 +36,23 @@
 
     <!-- CKEditor -->
     <script src="//cdn.ckeditor.com/4.6.0/standard/ckeditor.js"></script>
+    
+    <!-- Datatables -->
+    <!--link href="/datatable/css/jquery-ui.css" rel="stylesheet"-->
+    <link href="/datatable/css/dataTables.jqueryui.min.css" rel="stylesheet">
+    <link href="/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/datatable/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="/datatable/css/fixedColumns.bootstrap.min.css" rel="stylesheet">
+    <!-- This 'jquery.dataTables.min.css' creates error 'net::ERR_CONTENT_DECODING_FAILED' --> 
+    <!--link href="/datatable/css/jquery.dataTables.min.css" rel="stylesheet"-->
+    
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/jquery.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/dataTables.jqueryui.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="/datatable/js/dataTables.fixedColumns.min.js"></script>
   </head>

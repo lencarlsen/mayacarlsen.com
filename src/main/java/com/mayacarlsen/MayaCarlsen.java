@@ -71,6 +71,8 @@ public class MayaCarlsen {
         get(Path.Web.VIEW_ARTICLE, ArticleController.serveStoryPage);
         get(Path.Web.SAVE_ARTICLE, ArticleController.serveArticlePage);
         post(Path.Web.SAVE_ARTICLE, ArticleController.saveArticlePage);
+        get(Path.Web.GET_ALL_ARTICLES, ArticleController.getAllArticlesAsJSON);
+        get(Path.Web.GET_ARTICLE, ArticleController.getArticleAsJSON);
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);
 	}

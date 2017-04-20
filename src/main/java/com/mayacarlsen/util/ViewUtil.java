@@ -21,7 +21,7 @@ public class ViewUtil {
         model.put("user", request.session().attribute("user"));
         model.put("currentUser", RequestUtil.getSessionCurrentUser(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
-		model.put("articleList", ArticleDAO.getAllArticles());
+		model.put("articleList", ArticleDAO.getAllPublishArticles());
         
         return strictVelocityEngine().render(new ModelAndView(model, templatePath));
     }
