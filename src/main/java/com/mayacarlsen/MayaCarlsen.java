@@ -73,6 +73,11 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_ARTICLE, ArticleController.saveArticlePage);
         get(Path.Web.GET_ALL_ARTICLES, ArticleController.getAllArticlesAsJSON);
         get(Path.Web.GET_ARTICLE, ArticleController.getArticleAsJSON);
+
+        get(Path.Web.GET_ALL_USERS, UserController.getAllUsersAsJSON);
+        get(Path.Web.GET_USER, UserController.getUserAsJSON);
+        post(Path.Web.SAVE_USER, UserController.saveUserPage);
+
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);
 	}

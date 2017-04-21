@@ -1,13 +1,17 @@
 package com.mayacarlsen.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.*;
 
+import com.mayacarlsen.article.Article;
+import com.mayacarlsen.article.ArticleDAO;
 import com.mayacarlsen.login.LoginController;
 import com.mayacarlsen.util.DaoUtil;
+import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
@@ -95,4 +99,70 @@ public class UserController {
     public static String getSalt() {
     	return BCrypt.gensalt();
     }
+
+    public static Route saveUserPage = (Request request, Response response) -> {
+        String userId = request.queryParams("user_id");
+        String username = request.queryParams("username");
+        String firstName = request.queryParams("firstname");
+        String lastName = request.queryParams("lastname");
+        String alias = request.queryParams("alias");
+        String email = request.queryParams("email");
+        String newPassword = request.queryParams("password");
+        String confirmNewPassword = request.queryParams("confirmpassword");
+        
+        Integer userIdInt = (userId == null || userId.trim().isEmpty() ? null : Integer.valueOf(userId));
+        		 
+    	User loggedInUser = request.session().attribute("user");
+
+    	String salt = getSalt();
+    	String hashedPassword = createHashedPassword(newPassword, salt);
+    	
+    	if (newPassword.trim().length() == 0) {
+    		salt = loggedInUser.getSalt();
+    		hashedPassword = loggedInUser.getPassword();
+    	}
+
+    	User user = new User(
+    			userIdInt, 
+    			username, 
+    			firstName, 
+    			lastName, 
+    			alias, 
+    			null,
+    			email, 
+    			salt, hashedPassword, null, null);
+
+    	if (UserDAO.userExist(userIdInt)) {
+    		UserDAO.updateUser(user);
+    	} else {
+    		UserDAO.createUser(user);
+    	}
+        
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("article", new Article(null, null, null, null, null, null, null, null, null, null, null ));
+		
+        return ViewUtil.render(request, model, Path.Template.ADMIN);
+    };
+
+    
+    public static Route getAllUsersAsJSON = (Request request, Response response) -> {
+    	List<User> userList = UserDAO.getAllUsers();
+    	String json = JSONUtil.dataToJson(userList);
+
+		response.status(200);
+		response.type("application/json");
+
+		return json;
+    };
+
+    public static Route getUserAsJSON = (Request request, Response response) -> {
+		String userId = request.params("userId");
+    	User user = UserDAO.getUser(Integer.valueOf(userId));
+    	String json = JSONUtil.dataToJson(user);
+
+		response.status(200);
+		response.type("application/json");
+
+		return json;
+    };
 }

@@ -24,7 +24,11 @@ public class Path {
         @Getter public static final String GET_ALL_ARTICLES = "/get_all_articles/";
         @Getter public static final String GET_ARTICLE = "/get_article/:articleId";
 
-		@Getter public final static String UNAUTHORIZED = "/unauthorized/";
+        @Getter public static final String GET_ALL_USERS = "/get_all_users/";
+        @Getter public static final String GET_USER = "/get_user/:userId";
+        @Getter public static final String SAVE_USER = "/save_user/";
+
+        @Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }
 
     public static class Template {

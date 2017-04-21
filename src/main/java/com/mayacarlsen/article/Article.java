@@ -18,6 +18,8 @@ public class Article {
     final @Getter String article;
     final @Getter Date create_dttm;
     final @Getter Date update_dttm;
+    final @Getter String first_name;
+    final @Getter String last_name;
 
 	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 

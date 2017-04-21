@@ -30,7 +30,7 @@ public class ArticleController {
 
     public static Route serveArticlePage = (Request request, Response response) -> {
     	Map<String, Object> model = new HashMap<>();
-    	model.put("article", new Article(null, null, null, null, null, null, null, null, null ));
+    	model.put("article", new Article(null, null, null, null, null, null, null, null, null, null, null ));
 		
         return ViewUtil.render(request, model, Path.Template.ADMIN);
     };
@@ -55,7 +55,7 @@ public class ArticleController {
     			Boolean.valueOf(publishArticle), 
     			articleDescription, 
     			articleText, 
-    			null, null);
+    			null, null, null, null);
 
     	if (ArticleDAO.articleExist(articlaeIdInt)) {
     		ArticleDAO.updateArticle(article);
@@ -64,7 +64,7 @@ public class ArticleController {
     	}
         
     	Map<String, Object> model = new HashMap<>();
-    	model.put("article", new Article(null, null, null, null, null, null, null, null, null ));
+    	model.put("article", new Article(null, null, null, null, null, null, null, null, null, null, null ));
 		
         return ViewUtil.render(request, model, Path.Template.ADMIN);
     };

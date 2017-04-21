@@ -17,13 +17,18 @@ public class UserDAO {
 	private final static Sql2o sql2o = DaoUtil.getSql2o();
 
 	private static final String SELECT_ALL_USERS_SQL =
-			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, SALT, PASSWORD, CREATE_DTTM, UPDATE_DTTM "
+			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
 					+ "FROM USERS";
 						
-	private static final String SELECT_USER_SQL =
+	private static final String SELECT_USER_BY_USERNAME_SQL =
 			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, SALT, PASSWORD, CREATE_DTTM, UPDATE_DTTM "
 					+ "FROM USERS "
 					+ "WHERE USERNAME = :username";
+    
+	private static final String SELECT_USER_BY_USERID_SQL =
+			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
+					+ "FROM USERS "
+					+ "WHERE USER_ID = :user_id";
     
 	private static final String UPDATE_USER_SQL =
 			"UPDATE USERS SET "
@@ -65,10 +70,24 @@ public class UserDAO {
 		return usernameExist(user.getUsername());
 	}
 
+	public static Boolean userExist(Integer userId) {
+		return (getUser(userId) == null ? false : true);
+	}
+	
 	public static User getUserByUsername(String username) {
 		try (Connection conn = sql2o.beginTransaction()) {
-			return conn.createQuery(SELECT_USER_SQL)
+			return conn.createQuery(SELECT_USER_BY_USERNAME_SQL)
 					.addParameter("username", username)
+					.executeAndFetchFirst(User.class);
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static User getUser(Integer userId) {
+		try (Connection conn = sql2o.beginTransaction()) {
+			return conn.createQuery(SELECT_USER_BY_USERID_SQL)
+					.addParameter("user_id", userId)
 					.executeAndFetchFirst(User.class);
 		} catch(Exception e) {
 			throw new RuntimeException(e);
