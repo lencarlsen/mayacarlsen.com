@@ -17,6 +17,7 @@ public class User {
     final @Getter String email;
     @Getter @Setter String salt;
     @Getter @Setter String password;
+    final @Getter String role;
     final @Getter Date create_dttm;
     final @Getter Date update_dttm;
 

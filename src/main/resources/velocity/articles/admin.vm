@@ -50,6 +50,12 @@
                                   <input type="email" id="email1" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
                               </div>
                           </div>
+						  <div class="form-group row">
+						      <label for="role1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
+						      <div class="col-sm-4">
+						        <input type="text" id="role1" name="role" value="" placeholder="$msg.get("REGISTER_LABEL_ROLE")" required class="form-control">
+						      </div>
+						  </div>
                           <div class="form-group row">
                               <label for="password1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
                               <div class="col-sm-4">
@@ -83,6 +89,7 @@
 	                         <th>Last Name</th>
 	                         <th>Alias</th>
 	                         <th>Email</th>
+                             <th>Role</th>
 	                         <th>Created Date</th>
 	                         <th>Updated Date</th>
 	                    </tr>
@@ -134,6 +141,12 @@
 	                        <input type="email" id="email2" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
 	                    </div>
 	                </div>
+                    <div class="form-group row">
+                        <label for="role2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="role2" name="role" value="" placeholder="$msg.get("REGISTER_LABEL_ROLE")" required class="form-control">
+                        </div>
+                    </div>
 	                <div class="form-group row">
 	                    <label for="password2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
 	                    <div class="col-sm-4">
@@ -323,6 +336,7 @@
                 { data: "last_name" },
                 { data: "alias" },
                 { data: "email" },
+                { data: "role" },
                 { data: "create_dttm" },
                 { data: "update_dttm" },
             ],
@@ -372,6 +386,7 @@
                 $("#lastname2").val( result.last_name );
                 $("#alias2").val( result.alias );
                 $("#email2").val( result.email );
+                $("#role2").val( result.role );
                 $("#create_dttm2").val( result.create_dttm );
                 $("#update_dttm2").val( result.update_dttm );
               }

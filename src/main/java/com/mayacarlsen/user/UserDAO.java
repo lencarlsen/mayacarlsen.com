@@ -17,16 +17,16 @@ public class UserDAO {
 	private final static Sql2o sql2o = DaoUtil.getSql2o();
 
 	private static final String SELECT_ALL_USERS_SQL =
-			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
+			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, ROLE, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
 					+ "FROM USERS";
 						
 	private static final String SELECT_USER_BY_USERNAME_SQL =
-			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, SALT, PASSWORD, CREATE_DTTM, UPDATE_DTTM "
+			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, ROLE, SALT, PASSWORD, CREATE_DTTM, UPDATE_DTTM "
 					+ "FROM USERS "
 					+ "WHERE USERNAME = :username";
     
 	private static final String SELECT_USER_BY_USERID_SQL =
-			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
+			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, ROLE, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "
 					+ "FROM USERS "
 					+ "WHERE USER_ID = :user_id";
     
@@ -37,6 +37,7 @@ public class UserDAO {
 					+ "LAST_NAME = :last_name, "
 					+ "ALIAS = :alias, "
 					+ "EMAIL = :email, "
+					+ "ROLE = :role,"
 					+ "SALT = :salt, "
 					+ "PASSWORD = :password,"
 					+ "UPDATE_DTTM = CURRENT_TIMESTAMP "
@@ -49,6 +50,7 @@ public class UserDAO {
 					+ "LAST_NAME, "
 					+ "ALIAS, "
 					+ "EMAIL, "
+					+ "ROLE, "
 					+ "SALT, "
 					+ "PASSWORD,"
 					+ "CREATE_DTTM "
@@ -58,6 +60,7 @@ public class UserDAO {
 					+ ":last_name, "
 					+ ":alias, "
 					+ ":email, "
+					+ ":role, "
 					+ ":salt, "
 					+ ":password,"
 					+ "CURRENT_TIMESTAMP ) ";
@@ -111,6 +114,7 @@ public class UserDAO {
 					.addParameter("last_name", user.getLast_name())
 					.addParameter("alias", user.getAlias())
 					.addParameter("email", user.getEmail())
+					.addParameter("role", user.getRole())
 					.addParameter("salt", user.getSalt())
 					.addParameter("password", user.getPassword())
 					.addParameter("user_id", user.getUser_id())
@@ -130,6 +134,7 @@ public class UserDAO {
 					.addParameter("last_name", user.getLast_name())
 					.addParameter("alias", user.getAlias())
 					.addParameter("email", user.getEmail())
+					.addParameter("role", user.getRole())
 					.addParameter("salt", user.getSalt())
 					.addParameter("password", user.getPassword())
 					.executeUpdate().getResult();

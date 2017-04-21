@@ -34,11 +34,12 @@ public class DaoUtil {
 			+ "email VARCHAR(100),"
 			+ "salt VARCHAR(50),"
 			+ "password VARCHAR(100),"
+			+ "role VARCHAR(50),"
 			+ "create_dttm timestamp,"
 			+ "update_dttm timestamp)";
 	
 	private static final String USER_TABLE_INSERT_SQL =
-			"INSERT INTO users (username, last_name, first_name, alias, email, salt, password, create_dttm, update_dttm) "
+			"INSERT INTO users (username, last_name, first_name, alias, email, salt, password, role, create_dttm, update_dttm) "
 			+ "VALUES ("
 			+ "'admin', "
 			+ "'Admin Last Name', "
@@ -47,6 +48,7 @@ public class DaoUtil {
 			+ "'admin@admin', "
 			+ "'$2a$10$ZdCS2LELbU3BvWNibQbJre', "
 			+ "'$2a$10$ZdCS2LELbU3BvWNibQbJreMqywjR4MMWU.NiZBg1g4ndw61W8GL3.', "
+			+ "'ADMIN', "
 			+ "current_timestamp, "
 			+ "current_timestamp)";
 

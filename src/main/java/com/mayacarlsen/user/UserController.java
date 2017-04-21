@@ -72,7 +72,8 @@ public class UserController {
     		hashedPassword = loggedInUser.getPassword();
     	}
     	
-        User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, salt, hashedPassword, null, null);
+        User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, 
+        		salt, hashedPassword, UserRoles.USER.toString(), null, null);
         User newUser = UserDAO.updateUser(user);
         
         request.session().attribute("user", newUser);
@@ -107,6 +108,7 @@ public class UserController {
         String lastName = request.queryParams("lastname");
         String alias = request.queryParams("alias");
         String email = request.queryParams("email");
+        String role = request.queryParams("role");
         String newPassword = request.queryParams("password");
         String confirmNewPassword = request.queryParams("confirmpassword");
         
@@ -130,7 +132,7 @@ public class UserController {
     			alias, 
     			null,
     			email, 
-    			salt, hashedPassword, null, null);
+    			salt, hashedPassword, UserRoles.valueOf(role).toString(), null, null);
 
     	if (UserDAO.userExist(userIdInt)) {
     		UserDAO.updateUser(user);
