@@ -34,6 +34,10 @@ public class User {
     			? this.first_name + " " + this.last_name : this.alias);
     }
 
+    public String toLogString() {
+    	return "user_id=" + this.user_id + ", username=" + this.username + ", name=" + this.first_name + " " + this.last_name;
+    }
+
 	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	public String getCreated_dttm_string() {
