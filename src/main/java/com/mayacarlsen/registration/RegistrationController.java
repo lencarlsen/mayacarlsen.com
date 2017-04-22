@@ -6,7 +6,7 @@ import java.util.Map;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
 import com.mayacarlsen.user.UserDAO;
-import com.mayacarlsen.user.UserRoles;
+import com.mayacarlsen.user.UserRoleEnum;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
@@ -42,7 +42,7 @@ public class RegistrationController {
         
         String hashedPassword = UserController.createHashedPassword(password, salt);
         User user = UserDAO.createUser(new User(null, username, firstName, lastName, alias, avitar, email, 
-        		UserRoles.USER.toString(), salt, hashedPassword, null, null));
+        		UserRoleEnum.USER.toString(), salt, hashedPassword, null, null));
         
         if(!UserController.authenticate(username, password)) {
             model.put("registrationFailed", true);

@@ -30,17 +30,32 @@ function submitForm( formId, actionUrl, refreshTable ) {
 			success: function( data, textStatus, jQxhr ) {
 			    console.log("Post Successful: " + actionUrl);
 			},
-			error: function( jqXhr, textStatus, errorThrown ) {
-			    console.log("Post Failed: " + actionUrl + ", error: "+status);
+			error: function( jqXHR, textStatus, errorThrown ) {
+			    console.log("Post Failed: " + actionUrl + ", error: "+textStatus + ", "+ jqXHR.status);
                 pleaseWaitDialog.modal('hide');
-			 },
+                alert(getHttpError( jqXHR.status ));
+			},
 			beforeSend: function () {
 				pleaseWaitDialog.modal('show');
 			},
 			complete: function () {
                 refreshTable.ajax.reload();
                 pleaseWaitDialog.modal('hide');
+            	// Unbind so form is not submitted multiple times since every save will create a new form bind
+                $(formId).unbind("submit");
 			}
         });
 	});
+}
+
+function getHttpError(httpStatusCode) {
+    if (httpStatusCode == 401) {
+	    return "Unauthorized Access!";
+    } else if (httpStatusCode == 405) {
+	    return "Unauthorized Access: Method Not Allowed!";
+    } else if (httpStatusCode == 500) {
+	    return "Internal Server Error!";
+    } else {
+	    return "Error occured while processing request. Error Code: "+jqXHR.status;
+    }
 }

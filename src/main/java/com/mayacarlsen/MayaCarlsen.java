@@ -12,6 +12,7 @@ import com.mayacarlsen.chat.ChatWebSocketHandler;
 import com.mayacarlsen.index.IndexController;
 import com.mayacarlsen.login.LoginController;
 import com.mayacarlsen.registration.RegistrationController;
+import com.mayacarlsen.security.SecurityController;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
 import com.mayacarlsen.util.Filters;
@@ -49,9 +50,9 @@ public class MayaCarlsen {
 		// Handle local change
         before("*",           Filters.handleLocaleChange);
 		// Authenticate user
-		before("/*", LoginController.ensureUserIsLoggedIn);
+		before("/*", SecurityController.authenticate);
 		// Authorize user
-		//before("/*", SecurityController.authorize);
+		before("/*", SecurityController.authorize);
         
 		// Catch global exceptions
 		exception(Exception.class, IndexController.serveErrorPage);

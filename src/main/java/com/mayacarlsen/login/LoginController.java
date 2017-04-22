@@ -11,7 +11,6 @@ import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
 
-import spark.Filter;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -62,15 +61,6 @@ public class LoginController {
 		logger.info("User logged out: " + user.toLogString());
 
         return null;
-    };
-
-    // The origin of the request (request.pathInfo()) is saved in the session so
-    // the user can be redirected back after login
-	public static Filter ensureUserIsLoggedIn = (Request request, Response response) -> {
-        if (!com.mayacarlsen.security.ACL.isPublic(request.pathInfo()) && request.session().attribute("currentUser") == null) {
-            request.session().attribute("loginRedirect", request.pathInfo());
-            response.redirect(Path.Web.LOGIN);
-        }
     };
 
 }

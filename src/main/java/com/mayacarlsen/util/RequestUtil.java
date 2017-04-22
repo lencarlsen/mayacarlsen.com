@@ -1,5 +1,6 @@
 package com.mayacarlsen.util;
 
+import com.mayacarlsen.user.User;
 import spark.*;
 
 public class RequestUtil {
@@ -30,6 +31,10 @@ public class RequestUtil {
 
     public static String getSessionCurrentUser(Request request) {
         return request.session().attribute("currentUser");
+    }
+
+    public static User getSessionUser(Request request) {
+        return request.session().attribute("user");
     }
 
     public static boolean removeSessionAttrLoggedOut(Request request) {

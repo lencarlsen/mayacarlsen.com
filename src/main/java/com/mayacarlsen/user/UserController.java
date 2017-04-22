@@ -8,9 +8,6 @@ import java.util.logging.Logger;
 import org.mindrot.jbcrypt.*;
 
 import com.mayacarlsen.article.Article;
-import com.mayacarlsen.article.ArticleDAO;
-import com.mayacarlsen.login.LoginController;
-import com.mayacarlsen.util.DaoUtil;
 import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
@@ -73,7 +70,7 @@ public class UserController {
     	}
     	
         User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, 
-        		salt, hashedPassword, UserRoles.USER.toString(), null, null);
+        		salt, hashedPassword, UserRoleEnum.USER.toString(), null, null);
         User newUser = UserDAO.updateUser(user);
         
         request.session().attribute("user", newUser);
@@ -132,7 +129,7 @@ public class UserController {
     			alias, 
     			null,
     			email, 
-    			salt, hashedPassword, UserRoles.valueOf(role).toString(), null, null);
+    			salt, hashedPassword, UserRoleEnum.valueOf(role).toString(), null, null);
 
     	if (UserDAO.userExist(userIdInt)) {
     		UserDAO.updateUser(user);

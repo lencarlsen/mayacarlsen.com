@@ -2,8 +2,16 @@ package com.mayacarlsen.security;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.mayacarlsen.user.User;
+import com.mayacarlsen.user.UserRoleEnum;
 import com.mayacarlsen.util.Path;
+
+import spark.Request;
 
 /**
  * ACL relies on UserDAO to read the User.getAccess_control().
@@ -13,6 +21,8 @@ import com.mayacarlsen.util.Path;
  * 
  */
 public class ACL {
+
+	private static final Logger logger = Logger.getLogger(ACL.class.getCanonicalName());
 
 	// List of public paths that do not require authorization
 	private final static List<String> PUBLIC = Arrays.asList(Path.Web.UNAUTHORIZED, 
@@ -24,6 +34,11 @@ public class ACL {
 
 	// List of public paths that do not require authorization
 	private final static List<String> PUBLIC_STARTS_WITH = Arrays.asList("/article/");
+	
+	private final static Map<UserRoleEnum, List<HttpMethodEnum>> priviledgeMap = ImmutableMap.of(
+			UserRoleEnum.ADMIN, ImmutableList.of(HttpMethodEnum.GET, HttpMethodEnum.POST, HttpMethodEnum.DELETE),
+			UserRoleEnum.USER, ImmutableList.of(HttpMethodEnum.GET)
+	);
 	
 	/**
 	 * Determines if a <code>path</code> is public.
@@ -52,13 +67,19 @@ public class ACL {
 	 * @param request HTTP Request
 	 * @return True if user is allowed to access path; otherwise false
 	 */
-	/*public static Boolean isAuthorized(final User user, final String path, final Request request) {
-		if (user == null || user.getAccess_control() == null || user.getAccess_control().trim().isEmpty()) {
+	public static Boolean isAuthorized(final User user, final String path, final Request request) {
+		if (user == null || user.getRole() == null || user.getRole().trim().isEmpty()) {
 			return false;
 		}
-		String[] paths = user.getAccess_control().toUpperCase().split(",");
-		List<String> accessControl = Arrays.asList(paths);
-		return accessControl.contains(request.requestMethod().toUpperCase());
-	}*/
+		
+		UserRoleEnum userRole = UserRoleEnum.valueOf(user.getRole());
+		List<HttpMethodEnum> authorizedMethods = priviledgeMap.get(userRole);
+		
+		HttpMethodEnum requestMethod = HttpMethodEnum.valueOf(request.requestMethod().toUpperCase());
+		Boolean isAuthorized = authorizedMethods.contains(requestMethod);
+		
+		logger.info("authorizedMethods="+authorizedMethods+", requestMethod="+requestMethod);
+		return isAuthorized;
+	}
 
 }
