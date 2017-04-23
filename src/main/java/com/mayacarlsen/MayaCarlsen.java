@@ -52,7 +52,7 @@ public class MayaCarlsen {
 		// Authenticate user
 		before("/*", SecurityController.authenticate);
 		// Authorize user
-		before("/*", SecurityController.authorize);
+		//before("/*", SecurityController.authorize);
         
 		// Catch global exceptions
 		exception(Exception.class, IndexController.serveErrorPage);

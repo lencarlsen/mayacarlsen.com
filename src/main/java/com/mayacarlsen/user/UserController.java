@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.mindrot.jbcrypt.*;
 
 import com.mayacarlsen.article.Article;
+import com.mayacarlsen.security.AuthorizedList;
 import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
@@ -45,7 +46,7 @@ public class UserController {
 
     public static Route handleUserSettingsPost = (Request request, Response response) -> {
     	Map<String, Object> model = new HashMap<>();
-        String username = RequestUtil.getQueryUsername(request);
+        String username = request.queryParams("username");
         String firstName = request.queryParams("firstname");
         String lastName = request.queryParams("lastname");
         String alias = request.queryParams("alias");
@@ -142,11 +143,11 @@ public class UserController {
 		
         return ViewUtil.render(request, model, Path.Template.ADMIN);
     };
-
     
     public static Route getAllUsersAsJSON = (Request request, Response response) -> {
     	List<User> userList = UserDAO.getAllUsers();
-    	String json = JSONUtil.dataToJson(userList);
+    	AuthorizedList<User> list = new AuthorizedList<>(RequestUtil.getSessionUser(request), userList);
+    	String json = JSONUtil.dataToJson(list.getList());
 
 		response.status(200);
 		response.type("application/json");

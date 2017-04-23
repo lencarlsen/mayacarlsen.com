@@ -19,7 +19,7 @@ public class RegistrationController {
 
     public static Route handleRegistrationPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        String username = RequestUtil.getQueryUsername(request);
+        String username = request.queryParams("username");
         String firstName = request.queryParams("firstname");
         String lastName = request.queryParams("lastname");
         String alias = request.queryParams("alias");

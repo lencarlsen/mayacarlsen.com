@@ -28,8 +28,8 @@ public class LoginController {
 
     public static Route handleLoginPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<String, Object>();
-        String username = RequestUtil.getQueryUsername(request);
-        String password = RequestUtil.getQueryPassword(request);
+        String username = request.queryParams("username");
+        String password = request.queryParams("password");
         
         if (!UserController.authenticate(username, password)) {
             model.put("authenticationFailed", true);

@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserRoleEnum;
 import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.RequestUtil;
 
 import spark.Request;
 
@@ -23,6 +24,12 @@ import spark.Request;
 public class ACL {
 
 	private static final Logger logger = Logger.getLogger(ACL.class.getCanonicalName());
+
+	private Request request;
+	
+	public ACL(final Request request) {
+		this.request = request;
+	}
 
 	// List of public paths that do not require authorization
 	private final static List<String> PUBLIC = Arrays.asList(Path.Web.UNAUTHORIZED, 
@@ -38,6 +45,11 @@ public class ACL {
 	private final static Map<UserRoleEnum, List<HttpMethodEnum>> priviledgeMap = ImmutableMap.of(
 			UserRoleEnum.ADMIN, ImmutableList.of(HttpMethodEnum.GET, HttpMethodEnum.POST, HttpMethodEnum.DELETE),
 			UserRoleEnum.USER, ImmutableList.of(HttpMethodEnum.GET)
+	);
+	
+	private final static Map<UserRoleEnum, List<String>> ATTRIBUTE_LIST = ImmutableMap.of(
+			UserRoleEnum.ADMIN, ImmutableList.of("userAdmin", "createUser", "editUser", "articleAdmin", "createArticle", "editArticle"),
+			UserRoleEnum.USER, ImmutableList.of("articleAdmin", "createArticle", "editArticle")
 	);
 	
 	/**
@@ -82,4 +94,14 @@ public class ACL {
 		return isAuthorized;
 	}
 
+	public Boolean isAuthorized(final String attributeId) {
+		User user = RequestUtil.getSessionUser(request);
+		UserRoleEnum role = UserRoleEnum.valueOf(user.getRole());
+		String path = request.pathInfo();
+		String id = attributeId;
+		if (ATTRIBUTE_LIST.get(role).contains(id)) {
+			return true;
+		}
+		return false;
+	}
 }

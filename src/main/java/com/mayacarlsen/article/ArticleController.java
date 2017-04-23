@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mayacarlsen.security.AuthorizedList;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.RequestUtil;
 import com.mayacarlsen.util.ViewUtil;
 
 import spark.Request;
@@ -71,7 +73,8 @@ public class ArticleController {
 
     public static Route getAllArticlesAsJSON = (Request request, Response response) -> {
     	List<Article> articleList = ArticleDAO.getAllArticles();
-    	String json = JSONUtil.dataToJson(articleList);
+    	AuthorizedList<Article> list = new AuthorizedList<>(RequestUtil.getSessionUser(request), articleList);
+    	String json = JSONUtil.dataToJson(list.getList());
 
 		response.status(200);
 		response.type("application/json");

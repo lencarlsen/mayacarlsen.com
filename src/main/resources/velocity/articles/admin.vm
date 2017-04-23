@@ -1,10 +1,15 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 <ul class="nav nav-tabs">
+#if($acl.isAuthorized("userAdmin"))
     <li class="active"><a data-toggle="tab" href="#userAdmin"><b>$msg.get("USER_ADMIN_TAB_HEADING")</b></a></li>
+#end
+#if($acl.isAuthorized("articleAdmin"))
     <li><a data-toggle="tab" href="#articleAdmin"><b>$msg.get("ARTICLE_ADMIN_TAB_HEADING")</b></a></li>
+#end
 </ul>
 <div class="tab-content">
+#if($acl.isAuthorized("userAdmin"))
     <div id="userAdmin" class="tab-pane fade in active">
 	    <ul class="nav nav-tabs">
 	        <li class="active"><a data-toggle="tab" href="#createUser"><b>$msg.get("USER_ADMIN_TAB_CREATE_USER")</b></a></li>
@@ -17,11 +22,11 @@
                           <div class="form-group row">
                               <label for="username1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
                               <div class="col-sm-4">
-                                  <input type="text" id="username1" name="username" value="" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
+                                  <input type="text" id="username1" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
                               </div>
                           </div>
                           <div class="form-group row">
-                                <label for="firstname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+                              <label for="firstname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
                               <div class="col-sm-4">
                                   <input type="text" id="firstname1" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
                               </div>
@@ -53,7 +58,11 @@
 						  <div class="form-group row">
 						      <label for="role1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
 						      <div class="col-sm-4">
-						        <input type="text" id="role1" name="role" value="" placeholder="$msg.get("REGISTER_LABEL_ROLE")" required class="form-control">
+				                <select id="role1" name="role" required class="form-control">
+				                    #foreach( $item in $codes.getUSER_ROLES() )
+				                        <option value="$item.getCode()">$!item.getDescription()</option>
+				                    #end
+				                </select>
 						      </div>
 						  </div>
                           <div class="form-group row">
@@ -100,7 +109,7 @@
 	                <div class="form-group row">
 	                    <label for="username2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
 	                    <div class="col-sm-4">
-	                        <input type="text" id="username2" name="username" value="" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
+	                        <input type="text" id="username2" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
 	                    </div>
 	                    <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
 	                    <div class="col-sm-3">
@@ -144,7 +153,11 @@
                     <div class="form-group row">
                         <label for="role2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
                         <div class="col-sm-4">
-                            <input type="text" id="role2" name="role" value="" placeholder="$msg.get("REGISTER_LABEL_ROLE")" required class="form-control">
+			                <select id="role2" name="role" required class="form-control">
+			                    #foreach( $item in $codes.getUSER_ROLES() )
+			                        <option value="$item.getCode()">$!item.getDescription()</option>
+			                    #end
+			                </select>
                         </div>
                     </div>
 	                <div class="form-group row">
@@ -171,7 +184,9 @@
 	        </div> <!-- end of tab editUser -->
         </div>
     </div> <!-- end of tab userAdmin -->
+#end
 
+#if($acl.isAuthorized("articleAdmin"))
     <div id="articleAdmin" class="tab-pane fade">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#createArticle"><b>$msg.get("ARTICLE_ADMIN_TAB_CREATE_ARTICLE")</b></a></li>
@@ -204,8 +219,12 @@
                         </div>
                         <div class="form-group row">
                             <label for="publish_article1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
-                            <div class="col-sm-1">
-                                <input type="text" id="publish_article1" name="publish_article" value="" placeholder="$msg.get("ARTICLE_LABEL_PUBLISH")" required class="form-control">
+                            <div class="col-sm-2">
+	                            <select id="publish_article1" name="publish_article" required class="form-control">
+	                                #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+	                                    <option value="$item.getCode()">$!item.getDescription()</option>
+	                                #end
+	                            </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -217,7 +236,7 @@
                         <div class="form-group row">
                             <label for="article_text1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
                             <div class="col-sm-12">
-                            <textarea id="article_text" name="article_text1" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                            <textarea id="article_text1" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
                             <script type="text/javascript" charset="utf-8">
                                 CKEDITOR.replace( "article_text1" );
                             </script>
@@ -274,8 +293,12 @@
                     </div>
                         <div class="form-group row">
                             <label for="publish_article2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
-                            <div class="col-sm-1">
-                                <input type="text" id="publish_article2" name="publish_article" value="" placeholder="$msg.get("ARTICLE_LABEL_PUBLISH")" required class="form-control">
+                            <div class="col-sm-2">
+                                <select id="publish_article2" name="publish_article" required class="form-control">
+                                    #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+                                        <option value="$item.getCode()">$!item.getDescription()</option>
+                                    #end
+                                </select>
                             </div>
                         </div>
                     <div class="form-group row">
@@ -305,6 +328,7 @@
     	    </div>
         </div> <!-- end  tab-content -->
     </div> <!-- end of tab articleAdmin -->
+#end
 </div> <!-- end  tab-content -->
 
 <script type="text/javascript" charset="utf-8">
@@ -313,8 +337,9 @@
     // Wait until browser DOM is loaded
     $(document).ready(function() {
 
-        //$('.nav-tabs a[href="#editUser"]').tab('show');
-    	//$('.nav-tabs a[href="#createUser"]').tab('show');
+    	// show tab so a single tab will when authorization is applied
+    	$('.nav-tabs a[href="#articleAdmin"]').tab('show');
+        $('.nav-tabs a[href="#userAdmin"]').tab('show');
 
     	console.log("loading user table...");
         userTable = $('#userTable').DataTable( {

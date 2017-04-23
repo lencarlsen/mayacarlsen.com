@@ -4,10 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.mayacarlsen.util.AuthObject;
+
 import lombok.*;
 
 @AllArgsConstructor // All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
-public class User {
+public class User extends AuthObject {
     final @Getter Integer user_id;
     final @Getter String username;
     final @Getter String first_name;
