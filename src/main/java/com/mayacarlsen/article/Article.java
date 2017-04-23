@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.mayacarlsen.util.AuthObject;
+import com.mayacarlsen.security.AuthObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +31,9 @@ public class Article extends AuthObject {
 
 	public String getUpdated_dttm_string() {
 		return (update_dttm == null ? null : format.format(update_dttm));
+	}
+	
+	public String getPublish_article_string() {
+		return (publish_article == null ? "false" : publish_article.toString());
 	}
 }

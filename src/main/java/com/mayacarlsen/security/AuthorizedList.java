@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserRoleEnum;
-import com.mayacarlsen.util.AuthObject;
 
 public class AuthorizedList<T extends AuthObject> {
 

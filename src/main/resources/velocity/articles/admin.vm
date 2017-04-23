@@ -264,6 +264,7 @@
                              <th>Type</th>
                              <th>Title</th>
                              <th>Description</th>
+                             <th>Publish</th>
                              <th>Created Date</th>
                              <th>Updated Date</th>
 	                    </tr>
@@ -362,8 +363,8 @@
                 { data: "alias" },
                 { data: "email" },
                 { data: "role" },
-                { data: "create_dttm" },
-                { data: "update_dttm" },
+                { data: "created_dttm_string" },
+                { data: "updated_dttm_string" },
             ],
             dom: 'Bfrtip',
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
@@ -412,8 +413,8 @@
                 $("#alias2").val( result.alias );
                 $("#email2").val( result.email );
                 $("#role2").val( result.role );
-                $("#create_dttm2").val( result.create_dttm );
-                $("#update_dttm2").val( result.update_dttm );
+                $("#create_dttm2").val( result.created_dttm_string );
+                $("#update_dttm2").val( result.updated_dttm_string );
               }
             });
         });
@@ -454,8 +455,9 @@
                 { data: "article_type" },
                 { data: "article_title" },
                 { data: "article_description" },
-                { data: "create_dttm" },
-                { data: "update_dttm" },
+                { data: "publish_article" },
+                { data: "created_dttm_string" },
+                { data: "updated_dttm_string" },
             ],
             dom: 'Bfrtip',
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
@@ -500,12 +502,12 @@
                 $("#article_id2").val( result.article_id );
                 $("#article_type2").val( result.article_type );
                 $("#article_title2").val( result.article_title );
-                $("#publish_article2").val( result.publish_article );
+                $("#publish_article2").val( result.publish_article_string );
                 $("#article_description2").val( result.article_description );
                 $("#article_text2").val( result.article_text );
                 CKEDITOR.instances.article_text2.setData( result.article );
-                $("#create_dttm2").val( result.create_dttm );
-                $("#update_dttm2").val( result.update_dttm );
+                $("#create_dttm2").val( result.created_dttm_string );
+                $("#update_dttm2").val( result.updated_dttm_string );
               }
             });
         });

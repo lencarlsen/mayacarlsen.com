@@ -97,7 +97,7 @@ public class ACL {
 	public Boolean isAuthorized(final String attributeId) {
 		User user = RequestUtil.getSessionUser(request);
 		UserRoleEnum role = UserRoleEnum.valueOf(user.getRole());
-		String path = request.pathInfo();
+		//String path = request.pathInfo();
 		String id = attributeId;
 		if (ATTRIBUTE_LIST.get(role).contains(id)) {
 			return true;

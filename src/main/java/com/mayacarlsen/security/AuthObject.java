@@ -1,4 +1,4 @@
-package com.mayacarlsen.util;
+package com.mayacarlsen.security;
 
 public abstract class AuthObject {
 

@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.mayacarlsen.util.AuthObject;
+import com.mayacarlsen.security.AuthObject;
 
 import lombok.*;
 
@@ -41,7 +41,7 @@ public class User extends AuthObject {
     	return "user_id=" + this.user_id + ", username=" + this.username + ", name=" + this.first_name + " " + this.last_name;
     }
 
-	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public String getCreated_dttm_string() {
 		return (create_dttm == null ? null : format.format(create_dttm));
