@@ -65,6 +65,7 @@ public class MayaCarlsen {
         post(Path.Web.REGISTER, RegistrationController.handleRegistrationPost);
         get(Path.Web.LOGOUT,    LoginController.handleLogoutPost);
         get(Path.Web.CHAT,      ChatController.serveChatPage);
+
         get(Path.Web.USER_SETTINGS, UserController.serveUserSettingsPage);
         post(Path.Web.SAVE_USER_SETTINGS, UserController.handleUserSettingsPost);
         //get("*",              ViewUtil.notFound);
@@ -74,10 +75,12 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_ARTICLE, ArticleController.saveArticlePage);
         get(Path.Web.GET_ALL_ARTICLES, ArticleController.getAllArticlesAsJSON);
         get(Path.Web.GET_ARTICLE, ArticleController.getArticleAsJSON);
+        delete(Path.Web.DELETE_ARTICLE, ArticleController.deleteArticleAsJSON);
 
         get(Path.Web.GET_ALL_USERS, UserController.getAllUsersAsJSON);
         get(Path.Web.GET_USER, UserController.getUserAsJSON);
         post(Path.Web.SAVE_USER, UserController.saveUserPage);
+        delete(Path.Web.DELETE_USER, UserController.deleteUserAsJSON);
 
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);

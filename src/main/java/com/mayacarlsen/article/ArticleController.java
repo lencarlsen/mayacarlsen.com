@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.mayacarlsen.security.AuthorizedList;
 import com.mayacarlsen.user.User;
+import com.mayacarlsen.user.UserDAO;
 import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
 import com.mayacarlsen.util.RequestUtil;
@@ -16,6 +17,10 @@ import spark.Response;
 import spark.Route;
 
 public class ArticleController {
+
+	private static final String ARTICLE_DELETED_MSG       = "Article '%1s' Successfully Deleted";
+	private static final String ARTICLE_DELETED_ERROR_MSG = "Article '%1s' Could Not be Deleted";
+	private static final String ARTICLE_NOT_EXIST_MSG     = "Article '%1s' Does Not Exist";
 
     public static Route serveStoryPage = (Request request, Response response) -> {
 		String articleId = request.params("articleId");
@@ -93,4 +98,26 @@ public class ArticleController {
 		return json;
     };
 
+	public static Route deleteArticleAsJSON = (Request request, Response response) -> {
+		Integer articleId = Integer.valueOf(request.params("articleId"));
+
+		String json = JSONUtil.dataToJson("Error");
+		if (ArticleDAO.articleExist(articleId)) {
+			Integer count = ArticleDAO.deleteArticle(articleId);
+			if (count > 0) {
+				response.status(200);
+				json = JSONUtil.dataToJson(String.format(ARTICLE_DELETED_MSG, articleId));
+			} else {
+				response.status(404);
+				json = JSONUtil.dataToJson(String.format(ARTICLE_DELETED_ERROR_MSG, articleId));
+			}
+		} else {
+			response.status(404);
+			json = JSONUtil.dataToJson(String.format(ARTICLE_NOT_EXIST_MSG, articleId));
+		}
+
+		response.type("application/json");
+
+		return json;
+	};
 }

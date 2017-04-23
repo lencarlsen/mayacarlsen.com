@@ -45,6 +45,9 @@ public class ArticleDAO {
 					+ "UPDATE_DTTM = CURRENT_TIMESTAMP "
 					+ "WHERE article_id = :article_id";
 
+	private static final String DELETE_ARTICLE_SQL =
+			"DELETE FROM ARTICLES WHERE article_id = :article_id ";
+
 	public static List<Article> getAllArticles() {
 		try (Connection conn = sql2o.beginTransaction()) {
 			return conn.createQuery(SELECT_ALL_ARTICLES_SQL)
@@ -89,8 +92,8 @@ public class ArticleDAO {
 					.addParameter("article_id", article.getArticle_id())
 					.executeUpdate().getResult();
 
-			logger.info("Update Article Count: "+count);
 			conn.commit();
+			logger.info("Update Article Count: "+count);
 		}
 		return getArticle(article.getArticle_id());
 	}
@@ -106,9 +109,20 @@ public class ArticleDAO {
 					.addParameter("article", article.getArticle())
 					.executeUpdate().getResult();
 
-			logger.info("Insert Article Count: "+count);
 			conn.commit();
+			logger.info("Insert Article Count: "+count);
 		}
 	}
 
+	public static Integer deleteArticle(Integer articleId) {
+		try (Connection conn = sql2o.beginTransaction()) {
+			int count = conn.createQuery(DELETE_ARTICLE_SQL)
+					.addParameter("article_id", articleId)
+					.executeUpdate().getResult();
+
+			conn.commit();
+			logger.info("Delete Article Count: "+count);
+			return count;
+		}
+	}
 }

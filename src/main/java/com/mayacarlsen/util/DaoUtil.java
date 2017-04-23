@@ -14,7 +14,7 @@ public class DaoUtil {
 	private static final Logger logger = Logger.getLogger(DaoUtil.class.getCanonicalName());
 
 	// Heroku PostgreSQL database connection from system environment variable
-	//private static final String HEROKU_DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
+//	private static final String HEROKU_DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
 	
 	// Heroku PostgreSQL database connection URL
 	private static final String HEROKU_DATABASE_URL = "jdbc:postgresql://ec2-54-225-71-119.compute-1.amazonaws.com:5432/df1ee1153d9ulv?user=lnvfbhpyxbknmy&password=201decc8aa33924cfd161680d73336add505fe894ccd84cf37d1eeddf347c6fa&sslmode=require";

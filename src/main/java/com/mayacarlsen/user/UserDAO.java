@@ -65,6 +65,9 @@ public class UserDAO {
 					+ ":password,"
 					+ "CURRENT_TIMESTAMP ) ";
 
+	private static final String DELETE_USER_SQL =
+			"DELETE FROM USERS WHERE user_id = :user_id ";
+
 	public static Boolean usernameExist(String username) {
 		return (getUserByUsername(username) != null);
 	}
@@ -120,8 +123,8 @@ public class UserDAO {
 					.addParameter("user_id", user.getUser_id())
 					.executeUpdate().getResult();
 
-			logger.info("Update count: "+count);
 			conn.commit();
+			logger.info("Update User Count: "+count);
 		}
 		return getUserByUsername(user.getUsername());
 	}
@@ -140,8 +143,21 @@ public class UserDAO {
 					.executeUpdate().getResult();
 
 			conn.commit();
+			logger.info("Create User Count: "+count);
 		}
 		return getUserByUsername(user.getUsername());
+	}
+
+	public static Integer deleteUser(Integer userId) {
+		try (Connection conn = sql2o.beginTransaction()) {
+			int count = conn.createQuery(DELETE_USER_SQL)
+					.addParameter("user_id", userId)
+					.executeUpdate().getResult();
+
+			conn.commit();
+			logger.info("Delete User Count: "+count);
+			return count;
+		}
 	}
 
 	public static void main(String[] args) {

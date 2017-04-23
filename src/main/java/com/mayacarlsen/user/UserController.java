@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.mindrot.jbcrypt.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.mayacarlsen.article.Article;
 import com.mayacarlsen.security.AuthorizedList;
@@ -21,6 +21,10 @@ import spark.Route;
 public class UserController {
 	
 	private static final Logger logger = Logger.getLogger(UserController.class.getCanonicalName());
+
+	private static final String USER_DELETED_MSG       = "User '%1s' Successfully Deleted";
+	private static final String USER_DELETED_ERROR_MSG = "User '%1s' Could Not be Deleted";
+	private static final String USER_NOT_EXIST_MSG     = "User '%1s' Does Not Exist";
 
 	// Authenticate the user by hashing the inputed password using the stored salt,
     // then comparing the generated hashed password to the stored hashed password
@@ -165,4 +169,29 @@ public class UserController {
 
 		return json;
     };
+
+	public static Route deleteUserAsJSON = (Request request, Response response) -> {
+		logger.info("deleteUserAsJSON...");
+
+		Integer userId = Integer.valueOf(request.params("userId"));
+
+		String json = JSONUtil.dataToJson("Error");
+		if (UserDAO.userExist(userId)) {
+			Integer count = UserDAO.deleteUser(userId);
+			if (count > 0) {
+				response.status(200);
+				json = JSONUtil.dataToJson(String.format(USER_DELETED_MSG, userId));
+			} else {
+				response.status(404);
+				json = JSONUtil.dataToJson(String.format(USER_DELETED_ERROR_MSG, userId));
+			}
+		} else {
+			response.status(404);
+			json = JSONUtil.dataToJson(String.format(USER_NOT_EXIST_MSG, userId));
+		}
+
+		response.type("application/json");
+
+		return json;
+	};
 }

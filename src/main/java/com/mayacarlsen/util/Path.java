@@ -23,10 +23,12 @@ public class Path {
         @Getter public static final String SAVE_ARTICLE = "/save_article/";
         @Getter public static final String GET_ALL_ARTICLES = "/get_all_articles/";
         @Getter public static final String GET_ARTICLE = "/get_article/:articleId";
+        @Getter public static final String DELETE_ARTICLE = "/delete_article/:articleId";
 
         @Getter public static final String GET_ALL_USERS = "/get_all_users/";
         @Getter public static final String GET_USER = "/get_user/:userId";
         @Getter public static final String SAVE_USER = "/save_user/";
+        @Getter public static final String DELETE_USER = "/delete_user/:userId";
 
         @Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }

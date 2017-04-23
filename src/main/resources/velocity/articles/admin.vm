@@ -259,12 +259,12 @@
 			            <tr> <!-- ARTICLE_ID, USER_ID, ARTICLE_TYPE, ARTICLE_TITLE, ARTICLE_DESCRIPTION, CREATE_DTTM, UPDATE_DTTM -->
 			                 <th>Article ID</th>
 			                 <th>User ID</th>
-                             <th>First Name</th>
-                             <th>Last Name</th>
                              <th>Type</th>
                              <th>Title</th>
                              <th>Description</th>
                              <th>Publish</th>
+                             <th>First Name</th>
+                             <th>Last Name</th>
                              <th>Created Date</th>
                              <th>Updated Date</th>
 	                    </tr>
@@ -366,6 +366,13 @@
                 { data: "created_dttm_string" },
                 { data: "updated_dttm_string" },
             ],
+            columnDefs: [
+                {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+                }
+            ],
             dom: 'Bfrtip',
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
             buttons: [
@@ -384,6 +391,35 @@
                     exportOptions: {
                         modifier: {
                             search: 'none'
+                        }
+                    }
+                },
+                {
+                    text: 'Delete User',
+                    action: function ( e, dt, node, config ) {
+                        //var cell = dt.cell( ".selected", 0 ).data();
+                        //var cell = dt.row().data().attribute_id;
+                        
+                        var data = dt.row(".selected").data();
+
+                        if(data) {
+                            var url = "/delete_user/" + data.user_id;
+                            $.ajax({
+                                url: url,
+                                type: "DELETE",
+                                //contentType: 'application/json; charset=utf-8',
+                                async: true,
+                                processData: false,
+                                cache: false,
+                                success: function (data, status) {
+                                    userTable.ajax.reload();
+                                    //dt.row(".selected").remove().draw();
+                                    alert(data);
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("Status: " + status + " : " + error);
+                                }
+                            });
                         }
                     }
                 }
@@ -450,14 +486,26 @@
             columns: [
                 { data: "article_id" },
                 { data: "user_id" },
-                { data: "first_name" },
-                { data: "last_name" },
                 { data: "article_type" },
                 { data: "article_title" },
                 { data: "article_description" },
                 { data: "publish_article" },
+                { data: "first_name" },
+                { data: "last_name" },
                 { data: "created_dttm_string" },
                 { data: "updated_dttm_string" },
+            ],
+            columnDefs: [
+                {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false
+                 }
             ],
             dom: 'Bfrtip',
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
@@ -477,6 +525,35 @@
                     exportOptions: {
                         modifier: {
                             search: 'none'
+                        }
+                    }
+                },
+                {
+                    text: 'Delete Article',
+                    action: function ( e, dt, node, config ) {
+                        //var cell = dt.cell( ".selected", 0 ).data();
+                        //var cell = dt.row().data().attribute_id;
+                        
+                        var data = dt.row(".selected").data();
+
+                        if(data) {
+                            var url = "/delete_article/" + data.article_id;
+                            $.ajax({
+                                url: url,
+                                type: "DELETE",
+                                //contentType: 'application/json; charset=utf-8',
+                                async: true,
+                                processData: false,
+                                cache: false,
+                                success: function (data, status) {
+                                	articleTable.ajax.reload();
+                                    //dt.row(".selected").remove().draw();
+                                    alert(data);
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("Status: " + status + " : " + error);
+                                }
+                            });
                         }
                     }
                 }
