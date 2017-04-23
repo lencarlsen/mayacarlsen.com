@@ -17,76 +17,74 @@
         </ul>
         <div class="tab-content">
 	        <div id="createUser" class="tab-pane fade in active">
-                <div class="account-wall">
-                      <form id="userForm1" action="$WebPath.getSAVE_USER()" method="post" class="">
-                          <div class="form-group row">
-                              <label for="username1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
-                              <div class="col-sm-4">
-                                  <input type="text" id="username1" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="firstname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
-                              <div class="col-sm-4">
-                                  <input type="text" id="firstname1" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="lastname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
-                              <div class="col-sm-4">
-                                  <input type="text" id="lastname1" name="lastname" value="" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="alias1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
-                              <div class="col-sm-4">
-                                  <input type="text" id="alias1" name="alias" value="" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="avitar1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
-                              <div class="col-sm-4">
-                                  <input type="text" id="avitar1" name="avitar" value="" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="email1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
-                              <div class="col-sm-4">
-                                  <input type="email" id="email1" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
-                              </div>
-                          </div>
-						  <div class="form-group row">
-						      <label for="role1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
-						      <div class="col-sm-4">
-				                <select id="role1" name="role" required class="form-control">
-				                    #foreach( $item in $codes.getUSER_ROLES() )
-				                        <option value="$item.getCode()">$!item.getDescription()</option>
-				                    #end
-				                </select>
-						      </div>
-						  </div>
-                          <div class="form-group row">
-                              <label for="password1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
-                              <div class="col-sm-4">
-                                  <input type="password" id="password1" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="confirmpassword1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
-                              <div class="col-sm-4">
-                                  <input type="password" id="confirmpassword1" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <div class="col-sm-3">
-                                  <input type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
-                              </div>
-                              <div class="col-sm-3">
-                                  <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
-                              </div>
-                          </div>
-                     </form>
-                </div>
+                <form id="userForm1" action="$WebPath.getSAVE_USER()" method="post" class="">
+                    <div class="form-group row">
+                        <label for="username1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="username1" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="firstname1" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastname1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="lastname1" name="lastname" value="" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alias1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="alias1" name="alias" value="" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="avitar1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="avitar1" name="avitar" value="" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
+                        <div class="col-sm-4">
+                            <input type="email" id="email1" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
+                        </div>
+                    </div>
+					<div class="form-group row">
+					    <label for="role1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
+					    <div class="col-sm-4">
+					            <select id="role1" name="role" required class="form-control">
+					                #foreach( $item in $codes.getUSER_ROLES() )
+					                    <option value="$item.getCode()">$!item.getDescription()</option>
+					                #end
+					            </select>
+					    </div>
+					</div>
+                    <div class="form-group row">
+                        <label for="password1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
+                        <div class="col-sm-4">
+                            <input type="password" id="password1" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="confirmpassword1" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
+                        <div class="col-sm-4">
+                            <input type="password" id="confirmpassword1" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
+                        </div>
+                    </div>
+                </form>
 	        </div> <!-- end of tab createUser -->
 	        <div id="editUser" class="tab-pane fade in">
 	            <table id="userTable" class="display table table-striped table-bordered nowrap" width="100%">
@@ -104,83 +102,87 @@
 	                    </tr>
 	                </thead>
 	            </table>
-	            <form id="userForm2" class="">
-	                <input type="hidden" id="user_id2" name="user_id" value="" class="form-control">
-	                <div class="form-group row">
-	                    <label for="username2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" id="username2" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
-	                    </div>
-	                    <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
-	                    <div class="col-sm-3">
-	                        <input readonly="readonly" type="text" id="create_dttm2" name="create_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                      <label for="firstname2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" id="firstname2" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
-	                    </div>
-	                    <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
-	                    <div class="col-sm-3">
-	                        <input readonly="readonly" type="text" id="update_dttm2" name="update_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <label for="lastname2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" id="lastname2" name="lastname" value="" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <label for="alias2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" id="alias2" name="alias" value="" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <label for="avitar2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" id="avitar2" name="avitar" value="" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <label for="email2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
-	                    <div class="col-sm-4">
-	                        <input type="email" id="email2" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
-	                    </div>
-	                </div>
-                    <div class="form-group row">
-                        <label for="role2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
-                        <div class="col-sm-4">
-			                <select id="role2" name="role" required class="form-control">
-			                    #foreach( $item in $codes.getUSER_ROLES() )
-			                        <option value="$item.getCode()">$!item.getDescription()</option>
-			                    #end
-			                </select>
-                        </div>
-                    </div>
-	                <div class="form-group row">
-	                    <label for="password2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
-	                    <div class="col-sm-4">
-	                        <input type="password" id="password2" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <label for="confirmpassword2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
-	                    <div class="col-sm-4">
-	                        <input type="password" id="confirmpassword2" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
-	                    </div>
-	                </div>
-	                <div class="form-group row">
-	                    <div class="col-sm-3">
-	                        <input id="buttonSubmitUserForm" type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
-	                    </div>
-	                    <div class="col-sm-3">
-	                        <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
-	                    </div>
-	                </div>
-	           </form>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+			            <form id="userForm2" class="">
+			                <input type="hidden" id="user_id2" name="user_id" value="" class="form-control">
+			                <div class="form-group row">
+			                    <label for="username2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_USERNAME")</label>
+			                    <div class="col-sm-4">
+			                        <input type="text" id="username2" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
+			                    </div>
+			                    <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
+			                    <div class="col-sm-3">
+			                        <input readonly="readonly" type="text" id="create_dttm2" name="create_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                      <label for="firstname2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_FIRST_NAME")</label>
+			                    <div class="col-sm-4">
+			                        <input type="text" id="firstname2" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
+			                    </div>
+			                    <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
+			                    <div class="col-sm-3">
+			                        <input readonly="readonly" type="text" id="update_dttm2" name="update_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <label for="lastname2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_LAST_NAME")</label>
+			                    <div class="col-sm-4">
+			                        <input type="text" id="lastname2" name="lastname" value="" placeholder="$msg.get("REGISTER_LABEL_LAST_NAME")" required class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <label for="alias2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ALIAS")</label>
+			                    <div class="col-sm-4">
+			                        <input type="text" id="alias2" name="alias" value="" placeholder="$msg.get("REGISTER_LABEL_ALIAS")" required class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <label for="avitar2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_AVITAR")</label>
+			                    <div class="col-sm-4">
+			                        <input type="text" id="avitar2" name="avitar" value="" placeholder="$msg.get("REGISTER_LABEL_AVITAR")" class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <label for="email2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_EMAIL")</label>
+			                    <div class="col-sm-4">
+			                        <input type="email" id="email2" name="email" value="" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
+			                    </div>
+			                </div>
+		                    <div class="form-group row">
+		                        <label for="role2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
+		                        <div class="col-sm-4">
+					                <select id="role2" name="role" required class="form-control">
+					                    #foreach( $item in $codes.getUSER_ROLES() )
+					                        <option value="$item.getCode()">$!item.getDescription()</option>
+					                    #end
+					                </select>
+		                        </div>
+		                    </div>
+			                <div class="form-group row">
+			                    <label for="password2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
+			                    <div class="col-sm-4">
+			                        <input type="password" id="password2" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <label for="confirmpassword2" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")</label>
+			                    <div class="col-sm-4">
+			                        <input type="password" id="confirmpassword2" name="confirmpassword" placeholder="$msg.get("REGISTER_LABEL_CONFIRM_PASSWORD")" value="" class="form-control">
+			                    </div>
+			                </div>
+			                <div class="form-group row">
+			                    <div class="col-sm-3">
+			                        <input id="buttonSubmitUserForm" type="submit" value="$msg.get("USER_SETTINGS_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+			                    </div>
+			                    <div class="col-sm-3">
+			                        <button type="reset" class="btn btn-link">$msg.get("USER_SETTINGS_FORM_BUTTON_RESET")</button>
+			                    </div>
+			                </div>
+			           </form>
+		            </div> <!-- end of panel-body -->
+		        </div> <!-- end of panel -->
 	        </div> <!-- end of tab editUser -->
         </div>
     </div> <!-- end of tab userAdmin -->
@@ -270,62 +272,66 @@
 	                    </tr>
 			        </thead>
 			    </table>
-                <form id="articleForm2">
-                    <input type="hidden" id="article_id2" name="article_id" value="$!article.getArticle_id()" class="form-control">
-                    <div class="form-group row">
-                        <label for="article_type2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
-                        <div class="col-sm-4">
-                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="$!article.getArticle_type()" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
-                        </div>
-                        <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
-                        <div class="col-sm-3">
-                            <input readonly="readonly" type="text" id="create_dttm2" value="" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="article_title2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TITLE")</label>
-                        <div class="col-sm-4">
-                            <input type="text" id="article_title2" name="article_title" value="$!article.getArticle_title()" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
-                        </div>
-                        <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
-                        <div class="col-sm-3">
-                            <input readonly="readonly" type="text" id="update_dttm2" value="" class="form-control">
-                        </div>
-                    </div>
-                        <div class="form-group row">
-                            <label for="publish_article2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
-                            <div class="col-sm-2">
-                                <select id="publish_article2" name="publish_article" required class="form-control">
-                                    #foreach( $item in $codes.getPUBLISH_ARTICLE() )
-                                        <option value="$item.getCode()">$!item.getDescription()</option>
-                                    #end
-                                </select>
-                            </div>
-                        </div>
-                    <div class="form-group row">
-                        <label for="article_description2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_DESCRIPTION")</label>
-                        <div class="col-sm-12">
-                            <input type="text" id="article_description2" name="article_description" value="" placeholder="$msg.get("ARTICLE_LABEL_DESCRIPTION")" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="article_text2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
-                        <div class="col-sm-12">
-                        <textarea id="article_text2" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
-                        <script type="text/javascript" charset="utf-8">
-                            CKEDITOR.replace( "article_text2" );
-                        </script>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <input id="buttonSubmitArticleForm" type="submit" value="$msg.get("ARTICLE_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="reset" class="btn btn-link">$msg.get("ARTICLE_FORM_BUTTON_RESET")</button>
-                        </div>
-                    </div>
-                </form>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+		                <form id="articleForm2">
+		                    <input type="hidden" id="article_id2" name="article_id" value="$!article.getArticle_id()" class="form-control">
+		                    <div class="form-group row">
+		                        <label for="article_type2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
+		                        <div class="col-sm-4">
+		                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="$!article.getArticle_type()" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
+		                        </div>
+		                        <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
+		                        <div class="col-sm-3">
+		                            <input readonly="readonly" type="text" id="create_dttm2" value="" class="form-control">
+		                        </div>
+		                    </div>
+		                    <div class="form-group row">
+		                        <label for="article_title2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TITLE")</label>
+		                        <div class="col-sm-4">
+		                            <input type="text" id="article_title2" name="article_title" value="$!article.getArticle_title()" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
+		                        </div>
+		                        <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
+		                        <div class="col-sm-3">
+		                            <input readonly="readonly" type="text" id="update_dttm2" value="" class="form-control">
+		                        </div>
+		                    </div>
+		                        <div class="form-group row">
+		                            <label for="publish_article2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
+		                            <div class="col-sm-2">
+		                                <select id="publish_article2" name="publish_article" required class="form-control">
+		                                    #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+		                                        <option value="$item.getCode()">$!item.getDescription()</option>
+		                                    #end
+		                                </select>
+		                            </div>
+		                        </div>
+		                    <div class="form-group row">
+		                        <label for="article_description2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_DESCRIPTION")</label>
+		                        <div class="col-sm-12">
+		                            <input type="text" id="article_description2" name="article_description" value="" placeholder="$msg.get("ARTICLE_LABEL_DESCRIPTION")" required class="form-control">
+		                        </div>
+		                    </div>
+		                    <div class="form-group row">
+		                        <label for="article_text2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
+		                        <div class="col-sm-12">
+		                        <textarea id="article_text2" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+		                        <script type="text/javascript" charset="utf-8">
+		                            CKEDITOR.replace( "article_text2" );
+		                        </script>
+		                        </div>
+		                    </div>
+		                    <div class="form-group row">
+		                        <div class="col-sm-3">
+		                            <input id="buttonSubmitArticleForm" type="submit" value="$msg.get("ARTICLE_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+		                        </div>
+		                        <div class="col-sm-3">
+		                            <button type="reset" class="btn btn-link">$msg.get("ARTICLE_FORM_BUTTON_RESET")</button>
+		                        </div>
+		                    </div>
+		                </form>
+                    </div> <!-- end of panel-body -->
+                </div> <!-- end of panel -->
     	    </div>
         </div> <!-- end  tab-content -->
     </div> <!-- end of tab articleAdmin -->
