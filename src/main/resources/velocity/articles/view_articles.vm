@@ -1,11 +1,11 @@
-#parse("/velocity/basic-layout.vm")
+#parse("/velocity/layout.vm")
 #@mainLayout()
     <div class="jumbotron">
         #if ($article)
-			<h1 class="text-center">$!article.getArticle_title()</h1>
-	        <p class="text-center">$!article.getCreated_dttm_string()</p>
+			<h2 class="post-title text-center">$!article.getArticle_title()</h2>
+	        <p class="post-subtitle text-center">$!article.getCreated_dttm_string()</p>
 	        <hr class="m-y-2">
-	        $!article.getArticle()
+	        <p>$!article.getArticle()</p>
         #end
     </div>
 #end
