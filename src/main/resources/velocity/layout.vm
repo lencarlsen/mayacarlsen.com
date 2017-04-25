@@ -63,41 +63,25 @@
     </nav>
 
     <div class="container-fluid">
-
-        <!-- Main component for a primary marketing message or call to action -->
-        <!--div class="jumbotron"-->
-        <div class="row">
-            <div class="col-sm-10">
-                $bodyContent
-            </div>
-            <div class="col-sm-2">
-                <dl>
-                    <dt>Short Stories</dt>
-	                <ol>
-	                #if($articleList)
-	                    #foreach( $article in $articleList )
-			                <li>
-			                    <dd><a href="/article/$!article.getArticle_id()">$!article.getArticle_title()</a></dd>
-			                </li>
-	                    #end
-                    #end
-	                </ol>
-                </dl>                
-                <dl>
-                    <dt>My Pictures</dt>
-                    <dd>Coming soon...</dd>
-                </dl>                
-                <dl>
-                    <dt>My Favorite Sites</dt>
-                    <dd>Coming soon...</dd>
-                </dl>                
-            </div>
-        </div> <!-- /jumbotron -->
-
+$bodyContent
     </div>
 
     #parse("/velocity/bootstrap_core_js.vm")
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <p class="copyright text-muted">Copyright &copy; mayacarlsen.com 2017</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
   </body>
 </html>
 #end
