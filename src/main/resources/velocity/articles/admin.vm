@@ -111,9 +111,9 @@
 			                    <div class="col-sm-4">
 			                        <input type="text" id="username2" name="username" value="" autofocus required placeholder="$msg.get("REGISTER_LABEL_USERNAME")" class="form-control">
 			                    </div>
-			                    <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
+			                    <label for="user_create_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")</label>
 			                    <div class="col-sm-3">
-			                        <input readonly="readonly" type="text" id="create_dttm2" name="create_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
+			                        <input readonly="readonly" type="text" id="user_create_dttm2" name="create_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_CREATE_DTTM")" class="form-control">
 			                    </div>
 			                </div>
 			                <div class="form-group row">
@@ -121,9 +121,9 @@
 			                    <div class="col-sm-4">
 			                        <input type="text" id="firstname2" name="firstname" value="" placeholder="$msg.get("REGISTER_LABEL_FIRST_NAME")" required autofocus class="form-control">
 			                    </div>
-			                    <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
+			                    <label for="user_update_dttm2" class="col-sm-3 form-control-label">$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")</label>
 			                    <div class="col-sm-3">
-			                        <input readonly="readonly" type="text" id="update_dttm2" name="update_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
+			                        <input readonly="readonly" type="text" id="user_update_dttm2" name="update_dttm" value="" placeholder="$msg.get("REGISTER_LABEL_USER_UPDATE_DTTM")" class="form-control">
 			                    </div>
 			                </div>
 			                <div class="form-group row">
@@ -281,9 +281,9 @@
 		                        <div class="col-sm-4">
 		                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="$!article.getArticle_type()" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
 		                        </div>
-		                        <label for="create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
+		                        <label for="article_create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
 		                        <div class="col-sm-3">
-		                            <input readonly="readonly" type="text" id="create_dttm2" value="" class="form-control">
+		                            <input readonly="readonly" type="text" id="article_create_dttm2" value="" class="form-control">
 		                        </div>
 		                    </div>
 		                    <div class="form-group row">
@@ -291,9 +291,9 @@
 		                        <div class="col-sm-4">
 		                            <input type="text" id="article_title2" name="article_title" value="$!article.getArticle_title()" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
 		                        </div>
-		                        <label for="update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
+		                        <label for="article_update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
 		                        <div class="col-sm-3">
-		                            <input readonly="readonly" type="text" id="update_dttm2" value="" class="form-control">
+		                            <input readonly="readonly" type="text" id="article_update_dttm2" value="" class="form-control">
 		                        </div>
 		                    </div>
 		                        <div class="form-group row">
@@ -369,8 +369,16 @@
                 { data: "alias" },
                 { data: "email" },
                 { data: "role" },
-                { data: "created_dttm_string" },
-                { data: "updated_dttm_string" },
+                { data: "create_dttm", 
+                  render: function ( data, type, row, meta ) {
+                	  return getDateTime( row.create_dttm );
+                    }
+                },
+                { data: "update_dttm",
+                    render: function ( data, type, row, meta ) {
+                        return getDateTime( row.update_dttm );
+                      }
+             	}
             ],
             columnDefs: [
                 {
@@ -455,8 +463,8 @@
                 $("#alias2").val( result.alias );
                 $("#email2").val( result.email );
                 $("#role2").val( result.role );
-                $("#create_dttm2").val( result.created_dttm_string );
-                $("#update_dttm2").val( result.updated_dttm_string );
+                $("#user_create_dttm2").val( getDateTime( result.create_dttm ) );
+                $("#user_update_dttm2").val( getDateTime( result.update_dttm ) );
               }
             });
         });
@@ -498,8 +506,16 @@
                 { data: "publish_article" },
                 { data: "first_name" },
                 { data: "last_name" },
-                { data: "created_dttm_string" },
-                { data: "updated_dttm_string" },
+                { data: "create_dttm", 
+                    render: function ( data, type, row, meta ) {
+                        return getDateTime( row.create_dttm );
+                      }
+                  },
+                  { data: "update_dttm",
+                      render: function ( data, type, row, meta ) {
+                          return getDateTime( row.update_dttm );
+                        }
+                  }
             ],
             columnDefs: [
                 {
@@ -589,8 +605,8 @@
                 $("#article_description2").val( result.article_description );
                 $("#article_text2").val( result.article_text );
                 CKEDITOR.instances.article_text2.setData( result.article );
-                $("#create_dttm2").val( result.created_dttm_string );
-                $("#update_dttm2").val( result.updated_dttm_string );
+                $("#article_create_dttm2").val( getDateTime( result.create_dttm ) );
+                $("#article_update_dttm2").val( getDateTime( result.update_dttm ) );
               }
             });
         });

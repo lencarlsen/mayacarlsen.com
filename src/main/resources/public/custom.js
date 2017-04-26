@@ -1,3 +1,22 @@
+function getDateTime( dateTime ) {
+	  date = new Date( dateTime );  
+	  var year = date.getFullYear();
+	  var month = convertIntString( date.getMonth()+1 );
+	  var day = convertIntString( date.getDate() );
+	  var hour = convertIntString( date.getHours() );
+	  var minutes = convertIntString( date.getMinutes() );
+	  return year + "-" + month + "-" + day + " " + hour + ":" + minutes;
+	
+}
+
+function convertIntString( num ) {
+	var s = num;  
+	if (num < 10) {
+		  s = "0" + s;
+	}
+	return s;
+}
+
 // Wait Dialog
 var pleaseWaitDialog = 
 	$('<div class="modal fade bs-example-modal-sm" id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">'
