@@ -23,7 +23,7 @@ body {
     padding: 5px;
 }
 
-.jumbotron-image {
+/*.jumbotron-image {
     position: relative;
     background: linear-gradient( rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50) ), url("/img/river-mountains.jpg") center center;
     width: 100%;
@@ -31,7 +31,7 @@ body {
     background-size: cover;
     overflow: hidden;
     border-width: 0px 1px 1px 1px; /* Removes the top border */
-}
+}*/
 
 /* --------------------- */
 
@@ -64,13 +64,13 @@ a {
 
 .intro-header {
   background-color: #777777;
-  background: no-repeat center center;
+/*  background: no-repeat center center;*/
+  background: linear-gradient( rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50) ), url('/img/river-mountains.jpg') no-repeat center center;
   background-attachment: scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
-  background-size: cover;
   -o-background-size: cover;
-  margin-bottom: 0px;
+  background-size: cover;
 }
 .intro-header .site-heading,
 .intro-header .post-heading,

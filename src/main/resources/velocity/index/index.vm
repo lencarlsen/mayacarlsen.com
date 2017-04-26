@@ -1,6 +1,5 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <div class="jumbotron-image">
 		<!--h1 class="text-primary text-center" style="color: white">Maya's Web Site</h1>
 		<hr class="small">
 		<h3 class="text-center" style="color: white">Come play with me here...</h3>
@@ -12,7 +11,7 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -26,7 +25,6 @@
         </div>
     </header>
     
-    </div>
     <div>
 		#if($articleList)
 		    #foreach( $article in $articleList )
