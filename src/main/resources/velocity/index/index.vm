@@ -35,7 +35,7 @@
 					            <h2 class="post-title">$!article.getArticle_title()</h2>
 					            <h3 class="post-subtitle">$!article.getArticle_description()</h3>
 				            </a>
-	                        <p class="post-meta">$!article.getFirst_name() $!article.getLast_name() on $!article.getCreated_dttm_string()</p>
+	                        <p class="post-meta">Added by <b>$!article.getFirst_name() $!article.getLast_name()</b> on $!article.getCreated_dttm_string()</p>
 			            </div>
                     </div>
 	            </div>

@@ -23,7 +23,7 @@ public class Article extends AuthObject {
     final @Getter String first_name;
     final @Getter String last_name;
 
-	private final static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private final static DateFormat format = new SimpleDateFormat("MMMMM d, yyyy @ HH:mm");
 
 	public String getCreated_dttm_string() {
 		return (create_dttm == null ? null : format.format(create_dttm));

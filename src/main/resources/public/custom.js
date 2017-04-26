@@ -1,3 +1,29 @@
+Date.prototype.fullMonth = function() {
+    if (this.getMonth() == 0){this.getMonthName = "January"};
+    if (this.getMonth() == 1){this.getMonthName = "February"};
+    if (this.getMonth() == 2){this.getMonthName = "March"};
+    if (this.getMonth() == 3){this.getMonthName = "April"};
+    if (this.getMonth() == 4){this.getMonthName = "May"};
+    if (this.getMonth() == 5){this.getMonthName = "June"};
+    if (this.getMonth() == 6){this.getMonthName = "July"};
+    if (this.getMonth() == 7){this.getMonthName = "August"};
+    if (this.getMonth() == 8){this.getMonthName = "Spetember"};
+    if (this.getMonth() == 9){this.getMonthName = "October"};
+    if (this.getMonth() == 10){this.getMonthName = "November"};
+    if (this.getMonth() == 11){this.getMonthName = "December"};
+};
+
+function getFullDateTimeString( dateTime ) {
+	  date = new Date( dateTime );
+	  date.fullMonth();
+	  var year = date.getFullYear();
+	  var month = date.getMonthName();
+	  var day = date.getDate();
+	  var hour = convertIntString( date.getHours() );
+	  var minutes = convertIntString( date.getMinutes() );
+	  return month + day + ", " + year + " " + hour + ":" + minutes;
+}
+
 function getDateTime( dateTime ) {
 	  date = new Date( dateTime );  
 	  var year = date.getFullYear();
@@ -6,7 +32,6 @@ function getDateTime( dateTime ) {
 	  var hour = convertIntString( date.getHours() );
 	  var minutes = convertIntString( date.getMinutes() );
 	  return year + "-" + month + "-" + day + " " + hour + ":" + minutes;
-	
 }
 
 function convertIntString( num ) {
