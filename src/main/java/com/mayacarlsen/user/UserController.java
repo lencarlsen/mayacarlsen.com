@@ -75,7 +75,7 @@ public class UserController {
     	}
     	
         User user = new User(loggedInUser.getUser_id(), username, firstName, lastName, alias, avitar, email, 
-        		salt, hashedPassword, UserRoleEnum.USER.toString(), null, null);
+        		salt, hashedPassword, loggedInUser.getRole(), null, null);
         User newUser = UserDAO.updateUser(user);
         
         request.session().attribute("user", newUser);

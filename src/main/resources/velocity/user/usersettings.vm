@@ -51,6 +51,16 @@
 	                              <input type="email" id="email" name="email" value="$!user.getEmail()" placeholder="$msg.get("REGISTER_LABEL_EMAIL")" required class="form-control">
 	                          </div>
 	                      </div>
+						  <div class="form-group row">
+						      <label for="role" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_ROLE")</label>
+						      <div class="col-sm-4">
+						          <select id="role" name="role" disabled="disabled" class="form-control">
+						              #foreach( $item in $codes.getUSER_ROLES() )
+						                  <option value="$item.getCode()">$!item.getDescription()</option>
+						              #end
+						          </select>
+						      </div>
+						  </div>
 	                      <div class="form-group row">
 	                          <label for="password" class="col-sm-2 form-control-label">$msg.get("REGISTER_LABEL_PASSWORD")</label>
 	                          <div class="col-sm-3">

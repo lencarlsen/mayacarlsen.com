@@ -52,6 +52,13 @@ public class DaoUtil {
 			+ "current_timestamp, "
 			+ "current_timestamp)";
 
+	private static final String RESET_ADMIN_USER_SQL = 
+			"UPDATE USERS SET "
+			+ "ROLE = 'ADMIN', "
+			+ "SALT = '$2a$10$ZdCS2LELbU3BvWNibQbJre', "
+			+ "PASSWORD = '$2a$10$ZdCS2LELbU3BvWNibQbJreMqywjR4MMWU.NiZBg1g4ndw61W8GL3.' "
+			+ "WHERE user_id = 1";
+	
 	private static final String ARTICLE_TABLE_DROP_SQL =
 			"DROP TABLE IF EXISTS articles";
 	
@@ -94,6 +101,15 @@ public class DaoUtil {
 	public static Connection getConnection() throws URISyntaxException, SQLException {
 		return DriverManager.getConnection(HEROKU_DATABASE_URL);
 	}
+	private void updateUser() {
+		try (Connection conn = getConnection()) {
+			createPreparedStatement(conn, RESET_ADMIN_USER_SQL);
+		} catch (URISyntaxException e) {
+			throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	private void createTables() {
 		try (Connection conn = getConnection()) {
@@ -117,7 +133,8 @@ public class DaoUtil {
 
 	public static void main(String[] args) throws Exception {
 		logger.info("Creating database...");
-		new DaoUtil().createTables();
+		//new DaoUtil().createTables();
+		new DaoUtil().updateUser();
 		logger.info("Creating database completed");
 	}
 	
