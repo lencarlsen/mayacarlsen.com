@@ -1,87 +1,14 @@
 #macro(mainLayout)
 <!DOCTYPE html>
 <html lang="en">
-
-#parse("/velocity/header.vm")
-
-  <body>
-
-    <!-- Fixed navbar -->
-    <!--nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('../img/20170409_134012.jpg');"-->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">MayaCarlsen.com</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="$WebPath.getABOUT()">About</a></li>
-            #if($currentUser)
-                <li><a href="$WebPath.getCHAT()">Chat</a></li>
-            #end
-          </ul>
-          <ul class="nav navbar-nav navbar-right text-right">
-            #if($currentUser)
-                <input type="hidden" id="username" value="$currentUser"/>
-            #else
-                <li class="list-unstyled"><a href="$WebPath.getLOGIN()">$msg.get("COMMON_NAV_LOGIN")</a></li>
-            #end
-            <li class="dropdown">
-              #if($currentUser)
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> $user.getAlias()<span class="caret"></span></a>
-              #else
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
-              #end
-              <ul class="dropdown-menu">
-                  <li class="dropdown-header">Language</li>
-                  <form>
-					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="jp"><img src="/img/jp.png"></img> Japanese</button></li>
-					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="dk"><img src="/img/dk.png"></img> Danish</button></li>
-					<li class="list-unstyled"><button class="btn btn-default" style="border: 0; padding: 2px 20px 2px 20px" name="locale" value="en"><img src="/img/england.png"></img> English</button></li>
-                  </form>
-                  #if($currentUser)
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">$user.getAlias()</li>
-                    <li class="list-unstyled"><a href="$WebPath.getUSER_SETTINGS()"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> $msg.get("USER_SETTINGS_MENU_LABEL")</a></li>
-	                <li role="separator" class="divider"></li>
-                    <li class="list-unstyled"><a href="$WebPath.getSAVE_ARTICLE()"><i class="glyphicon glyphicon-cog" aria-hidden="true"></i> $msg.get("ADMIN_MENU_LABEL")</a></li>
-                    <li role="separator" class="divider"></li>
-	                <li class="list-unstyled"><a class="nav-link" href="$WebPath.getLOGOUT()"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> $msg.get("COMMON_NAV_LOGOUT")</a></li>
-                  #end
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-    <div class="container-fluid">
-$bodyContent
-    </div>
-
-    #parse("/velocity/bootstrap_core_js.vm")
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <p class="copyright text-muted">Copyright &copy; mayacarlsen.com 2017</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-  </body>
+    #parse("/velocity/header.vm")
+    <body>
+		#parse("/velocity/navbar.vm")
+		<div class="container-fluid">
+            $bodyContent
+		</div>
+		#parse("/velocity/bootstrap_core_js.vm")
+		#parse("/velocity/footer.vm")
+	</body>
 </html>
 #end

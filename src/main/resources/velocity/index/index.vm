@@ -1,14 +1,5 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-		<!--h1 class="text-primary text-center" style="color: white">Maya's Web Site</h1>
-		<hr class="small">
-		<h3 class="text-center" style="color: white">Come play with me here...</h3>
-		<p>
-            <center>
-                <a class="btn btn-lg btn-primary" href="$WebPath.getCHAT()" role="button">Let's Chat NOW &raquo;</a>
-            </center>
-		</p-->
-
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     <header class="intro-header">
@@ -29,17 +20,21 @@
 		#if($articleList)
 		    #foreach( $article in $articleList )
 		        <div class="row">
-		            <div class="col-lg-8 col-lg-offset-4 col-md-10 col-md-offset-2">
+		            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
 		                <div class="post-preview">
 				            <a href="/article/$!article.getArticle_id()">
-					            <h2 class="post-title">$!article.getArticle_title()</h2>
-					            <h3 class="post-subtitle">$!article.getArticle_description()</h3>
+					            <h2 class="post-title" style="word-wrap: break-word;">$!article.getArticle_title()</h2>
+					            <h3 class="post-subtitle" style="word-wrap: break-word;">$!article.getArticle_description()</h3>
 				            </a>
 	                        <p class="post-meta">Added by <b>$!article.getFirst_name() $!article.getLast_name()</b> on $!article.getCreated_dttm_string()</p>
 			            </div>
                     </div>
 	            </div>
-	            <hr>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+                        <hr class="small">
+                    </div>
+                </div>
 		    #end
 		#end
     </div>
