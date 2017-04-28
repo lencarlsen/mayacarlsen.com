@@ -81,7 +81,7 @@ public class UserDAO {
 	}
 	
 	public static User getUserByUsername(String username) {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_USER_BY_USERNAME_SQL)
 					.addParameter("username", username)
 					.executeAndFetchFirst(User.class);
@@ -91,7 +91,7 @@ public class UserDAO {
 	}
 
 	public static User getUser(Integer userId) {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_USER_BY_USERID_SQL)
 					.addParameter("user_id", userId)
 					.executeAndFetchFirst(User.class);
@@ -101,7 +101,7 @@ public class UserDAO {
 	}
 
 	public static List<User> getAllUsers() {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_ALL_USERS_SQL)
 					.executeAndFetch(User.class);
 		} catch(Exception e) {

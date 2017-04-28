@@ -51,7 +51,7 @@ public class ArticleDAO {
 			"DELETE FROM ARTICLES WHERE article_id = :article_id ";
 
 	public static List<Article> getAllArticles() {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_ALL_ARTICLES_SQL)
 					.executeAndFetch(Article.class);
 		} catch(Exception e) {
@@ -60,7 +60,7 @@ public class ArticleDAO {
 	}
 
 	public static List<Article> getAllPublishArticles() {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_ALL_PUBLISH_ARTICLES_SQL)
 					.executeAndFetch(Article.class);
 		} catch(Exception e) {
@@ -73,7 +73,7 @@ public class ArticleDAO {
 	}
 	
 	public static Article getArticle(Integer articleId) {
-		try (Connection conn = sql2o.beginTransaction()) {
+		try (Connection conn = sql2o.open()) {
 			return conn.createQuery(SELECT_ARTICLE_SQL)
 					.addParameter("article_id", articleId)
 					.executeAndFetchFirst(Article.class);
