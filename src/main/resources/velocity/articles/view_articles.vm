@@ -1,6 +1,5 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-		<article>
 			<div class="row">
 				<div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 ">
 				#if ($article)
@@ -9,7 +8,9 @@
 					<h4 class="subheading text-center">$!article.getFirst_name() $!article.getLast_name()</h4>
 					<h4 class="meta text-center" style="word-wrap: break-word;">$!article.getCreated_dttm_string()</h4>
 					<hr class="m-y-2">
-					<p class="article">$!article.getArticle()</p>
+                    <div class="article">
+					   <p>$!article.getArticle()</p>
+                    </div>
 				#end
 				</div>
                 <div class="col-lg-2 col-md-2">
@@ -22,5 +23,4 @@
                 #end
                 </div>
             </div>
-        </article>
 #end

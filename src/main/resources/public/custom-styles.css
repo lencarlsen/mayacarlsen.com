@@ -54,12 +54,17 @@ ol > li {
 p {
     line-height: 1.5;
     margin: 0px 0;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 p a {
     text-decoration: underline;
 }
+
+.article > p {
+    font-size: 20px;
+}
+
 h1,
 h2,
 h3,
