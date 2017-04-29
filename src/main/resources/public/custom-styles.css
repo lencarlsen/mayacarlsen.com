@@ -1,13 +1,13 @@
-/*body {
-    margin: 0;
-    background-image: url("/img/20170409_133250.jpg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: compact;
-}*/
-
 body {
-	/*background: #F1F1F1;*/
+/*  font-family: 'Lora', 'Times New Roman', serif;*/
+    font-family: Arial, 'Open Sans', Sans-serif, 'Helvetica Neue', Helvetica;
+  /*font-size: 20px;*/
+  color: #333333;
+}
+
+.navbar {
+    font-family: Arial, 'Open Sans', Sans-serif, 'Helvetica Neue', Helvetica;
+	font-size: 14px;
 }
 
 .jumbotron {
@@ -15,12 +15,6 @@ body {
 	padding-bottom: 20px;
 	margin-bottom: 20px;
 	background: #FCFCFC;
-}
-
-.tab-pane {
-    border: 1px solid #ddd;
-    border-width: 0px 1px 1px 1px; /* Removes the top border */
-    padding: 5px;
 }
 
 /*.jumbotron-image {
@@ -33,6 +27,12 @@ body {
     border-width: 0px 1px 1px 1px; /* Removes the top border */
 }*/
 
+.tab-pane {
+    border: 1px solid #ddd;
+    border-width: 0px 1px 1px 1px; /* Removes the top border */
+    padding: 5px;
+}
+
 /* --------------------- */
 
 hr.small {
@@ -42,10 +42,21 @@ hr.small {
 	border-color: white;
 }
 
-p {
-    line-height: 1.0;
-    margin: 10px 0;
+hr.article {
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
+
+ol > li {
+  font-size: 14px;
+}
+
+p {
+    line-height: 1.5;
+    margin: 0px 0;
+    font-size: 20px;
+}
+
 p a {
     text-decoration: underline;
 }
@@ -55,7 +66,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans', Sans-serif, 'Helvetica Neue', Helvetica, Arial;
 	font-weight: 700;
 }
 a {

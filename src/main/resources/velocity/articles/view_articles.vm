@@ -1,18 +1,18 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <div class="jumbotron">
-           <div class="row">
-               <div class="col-lg-offset-1 col-lg-9 col-md-offset-1 col-md-9 ">
-		        #if ($article)
+		<article>
+			<div class="row">
+				<div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 ">
+				#if ($article)
 					<h2 class="text-center" style="word-wrap: break-word;">$!article.getArticle_title()</h2>
 					<h4 class="subheading text-center">by</h4>
 					<h4 class="subheading text-center">$!article.getFirst_name() $!article.getLast_name()</h4>
-			        <h4 class="meta text-center" style="word-wrap: break-word;">$!article.getCreated_dttm_string()</h4>
-			        <hr class="m-y-2">
-			        <p>$!article.getArticle()</p>
-		        #end
-	           </div>
-            <div class="col-lg-2 col-md-2">
+					<h4 class="meta text-center" style="word-wrap: break-word;">$!article.getCreated_dttm_string()</h4>
+					<hr class="m-y-2">
+					<p class="article">$!article.getArticle()</p>
+				#end
+				</div>
+                <div class="col-lg-2 col-md-2">
                 #if($articleList)
                     <ol>
 			            #foreach( $article in $articleList )
@@ -20,7 +20,7 @@
 		                #end
                     </ol>
                 #end
+                </div>
             </div>
-        </div>
-    </div>
+        </article>
 #end

@@ -7,8 +7,9 @@
 		<div class="container-fluid">
             $bodyContent
 		</div>
-		#parse("/velocity/bootstrap_core_js.vm")
+		<hr>
 		#parse("/velocity/footer.vm")
+        #parse("/velocity/bootstrap_core_js.vm")
 	</body>
 </html>
 #end
