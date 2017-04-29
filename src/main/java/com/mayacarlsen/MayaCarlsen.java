@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mayacarlsen.about.AboutController;
+import com.mayacarlsen.admin.AdminController;
 import com.mayacarlsen.article.ArticleController;
 import com.mayacarlsen.chat.ChatController;
 import com.mayacarlsen.chat.ChatWebSocketHandler;
@@ -70,8 +71,9 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_USER_SETTINGS, UserController.handleUserSettingsPost);
         //get("*",              ViewUtil.notFound);
 
+        get(Path.Web.ADMIN, AdminController.serveAdminPage);
+
         get(Path.Web.VIEW_ARTICLE, ArticleController.serveStoryPage);
-        get(Path.Web.SAVE_ARTICLE, ArticleController.serveArticlePage);
         post(Path.Web.SAVE_ARTICLE, ArticleController.saveArticlePage);
         get(Path.Web.GET_ALL_ARTICLES, ArticleController.getAllArticlesAsJSON);
         get(Path.Web.GET_ARTICLE, ArticleController.getArticleAsJSON);

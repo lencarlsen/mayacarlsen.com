@@ -35,13 +35,6 @@ public class ArticleController {
         return ViewUtil.render(request, model, Path.Template.VIEW_ARTICLES);
     };
 
-    public static Route serveArticlePage = (Request request, Response response) -> {
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("article", new Article(null, null, null, null, null, null, null, null, null, null, null ));
-		
-        return ViewUtil.render(request, model, Path.Template.ADMIN);
-    };
-
     public static Route saveArticlePage = (Request request, Response response) -> {
         String articleId = request.queryParams("article_id");
         String articleType = request.queryParams("article_type");
