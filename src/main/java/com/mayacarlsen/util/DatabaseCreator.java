@@ -78,7 +78,7 @@ public class DatabaseCreator {
 					+ "CURRENT_TIMESTAMP) ";
 
 	private void updateUser() {
-		try (Connection conn = DaoUtil.getConnection()) {
+		try (Connection conn = DAOUtil.getConnection()) {
 			createPreparedStatement(conn, RESET_ADMIN_USER_SQL);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -86,7 +86,7 @@ public class DatabaseCreator {
 	}
 	
 	private void createTables() {
-		try (Connection conn = DaoUtil.getConnection()) {
+		try (Connection conn = DAOUtil.getConnection()) {
 			createPreparedStatement(conn, USER_TABLE_DROP_SQL);
 			createPreparedStatement(conn, USER_TABLE_CREATE_SQL);
 			createPreparedStatement(conn, USER_TABLE_INSERT_SQL);

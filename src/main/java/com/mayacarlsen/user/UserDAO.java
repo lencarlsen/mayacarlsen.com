@@ -8,13 +8,13 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import com.mayacarlsen.user.User;
-import com.mayacarlsen.util.DaoUtil;
+import com.mayacarlsen.util.DAOUtil;
 
 public class UserDAO {
 
 	private static final Logger logger = Logger.getLogger(UserDAO.class.getCanonicalName());
 
-	private final static Sql2o sql2o = DaoUtil.getSql2o();
+	private final static Sql2o sql2o = DAOUtil.getSql2o();
 
 	private static final String SELECT_ALL_USERS_SQL =
 			"SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, ALIAS, EMAIL, ROLE, /*SALT, PASSWORD,*/ CREATE_DTTM, UPDATE_DTTM "

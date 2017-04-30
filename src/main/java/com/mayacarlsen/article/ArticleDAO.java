@@ -6,13 +6,13 @@ import java.util.logging.Logger;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import com.mayacarlsen.util.DaoUtil;
+import com.mayacarlsen.util.DAOUtil;
 
 public class ArticleDAO {
 
 	private static final Logger logger = Logger.getLogger(ArticleDAO.class.getCanonicalName());
 
-	private final static Sql2o sql2o = DaoUtil.getSql2o();
+	private final static Sql2o sql2o = DAOUtil.getSql2o();
 
 	private static final String SELECT_ALL_ARTICLES_SQL =
 			"SELECT A.ARTICLE_ID, A.USER_ID, A.ARTICLE_TYPE, A.ARTICLE_TITLE, A.PUBLISH_ARTICLE, A.ARTICLE_DESCRIPTION, A.CREATE_DTTM, A.UPDATE_DTTM, "
