@@ -12,7 +12,6 @@
 #if($acl.isAuthorized("userAdmin"))
     #parse("/velocity/admin/user_admin.vm")
 #end
-
 #if($acl.isAuthorized("articleAdmin"))
     #parse("/velocity/admin/article_admin.vm")
 #end
