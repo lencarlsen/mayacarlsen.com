@@ -1,0 +1,45 @@
+    <div id="fileAdmin" class="tab-pane fade">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#createFile"><b>$msg.get("FILE_ADMIN_TAB_CREATE_FILE")</b></a></li>
+            <li><a data-toggle="tab" href="#editFile"><b>$msg.get("FILE_ADMIN_TAB_EDIT_FILE")</b></a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="createFile" class="tab-pane fade in active">
+                <div class="panel">
+                    <div class="panel-body">
+                        <form id="fileForm1" action="$WebPath.getSAVE_FILE()" method="post" class="">
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end of tab createArticle -->
+            <div id="editFile" class="tab-pane fade in">
+                <div class="panel">
+                    <div class="panel-body">
+                        <table id="fileTable" class="display table table-striped table-bordered nowrap" width="100%">
+                            <thead style="background: #F0FAFF;">
+                                <tr>
+                                     <th>File ID</th>
+                                     <th>User ID</th>
+                                     <th>Type</th>
+                                     <th>Title</th>
+                                     <th>Description</th>
+                                     <th>Publish</th>
+                                     <th>First Name</th>
+                                     <th>Last Name</th>
+                                     <th>Created Date</th>
+                                     <th>Updated Date</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form id="articleForm2">
+                                </form>
+                            </div> <!-- end of panel-body -->
+                        </div> <!-- end of panel -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end  tab-content -->
+    </div> <!-- end of tab articleAdmin -->
+                        

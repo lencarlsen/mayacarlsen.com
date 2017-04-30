@@ -7,6 +7,9 @@
 #if($acl.isAuthorized("articleAdmin"))
     <li><a data-toggle="tab" href="#articleAdmin"><b>$msg.get("ARTICLE_ADMIN_TAB_HEADING")</b></a></li>
 #end
+#if($acl.isAuthorized("fileAdmin"))
+    <li><a data-toggle="tab" href="#fileAdmin"><b>$msg.get("FILE_ADMIN_TAB_HEADING")</b></a></li>
+#end
 </ul>
 <div class="tab-content">
 #if($acl.isAuthorized("userAdmin"))
@@ -14,6 +17,9 @@
 #end
 #if($acl.isAuthorized("articleAdmin"))
     #parse("/velocity/admin/article_admin.vm")
+#end
+#if($acl.isAuthorized("fileAdmin"))
+    #parse("/velocity/admin/file_admin.vm")
 #end
 </div> <!-- end  tab-content -->
 

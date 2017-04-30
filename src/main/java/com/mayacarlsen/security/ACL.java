@@ -48,8 +48,8 @@ public class ACL {
 	);
 	
 	private final static Map<UserRoleEnum, List<String>> ATTRIBUTE_LIST = ImmutableMap.of(
-			UserRoleEnum.ADMIN, ImmutableList.of("userAdmin", "createUser", "editUser", "articleAdmin", "createArticle", "editArticle"),
-			UserRoleEnum.USER, ImmutableList.of("articleAdmin", "createArticle", "editArticle")
+			UserRoleEnum.ADMIN, ImmutableList.of("userAdmin", "createUser", "editUser", "articleAdmin", "createArticle", "editArticle", "fileAdmin", "createFile", "editFile"),
+			UserRoleEnum.USER, ImmutableList.of("articleAdmin", "createArticle", "editArticle", "fileAdmin", "createFile", "editFile")
 	);
 	
 	/**

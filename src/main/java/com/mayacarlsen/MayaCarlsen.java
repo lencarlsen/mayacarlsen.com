@@ -84,6 +84,11 @@ public class MayaCarlsen {
         post(Path.Web.SAVE_USER, UserController.saveUserPage);
         delete(Path.Web.DELETE_USER, UserController.deleteUserAsJSON);
 
+//        get(Path.Web.GET_ALL_FILES, FileController.getAllFilesAsJSON);
+//        get(Path.Web.GET_FILE, FileController.getFileAsJSON);
+//        post(Path.Web.SAVE_FILE, FileController.saveFilePage);
+//        delete(Path.Web.DELETE_FILE, FileController.deleteFileAsJSON);
+
         //Set up after-filters (called after each get/post)
         after("*",            Filters.addGzipHeader);
 	}
