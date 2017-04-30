@@ -45,7 +45,7 @@ public class Path {
         public final static String USER_SETTINGS = "/velocity/user/usersettings.vm";
 
         public final static String VIEW_ARTICLES = "/velocity/articles/view_articles.vm";
-        public final static String ADMIN = "/velocity/articles/admin.vm";
+        public final static String ADMIN = "/velocity/admin/admin.vm";
 
 		// Security
 		public final static String UNAUTHORIZED = "/velocity/security/unauthorized_access.vm";

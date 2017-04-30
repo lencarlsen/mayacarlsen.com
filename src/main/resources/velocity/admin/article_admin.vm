@@ -1,0 +1,151 @@
+    <div id="articleAdmin" class="tab-pane fade">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#createArticle"><b>$msg.get("ARTICLE_ADMIN_TAB_CREATE_ARTICLE")</b></a></li>
+            <li><a data-toggle="tab" href="#editArticle"><b>$msg.get("ARTICLE_ADMIN_TAB_EDIT_ARTICLE")</b></a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="createArticle" class="tab-pane fade in active">
+                <div class="panel">
+                    <div class="panel-body">
+                        <form id="articleForm1" action="$WebPath.getSAVE_ARTICLE()" method="post" class="">
+                            <div class="form-group row">
+                                <label for="article_type1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
+                                <div class="col-sm-4">
+                                    <input readonly="readonly" type="text" id="article_type1" name="article_type" value="" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
+                                </div>
+                                <label for="create_dttm" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
+                                <div class="col-sm-3">
+                                    <input readonly="readonly" type="text" id="create_dttm" name="create_dttm" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="article_title1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TITLE")</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="article_title1" name="article_title" value="" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
+                                </div>
+                                <label for="update_dttm" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
+                                <div class="col-sm-3">
+                                    <input readonly="readonly" type="text" id="update_dttm" name="update_dttm" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="publish_article1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
+                                <div class="col-sm-2">
+                                    <select id="publish_article1" name="publish_article" required class="form-control">
+                                        #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+                                            <option value="$item.getCode()">$!item.getDescription()</option>
+                                        #end
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="article_description1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_DESCRIPTION")</label>
+                                <div class="col-sm-12">
+                                    <input type="text" id="article_description1" name="article_description" value="" placeholder="$msg.get("ARTICLE_LABEL_DESCRIPTION")" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="article_text1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
+                                <div class="col-sm-12">
+                                <textarea id="article_text1" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                                <script type="text/javascript" charset="utf-8">
+                                    CKEDITOR.replace( "article_text1" );
+                                </script>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <input type="submit" value="$msg.get("ARTICLE_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="reset" class="btn btn-link">$msg.get("ARTICLE_FORM_BUTTON_RESET")</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end of tab createArticle -->
+            <div id="editArticle" class="tab-pane fade in">
+                <div class="panel">
+                    <div class="panel-body">
+                        <table id="articleTable" class="display table table-striped table-bordered nowrap" width="100%">
+                            <thead style="background: #F0FAFF;">
+                                <tr> <!-- ARTICLE_ID, USER_ID, ARTICLE_TYPE, ARTICLE_TITLE, ARTICLE_DESCRIPTION, CREATE_DTTM, UPDATE_DTTM -->
+                                     <th>Article ID</th>
+                                     <th>User ID</th>
+                                     <th>Type</th>
+                                     <th>Title</th>
+                                     <th>Description</th>
+                                     <th>Publish</th>
+                                     <th>First Name</th>
+                                     <th>Last Name</th>
+                                     <th>Created Date</th>
+                                     <th>Updated Date</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form id="articleForm2">
+                                    <input type="hidden" id="article_id2" name="article_id" value="$!article.getArticle_id()" class="form-control">
+                                    <div class="form-group row">
+                                        <label for="article_type2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
+                                        <div class="col-sm-4">
+                                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="$!article.getArticle_type()" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
+                                        </div>
+                                        <label for="article_create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
+                                        <div class="col-sm-3">
+                                            <input readonly="readonly" type="text" id="article_create_dttm2" value="" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="article_title2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TITLE")</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="article_title2" name="article_title" value="$!article.getArticle_title()" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
+                                        </div>
+                                        <label for="article_update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
+                                        <div class="col-sm-3">
+                                            <input readonly="readonly" type="text" id="article_update_dttm2" value="" class="form-control">
+                                        </div>
+                                    </div>
+                                        <div class="form-group row">
+                                            <label for="publish_article2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
+                                            <div class="col-sm-2">
+                                                <select id="publish_article2" name="publish_article" required class="form-control">
+                                                    #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+                                                        <option value="$item.getCode()">$!item.getDescription()</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <div class="form-group row">
+                                        <label for="article_description2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_DESCRIPTION")</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" id="article_description2" name="article_description" value="" placeholder="$msg.get("ARTICLE_LABEL_DESCRIPTION")" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="article_text2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
+                                        <div class="col-sm-12">
+                                        <textarea id="article_text2" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                                        <script type="text/javascript" charset="utf-8">
+                                            CKEDITOR.replace( "article_text2" );
+                                        </script>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <input id="buttonSubmitArticleForm" type="submit" value="$msg.get("ARTICLE_FORM_BUTTON_SAVE")" class="btn btn-lg btn-primary btn-block">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="reset" class="btn btn-link">$msg.get("ARTICLE_FORM_BUTTON_RESET")</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!-- end of panel-body -->
+                        </div> <!-- end of panel -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end  tab-content -->
+    </div> <!-- end of tab articleAdmin -->

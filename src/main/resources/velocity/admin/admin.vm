@@ -1,0 +1,309 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<ul class="nav nav-tabs">
+#if($acl.isAuthorized("userAdmin"))
+    <li class="active"><a data-toggle="tab" href="#userAdmin"><b>$msg.get("USER_ADMIN_TAB_HEADING")</b></a></li>
+#end
+#if($acl.isAuthorized("articleAdmin"))
+    <li><a data-toggle="tab" href="#articleAdmin"><b>$msg.get("ARTICLE_ADMIN_TAB_HEADING")</b></a></li>
+#end
+</ul>
+<div class="tab-content">
+#if($acl.isAuthorized("userAdmin"))
+    #parse("/velocity/admin/user_admin.vm")
+#end
+
+#if($acl.isAuthorized("articleAdmin"))
+    #parse("/velocity/admin/article_admin.vm")
+#end
+</div> <!-- end  tab-content -->
+
+<script type="text/javascript" charset="utf-8">
+    var userTable;
+    var articleTable;
+    // Wait until browser DOM is loaded
+    $(document).ready(function() {
+
+    	// show tab so a single tab will when authorization is applied
+    	$('.nav-tabs a[href="#articleAdmin"]').tab('show');
+        $('.nav-tabs a[href="#userAdmin"]').tab('show');
+
+    	console.log("loading user table...");
+        userTable = $('#userTable').DataTable( {
+            processing : true,
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            select: true,
+            stateSave: false,
+            ajax: {
+                url: "$WebPath.getGET_ALL_USERS()",
+                dataSrc: null,
+                type: "GET"
+            },
+            columns: [
+                { data: "user_id" },
+                { data: "username" },
+                { data: "first_name" },
+                { data: "last_name" },
+                { data: "alias" },
+                { data: "email" },
+                { data: "role" },
+                { data: "create_dttm", 
+                  render: function ( data, type, row, meta ) {
+                	  return getDateTime( row.create_dttm );
+                    }
+                },
+                { data: "update_dttm",
+                    render: function ( data, type, row, meta ) {
+                        return getDateTime( row.update_dttm );
+                      }
+             	}
+            ],
+            columnDefs: [
+                {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+                }
+            ],
+            dom: 'Bfrtip',
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'colvis',
+                    text: 'Show/Hide Columns'
+                },
+                {
+                    extend: 'copy',
+                    text: 'Copy Table'
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'Export to CSV',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    text: 'Delete User',
+                    action: function ( e, dt, node, config ) {
+                        //var cell = dt.cell( ".selected", 0 ).data();
+                        //var cell = dt.row().data().attribute_id;
+                        
+                        var data = dt.row(".selected").data();
+
+                        if(data) {
+                            var url = "/delete_user/" + data.user_id;
+                            $.ajax({
+                                url: url,
+                                type: "DELETE",
+                                //contentType: 'application/json; charset=utf-8',
+                                async: true,
+                                processData: false,
+                                cache: false,
+                                success: function (data, status) {
+                                    userTable.ajax.reload();
+                                    //dt.row(".selected").remove().draw();
+                                    alert(data);
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("Status: " + status + " : " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            ]
+        });
+
+        userTable.on( 'select', function ( e, dt, type, indexes ) {
+            var data = dt.row(".selected").data();
+            var userId = data.user_id;
+            var userUrl = "/get_user/" + userId;
+
+            $.ajax({
+              type: 'GET',
+              url: userUrl,
+              beforeSend: function (xhr) {
+                if (xhr && xhr.overrideMimeType) {
+                  xhr.overrideMimeType('application/json;charset=utf-8');
+                }
+              },
+              dataType: 'json',
+              success: function (result) {                              
+                //Set the JSON data to each of the fields on the interface form
+                $("#user_id2").val( result.user_id );
+                $("#username2").val( result.username );
+                $("#firstname2").val( result.first_name );
+                $("#lastname2").val( result.last_name );
+                $("#alias2").val( result.alias );
+                $("#email2").val( result.email );
+                $("#role2").val( result.role );
+                $("#user_create_dttm2").val( getDateTime( result.create_dttm ) );
+                $("#user_update_dttm2").val( getDateTime( result.update_dttm ) );
+              }
+            });
+        });
+        
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            //alert(target);
+            if (target == "#editUser") {
+                //userTable.ajax.url( "$WebPath.getGET_ALL_USERS()" ).load();
+                userTable.ajax.reload();
+            }
+          });
+
+        $("#buttonSubmitUserForm").click(function(){
+            submitForm( '#userForm2', '$WebPath.getSAVE_USER()', userTable );
+        });         
+    	
+/* ------- */
+
+        console.log("loading article table...");
+        articleTable = $('#articleTable').DataTable( {
+            processing : true,
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            select: true,
+            stateSave: false,
+            ajax: {
+                url: "$WebPath.getGET_ALL_ARTICLES()",
+                dataSrc: null,
+                type: "GET"
+            },
+            columns: [
+                { data: "article_id" },
+                { data: "user_id" },
+                { data: "article_type" },
+                { data: "article_title" },
+                { data: "article_description" },
+                { data: "publish_article" },
+                { data: "first_name" },
+                { data: "last_name" },
+                { data: "create_dttm", 
+                    render: function ( data, type, row, meta ) {
+                        return getDateTime( row.create_dttm );
+                      }
+                  },
+                  { data: "update_dttm",
+                      render: function ( data, type, row, meta ) {
+                          return getDateTime( row.update_dttm );
+                        }
+                  }
+            ],
+            columnDefs: [
+                {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false
+                 }
+            ],
+            dom: 'Bfrtip',
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'colvis',
+                    text: 'Show/Hide Columns'
+                },
+                {
+                    extend: 'copy',
+                    text: 'Copy Table'
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'Export to CSV',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    text: 'Delete Article',
+                    action: function ( e, dt, node, config ) {
+                        //var cell = dt.cell( ".selected", 0 ).data();
+                        //var cell = dt.row().data().attribute_id;
+                        
+                        var data = dt.row(".selected").data();
+
+                        if(data) {
+                            var url = "/delete_article/" + data.article_id;
+                            $.ajax({
+                                url: url,
+                                type: "DELETE",
+                                //contentType: 'application/json; charset=utf-8',
+                                async: true,
+                                processData: false,
+                                cache: false,
+                                success: function (data, status) {
+                                	articleTable.ajax.reload();
+                                    //dt.row(".selected").remove().draw();
+                                    alert(data);
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("Status: " + status + " : " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            ]
+        });
+
+        articleTable.on( 'select', function ( e, dt, type, indexes ) {
+            var data = dt.row(".selected").data();
+            var articleId = data.article_id;
+            var articleUrl = "/get_article/" + articleId;
+
+            $.ajax({
+              type: 'GET',
+              url: articleUrl,
+              beforeSend: function (xhr) {
+                if (xhr && xhr.overrideMimeType) {
+                  xhr.overrideMimeType('application/json;charset=utf-8');
+                }
+              },
+              dataType: 'json',
+              success: function (result) {                              
+                //Set the JSON data to each of the fields on the interface form
+                $("#article_id2").val( result.article_id );
+                $("#article_type2").val( result.article_type );
+                $("#article_title2").val( result.article_title );
+                $("#publish_article2").val( result.publish_article_string );
+                $("#article_description2").val( result.article_description );
+                $("#article_text2").val( result.article_text );
+                CKEDITOR.instances.article_text2.setData( result.article );
+                $("#article_create_dttm2").val( getDateTime( result.create_dttm ) );
+                $("#article_update_dttm2").val( getDateTime( result.update_dttm ) );
+              }
+            });
+        });
+        
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            //alert(target);
+            if (target == "#editArticle") {
+                //articleTable.ajax.url( "$WebPath.getGET_ALL_ARTICLES()" ).load();
+                articleTable.ajax.reload();
+            }
+          });
+
+        $("#buttonSubmitArticleForm").click(function(){
+            submitForm( '#articleForm2', '$WebPath.getSAVE_ARTICLE()', articleTable );
+        });         
+        
+    });
+</script>
+#end
