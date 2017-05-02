@@ -10,6 +10,7 @@ import com.mayacarlsen.admin.AdminController;
 import com.mayacarlsen.article.ArticleController;
 import com.mayacarlsen.chat.ChatController;
 import com.mayacarlsen.chat.ChatWebSocketHandler;
+import com.mayacarlsen.file.FileController;
 import com.mayacarlsen.index.IndexController;
 import com.mayacarlsen.login.LoginController;
 import com.mayacarlsen.registration.RegistrationController;
@@ -85,7 +86,7 @@ public class MayaCarlsen {
         delete(Path.Web.DELETE_USER, UserController.deleteUserAsJSON);
 
 //        get(Path.Web.GET_ALL_FILES, FileController.getAllFilesAsJSON);
-//        get(Path.Web.GET_FILE, FileController.getFileAsJSON);
+        get(Path.Web.GET_FILE, FileController.getFile);
 //        post(Path.Web.SAVE_FILE, FileController.saveFilePage);
 //        delete(Path.Web.DELETE_FILE, FileController.deleteFileAsJSON);
 

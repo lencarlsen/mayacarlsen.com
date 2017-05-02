@@ -11,7 +11,7 @@
                         </form>
                     </div>
                 </div>
-            </div> <!-- end of tab createArticle -->
+            </div> <!-- end of tab createFile -->
             <div id="editFile" class="tab-pane fade in">
                 <div class="panel">
                     <div class="panel-body">
@@ -33,13 +33,16 @@
                         </table>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <form id="articleForm2">
+                                <form id="fileForm2">
                                 </form>
+                                #foreach( $item in $fileList )
+                                    <img alt="" src="http://localhost:4567/get_file/$item.getFile_id()" style="width: 20%; height: auto;">
+                                #end
                             </div> <!-- end of panel-body -->
                         </div> <!-- end of panel -->
                     </div>
                 </div>
             </div>
         </div> <!-- end  tab-content -->
-    </div> <!-- end of tab articleAdmin -->
+    </div> <!-- end of tab fileAdmin -->
                         

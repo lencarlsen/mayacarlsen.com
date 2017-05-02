@@ -1,13 +1,19 @@
 package com.mayacarlsen.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.sql2o.Sql2o;
+
+import com.mayacarlsen.file.FileDAO;
 
 public class DatabaseCreator {
 	private static final Logger logger = Logger.getLogger(DatabaseCreator.class.getCanonicalName());
@@ -77,6 +83,25 @@ public class DatabaseCreator {
 					+ "TRUE, "
 					+ "CURRENT_TIMESTAMP) ";
 
+	private static final String FILE_TABLE_DROP_SQL =
+			"DROP TABLE IF EXISTS files";
+	
+	private static final String FILE_TABLE_CREATE_SQL = 
+			"CREATE TABLE files ("
+			+ "file_id SERIAL,"
+			+ "user_id INTEGER,"
+			+ "file_name VARCHAR(100),"
+			+ "file_type VARCHAR(20),"
+			+ "file_title VARCHAR(100),"
+			+ "file BYTEA,"
+			+ "publish_file BOOLEAN,"
+			+ "create_dttm TIMESTAMP,"
+			+ "update_dttm TIMESTAMP)";
+	
+	private static final String FILE_TABLE_INSERT_SQL =
+			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file) "
+			+ "VALUES (1, ?, 'PNG', 'My Image', ?, TRUE)";
+
 	private void updateUser() {
 		try (Connection conn = DAOUtil.getConnection()) {
 			createPreparedStatement(conn, RESET_ADMIN_USER_SQL);
@@ -85,14 +110,33 @@ public class DatabaseCreator {
 		}
 	}
 	
+	private void createFile() {
+		File file = new File("/Users/lencarlsen/Documents/eclipse/workspace/dadb/src/main/resources/public/img/dadb_home_page.png");
+
+		try (Connection conn = DAOUtil.getConnection()) {
+			FileInputStream fis = new FileInputStream(file);
+
+			PreparedStatement ps = conn.prepareStatement(FILE_TABLE_INSERT_SQL);
+			ps.setString(1, file.getName());
+			ps.setBinaryStream(2, fis, (int)file.length());
+			ps.executeUpdate();
+			conn.commit();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	private void createTables() {
 		try (Connection conn = DAOUtil.getConnection()) {
-			createPreparedStatement(conn, USER_TABLE_DROP_SQL);
-			createPreparedStatement(conn, USER_TABLE_CREATE_SQL);
-			createPreparedStatement(conn, USER_TABLE_INSERT_SQL);
-			createPreparedStatement(conn, ARTICLE_TABLE_DROP_SQL);
-			createPreparedStatement(conn, ARTICLE_TABLE_CREATE_SQL);
-			createPreparedStatement(conn, ARTICLE_TABLE_INSERT_SQL);
+//			createPreparedStatement(conn, USER_TABLE_DROP_SQL);
+//			createPreparedStatement(conn, USER_TABLE_CREATE_SQL);
+//			createPreparedStatement(conn, USER_TABLE_INSERT_SQL);
+//			createPreparedStatement(conn, ARTICLE_TABLE_DROP_SQL);
+//			createPreparedStatement(conn, ARTICLE_TABLE_CREATE_SQL);
+//			createPreparedStatement(conn, ARTICLE_TABLE_INSERT_SQL);
+			createPreparedStatement(conn, FILE_TABLE_CREATE_SQL);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -101,14 +145,31 @@ public class DatabaseCreator {
 	private void createPreparedStatement(Connection conn, String sql) throws SQLException {
 		PreparedStatement preparedStatement = conn.prepareStatement(sql);
 		preparedStatement.executeUpdate();
+		conn.commit();
+	}
+
+	private void executePreparedStatement(String sql) throws SQLException {
+		try (Connection conn = DAOUtil.getConnection()) {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("1: " + rs.getString(1));
+				System.out.println("2: " + rs.getString(2));
+				System.out.println("3: " + rs.getString(3));
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
 		logger.info("Creating database...");
-		//new DaoUtil().createTables();
-		new DatabaseCreator().updateUser();
+		DatabaseCreator databaseCreator = new DatabaseCreator();
+		databaseCreator.createTables();
+		databaseCreator.createFile();
+		databaseCreator.executePreparedStatement(FileDAO.SELECT_ALL_FILES_SQL);
 		logger.info("Creating database completed");
 	}
-	
 
 }
