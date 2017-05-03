@@ -1,28 +1,127 @@
 package com.mayacarlsen.file;
 
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+
+import com.mayacarlsen.article.Article;
+import com.mayacarlsen.article.ArticleDAO;
+import com.mayacarlsen.security.AuthorizedList;
+import com.mayacarlsen.user.User;
+import com.mayacarlsen.util.ImageUtil;
+import com.mayacarlsen.util.JSONUtil;
+import com.mayacarlsen.util.Path;
+import com.mayacarlsen.util.RequestUtil;
+import com.mayacarlsen.util.ViewUtil;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 public class FileController {
-	
-    public static Route getFile = (Request request, Response response) -> {
+
+	private static final Logger logger = Logger.getLogger(FileController.class.getCanonicalName());
+
+    public static Route serveImagesPage = (Request request, Response response) -> {
+    	Map<String, Object> model = new HashMap<>();
+
+		List<File> fileList = FileDAO.getAllFiles();
+		if (fileList != null) {
+			model.put("fileList", fileList);
+		}
+		
+        return ViewUtil.render(request, model, Path.Template.VIEW_IMAGES);
+    };
+
+	public static Route uploadFile = (Request request, Response response) -> {
+		User user = RequestUtil.getSessionUser(request);
+		String fileType = request.queryParams("file_type");
+		String fileTitle = request.queryParams("file_title");
+		String publishFile = request.queryParams("publish_file");
+
+		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(".");
+		request.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+
+		for (Part part : request.raw().getParts()) {
+			String fileName = part.getSubmittedFileName();
+			logger.info("File Upload: Name=" + part.getName() + ", size=" + part.getSize() + ", filename=" + fileName);
+
+			InputStream is = part.getInputStream();
+			DataInputStream data = new DataInputStream(is);
+			byte[] bytes = new byte[is.available()];
+			data.readFully(bytes);
+
+			File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, bytes,
+					Boolean.valueOf(publishFile), null, null, null, null);
+			FileDAO.createFile(file);
+		}
+
+		Map<String, Object> model = new HashMap<>();
+		return ViewUtil.render(request, model, Path.Template.ADMIN);
+	};
+
+	public static Route getScaledImage = (Request request, Response response) -> {
+		String fileId = request.params("fileId");
+		String ratio = request.queryParams("ratio");
+		String width = request.queryParams("width");
+		double ratioInt = (ratio == null ? 1 : Double.parseDouble(ratio));
+		double widthInt = (width == null ? 1 : Double.parseDouble(width));
+
+		File file = FileDAO.getFile(Integer.valueOf(fileId));
+		byte[] imageBytes = file.file;
+
+		BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
+		if (width != null) {
+			ratioInt = widthInt / bi.getWidth();
+		}
+		
+		byte[] scaledImageBytes = ImageUtil.scaleImageAsBytes(bi, ratioInt);
+
+		try (OutputStream outputStream = response.raw().getOutputStream()) {
+			outputStream.write(scaledImageBytes);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return null;
+	};
+
+	public static Route getFile = (Request request, Response response) -> {
 		String fileId = request.params("fileId");
 
 		File file = FileDAO.getFile(Integer.valueOf(fileId));
 		byte[] bytes = file.file;
-		
+
 		try (OutputStream outputStream = response.raw().getOutputStream()) {
 			outputStream.write(bytes);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-        return null;
-    };
 
+		return null;
+	};
+
+	public static Route getAllFilesAsJSON = (Request request, Response response) -> {
+		List<File> fileList = FileDAO.getAllFiles();
+		AuthorizedList<File> list = new AuthorizedList<>(RequestUtil.getSessionUser(request), fileList);
+		String json = JSONUtil.dataToJson(list.getList());
+
+		response.status(200);
+		response.type("application/json");
+
+		return json;
+	};
 
 }

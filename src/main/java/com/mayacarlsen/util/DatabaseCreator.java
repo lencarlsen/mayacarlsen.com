@@ -99,8 +99,8 @@ public class DatabaseCreator {
 			+ "update_dttm TIMESTAMP)";
 	
 	private static final String FILE_TABLE_INSERT_SQL =
-			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file) "
-			+ "VALUES (1, ?, 'PNG', 'My Image', ?, TRUE)";
+			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file, create_dttm) "
+			+ "VALUES (1, ?, 'PNG', 'My Image', ?, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
 
 	private void updateUser() {
 		try (Connection conn = DAOUtil.getConnection()) {

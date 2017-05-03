@@ -23,7 +23,6 @@ public class ViewUtil {
         model.put("currentUser", RequestUtil.getSessionCurrentUser(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
 		model.put("articleList", ArticleDAO.getAllPublishArticles());
-		model.put("fileList", FileDAO.getAllFiles());
 		model.put("codes", CodesDAO.class);
         model.put("acl", new ACL(request));
         

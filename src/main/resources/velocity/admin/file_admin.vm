@@ -7,7 +7,19 @@
             <div id="createFile" class="tab-pane fade in active">
                 <div class="panel">
                     <div class="panel-body">
-                        <form id="fileForm1" action="$WebPath.getSAVE_FILE()" method="post" class="">
+                        <form id="fileForm1" action="$WebPath.getSAVE_FILE()" method="post" enctype="multipart/form-data">
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+	                                <label for="chooseFile" class="form-control-label btn btn-default">Select file to upload:
+	                                    <input type="file" id="chooseFile" name="file" style="display: none;"/>
+	                                </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <input type="submit" value="Upload" class="btn btn-primary btn-block"/>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -18,11 +30,12 @@
                         <table id="fileTable" class="display table table-striped table-bordered nowrap" width="100%">
                             <thead style="background: #F0FAFF;">
                                 <tr>
+                                     <th>File</th>
                                      <th>File ID</th>
                                      <th>User ID</th>
-                                     <th>Type</th>
-                                     <th>Title</th>
-                                     <th>Description</th>
+                                     <th>File Name</th>
+                                     <th>File Type</th>
+                                     <th>File Title</th>
                                      <th>Publish</th>
                                      <th>First Name</th>
                                      <th>Last Name</th>
@@ -35,9 +48,6 @@
                             <div class="panel-body">
                                 <form id="fileForm2">
                                 </form>
-                                #foreach( $item in $fileList )
-                                    <img alt="" src="http://localhost:4567/get_file/$item.getFile_id()" style="width: 20%; height: auto;">
-                                #end
                             </div> <!-- end of panel-body -->
                         </div> <!-- end of panel -->
                     </div>
@@ -45,4 +55,155 @@
             </div>
         </div> <!-- end  tab-content -->
     </div> <!-- end of tab fileAdmin -->
+
+<script type="text/javascript" charset="utf-8">
+    var fileTable;
+    // Wait until browser DOM is loaded
+    $(document).ready(function() {
+
+        // show tab so a single tab will show when authorization is applied
+        $('.nav-tabs a[href="#fileAdmin"]').tab('show');
+
+        console.log("loading file table...");
+        fileTable = $('#fileTable').DataTable( {
+            processing : true,
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            select: true,
+            stateSave: false,
+            ajax: {
+                url: "$WebPath.getGET_ALL_FILES()",
+                dataSrc: null,
+                type: "GET"
+            },
+            columns: [
+                { data: "file",
+                    render: function ( data, type, row, meta ) {
+                        return "<img alt='' src='/get_image/" + row.file_id + "?width=70'>";
+                    }
+                },
+                { data: "file_id" },
+                { data: "user_id" },
+                { data: "file_name" },
+                { data: "file_type" },
+                { data: "file_title" },
+                { data: "publish_file" },
+                { data: "first_name" },
+                { data: "last_name" },
+                { data: "create_dttm", 
+                  render: function ( data, type, row, meta ) {
+                      return getDateTime( row.create_dttm );
+                    }
+                },
+                { data: "update_dttm",
+                    render: function ( data, type, row, meta ) {
+                        return getDateTime( row.update_dttm );
+                      }
+                }
+            ],
+            columnDefs: [
+                {
+                   "targets": [1],
+                   "visible": false,
+                   "searchable": false
+                },
+                {
+                    "targets": [2],
+                    "visible": false,
+                    "searchable": false
+                 }
+            ],
+            dom: 'Bfrtip',
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'colvis',
+                    text: 'Show/Hide Columns'
+                },
+                {
+                    extend: 'copy',
+                    text: 'Copy Table'
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'Export to CSV',
+                    exportOptions: {
+                        modifier: {
+                            search: 'none'
+                        }
+                    }
+                },
+                {
+                    text: 'Delete File',
+                    action: function ( e, dt, node, config ) {
+                        //var cell = dt.cell( ".selected", 0 ).data();
+                        //var cell = dt.row().data().attribute_id;
                         
+                        var data = dt.row(".selected").data();
+
+                        if(data) {
+                            var url = "/delete_file/" + data.file_id;
+                            $.ajax({
+                                url: url,
+                                type: "DELETE",
+                                //contentType: 'application/json; charset=utf-8',
+                                async: true,
+                                processData: false,
+                                cache: false,
+                                success: function (data, status) {
+                                    fileTable.ajax.reload();
+                                    //dt.row(".selected").remove().draw();
+                                    alert(data);
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("Status: " + status + " : " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            ]
+        });
+
+        fileTable.on( 'select', function ( e, dt, type, indexes ) {
+            var data = dt.row(".selected").data();
+            var fileId = data.user_id;
+            var fileUrl = "/get_file/" + fileId;
+
+            $.ajax({
+              type: 'GET',
+              url: fileUrl,
+              beforeSend: function (xhr) {
+                if (xhr && xhr.overrideMimeType) {
+                  xhr.overrideMimeType('application/json;charset=utf-8');
+                }
+              },
+              dataType: 'json',
+              success: function (result) {                              
+                //Set the JSON data to each of the fields on the interface form
+/*                $("#user_id2").val( result.user_id );
+                $("#username2").val( result.username );
+                $("#firstname2").val( result.first_name );
+                $("#lastname2").val( result.last_name );
+                $("#alias2").val( result.alias );
+                $("#email2").val( result.email );
+                $("#role2").val( result.role );
+                $("#user_create_dttm2").val( getDateTime( result.create_dttm ) );
+                $("#user_update_dttm2").val( getDateTime( result.update_dttm ) );*/
+              }
+            });
+        });
+        
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            //alert(target);
+            if (target == "#editFile") {
+                //fileTable.ajax.url( "$WebPath.getGET_ALL_FILES()" ).load();
+                fileTable.ajax.reload();
+            }
+          });
+        
+    });
+</script>

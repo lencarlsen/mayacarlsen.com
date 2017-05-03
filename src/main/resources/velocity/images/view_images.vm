@@ -1,0 +1,21 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+	#set( $columnCount = 0 )
+	#foreach( $file in $fileList )
+        #set( $columnCount = $columnCount + 1 )
+        #if( $columnCount > 6 )
+            <div class="row">
+        #else
+			<div class="col-sm-2">
+				<a href="/get_image/$file.getFile_id()" class="thumbnail inline-block nowrap">
+	    			<img alt="$!file.getFile_title()" src="/get_image/$!file.getFile_id()?width=200">
+				</a>
+			</div>
+        #end
+        #if( $columnCount > 6 )
+		  </div>
+		#end
+	#end
+
+#end

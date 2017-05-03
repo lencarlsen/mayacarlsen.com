@@ -21,7 +21,7 @@ public class FileDAO {
 				+ "WHERE F.user_id = U.user_id";
 
 	private static final String SELECT_ALL_PUBLISH_FILES_SQL = 
-			"SELECT F.FILE_ID, F.USER_ID, F.FILE_NAME, F.FILE_TYPE, F.FILE_TITLE, F.FILE, F.PUBLISH_FILE, F.CREATE_DTTM, F.UPDATE_DTTM, "
+			"SELECT F.FILE_ID, F.USER_ID, F.FILE_NAME, F.FILE_TYPE, F.FILE_TITLE, /*F.FILE,*/ F.PUBLISH_FILE, F.CREATE_DTTM, F.UPDATE_DTTM, "
 				+ "U.FIRST_NAME, U.LAST_NAME "
 				+ "FROM FILES F, USERS U "
 				+ "WHERE F.user_id = U.user_id AND F.publish_file = TRUE";
@@ -31,6 +31,10 @@ public class FileDAO {
 				+ "U.FIRST_NAME, U.LAST_NAME "
 				+ "FROM FILES F, USERS U "
 				+ "WHERE F.user_id = U.user_id AND F.file_id = :file_id";
+
+	private static final String INSERT_FILE_SQL =
+			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file, create_dttm) "
+			+ "VALUES (:user_id, :file_name, :file_type, :file_title, :file, :publish_file, CURRENT_TIMESTAMP)";
 
 	private static final String DELETE_FILE_SQL =
 			"DELETE FROM FILES WHERE file_id = :file_id ";
@@ -60,6 +64,23 @@ public class FileDAO {
 					.executeAndFetchFirst(File.class);
 		} catch(Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static Integer createFile(File file) {
+		try (Connection conn = sql2o.beginTransaction()) {
+			int count = conn.createQuery(INSERT_FILE_SQL)
+					.addParameter("user_id", file.getUser_id())
+					.addParameter("file_name", file.getFile_name())
+					.addParameter("file_type", file.getFile_type())
+					.addParameter("file_title", file.getFile_title())
+					.addParameter("file", file.getFile())
+					.addParameter("publish_file", file.getPublish_file())
+					.executeUpdate().getResult();
+
+			conn.commit();
+			logger.info("Create File Count: "+count);
+			return count;
 		}
 	}
 

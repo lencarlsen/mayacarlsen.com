@@ -37,6 +37,9 @@ public class Path {
         @Getter public static final String SAVE_FILE = "/save_file/";
         @Getter public static final String DELETE_FILE = "/delete_file/:fileId";
 
+        @Getter public static final String GET_IMAGE = "/get_image/:fileId";
+        @Getter public static final String VIEW_IMAGES = "/view_images/";
+
         @Getter public final static String UNAUTHORIZED = "/unauthorized/";
     }
 
@@ -52,7 +55,9 @@ public class Path {
         public final static String VIEW_ARTICLES = "/velocity/articles/view_articles.vm";
         public final static String ADMIN = "/velocity/admin/admin.vm";
 
-		// Security
+        public final static String VIEW_IMAGES = "/velocity/images/view_images.vm";
+
+        // Security
 		public final static String UNAUTHORIZED = "/velocity/security/unauthorized_access.vm";
 
 		public static final String ERROR = "/velocity/error.vm";
