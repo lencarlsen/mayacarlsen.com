@@ -32,7 +32,7 @@
                                 <label for="publish_article1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
                                 <div class="col-sm-2">
                                     <select id="publish_article1" name="publish_article" required class="form-control">
-                                        #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+                                        #foreach( $item in $codes.getPUBLISH() )
                                             <option value="$item.getCode()">$!item.getDescription()</option>
                                         #end
                                     </select>
@@ -47,7 +47,7 @@
                             <div class="form-group row">
                                 <label for="article_text1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
                                 <div class="col-sm-12">
-                                <textarea id="article_text1" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                                <textarea id="article_text1" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control"></textarea>
                                 <script type="text/javascript" charset="utf-8">
                                     CKEDITOR.replace( "article_text1" );
                                 </script>
@@ -87,11 +87,11 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <form id="articleForm2">
-                                    <input type="hidden" id="article_id2" name="article_id" value="$!article.getArticle_id()" class="form-control">
+                                    <input type="hidden" id="article_id2" name="article_id" value="" class="form-control">
                                     <div class="form-group row">
                                         <label for="article_type2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TYPE")</label>
                                         <div class="col-sm-4">
-                                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="$!article.getArticle_type()" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
+                                            <input readonly="readonly" type="text" id="article_type2" name="article_type" value="" placeholder="$msg.get("ARTICLE_LABEL_TYPE")" class="form-control">
                                         </div>
                                         <label for="article_create_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_CREATE_DTTM")</label>
                                         <div class="col-sm-3">
@@ -101,7 +101,7 @@
                                     <div class="form-group row">
                                         <label for="article_title2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TITLE")</label>
                                         <div class="col-sm-4">
-                                            <input type="text" id="article_title2" name="article_title" value="$!article.getArticle_title()" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
+                                            <input type="text" id="article_title2" name="article_title" value="" placeholder="$msg.get("ARTICLE_LABEL_TITLE")" required autofocus class="form-control">
                                         </div>
                                         <label for="article_update_dttm2" class="col-sm-3 form-control-label">$msg.get("ARTICLE_LABEL_UPDATE_DTTM")</label>
                                         <div class="col-sm-3">
@@ -112,7 +112,7 @@
                                             <label for="publish_article2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
                                             <div class="col-sm-2">
                                                 <select id="publish_article2" name="publish_article" required class="form-control">
-                                                    #foreach( $item in $codes.getPUBLISH_ARTICLE() )
+                                                    #foreach( $item in $codes.getPUBLISH() )
                                                         <option value="$item.getCode()">$!item.getDescription()</option>
                                                     #end
                                                 </select>
@@ -127,7 +127,7 @@
                                     <div class="form-group row">
                                         <label for="article_text2" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_TEXT")</label>
                                         <div class="col-sm-12">
-                                        <textarea id="article_text2" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control">$!article.getArticle()</textarea>
+                                        <textarea id="article_text2" name="article_text" rows="30" cols="100" placeholder="Write new article here..." class="form-control"></textarea>
                                         <script type="text/javascript" charset="utf-8">
                                             CKEDITOR.replace( "article_text2" );
                                         </script>

@@ -32,6 +32,12 @@ public class FileDAO {
 				+ "FROM FILES F, USERS U "
 				+ "WHERE F.user_id = U.user_id AND F.file_id = :file_id";
 
+	public static final String SELECT_FILE_INFO_SQL = 
+			"SELECT F.FILE_ID, F.USER_ID, F.FILE_NAME, F.FILE_TYPE, F.FILE_TITLE, F.PUBLISH_FILE, F.CREATE_DTTM, F.UPDATE_DTTM, "
+				+ "U.FIRST_NAME, U.LAST_NAME "
+				+ "FROM FILES F, USERS U "
+				+ "WHERE F.user_id = U.user_id AND F.file_id = :file_id";
+
 	private static final String INSERT_FILE_SQL =
 			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file, create_dttm) "
 			+ "VALUES (:user_id, :file_name, :file_type, :file_title, :file, :publish_file, CURRENT_TIMESTAMP)";
@@ -67,6 +73,20 @@ public class FileDAO {
 		}
 	}
 
+	public static File getFileInfo(Integer fileId) {
+		try (Connection conn = sql2o.open()) {
+			return conn.createQuery(SELECT_FILE_INFO_SQL)
+					.addParameter("file_id", fileId)
+					.executeAndFetchFirst(File.class);
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Boolean fileExist(Integer fileId) {
+		return (getFileInfo(fileId) == null ? false : true);
+	}
+	
 	public static Integer createFile(File file) {
 		try (Connection conn = sql2o.beginTransaction()) {
 			int count = conn.createQuery(INSERT_FILE_SQL)

@@ -1,39 +1,49 @@
 package com.mayacarlsen.util;
 
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 public class ImageUtil {
 
 	/**
 	 * Scales an image by <code>ratio</code>.
 	 * 
-	 * @param image Image to scale
-	 * @param ratio Ratio to scale image by
+	 * @param image
+	 *            Image to scale
+	 * @param ratio
+	 *            Ratio to scale image by
 	 * @return Byte array
-	 * @throws IOException Any image IO errors
+	 * @throws IOException
+	 *             Any image IO errors
 	 */
-	public static byte[] scaleImageAsBytes(BufferedImage image, double ratio) throws IOException {
-		BufferedImage bi = scaleImage(image, ratio);
-		
+	public static byte[] scaleImageAsBytes(BufferedImage originalImage, double ratio) throws IOException {
+		//BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+		//String imageType = getFileType(new ByteArrayInputStream(imageBytes)); // scaleImage does not work properly for PNG images
+		ImageType imageType = ImageType.UNKNOWN_IMAGE;
+		BufferedImage scaledImage = scaleImage(originalImage, ratio, imageType);
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bi, "jpg", baos);
+		ImageIO.write(scaledImage, "jpg", baos);
 
 		return baos.toByteArray();
 	}
 
-	private static BufferedImage scaleImage(BufferedImage source, double ratio) {
+	private static BufferedImage scaleImage(BufferedImage source, double ratio, ImageType imageType) {
 		int w = (int) (source.getWidth() * ratio);
 		int h = (int) (source.getHeight() * ratio);
-		BufferedImage bi = getCompatibleImage(w, h);
+		BufferedImage bi = createHeadlessBufferedImage(source, ImageType.UNKNOWN_IMAGE, w, h);
 		Graphics2D g2d = bi.createGraphics();
 		double xScale = (double) w / source.getWidth();
 		double yScale = (double) h / source.getHeight();
@@ -43,12 +53,62 @@ public class ImageUtil {
 		return bi;
 	}
 
-	private static BufferedImage getCompatibleImage(int w, int h) {
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice gd = ge.getDefaultScreenDevice();
-		GraphicsConfiguration gc = gd.getDefaultConfiguration();
-		BufferedImage image = gc.createCompatibleImage(w, h);
-		return image;
+	public static String getFileType(Object obj) {
+		try {
+			ImageInputStream iis = ImageIO.createImageInputStream(obj);
+			Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+
+			ImageReader read = readers.next();
+			return read.getFormatName();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public enum ImageType {
+		UNKNOWN_IMAGE, JPEG, PNG, GIF;
+		
+		public static ImageType getEnum(String value) {
+			for (ImageType type : values()) {
+				if (type.name().equalsIgnoreCase(value.trim().toUpperCase())) {
+					return type;
+				}
+			}
+			return ImageType.UNKNOWN_IMAGE;
+		}
+	};
+
+	public static BufferedImage createHeadlessBufferedImage(final BufferedImage image, final ImageType imageType, final int width, final int height) {
+		int type = BufferedImage.TYPE_INT_RGB;
+		if (imageType == ImageType.PNG && hasAlpha(image)) {
+			type = BufferedImage.TYPE_INT_ARGB;
+		}
+
+		BufferedImage bi = new BufferedImage(width, height, type);
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				bi.setRGB(x, y, image.getRGB(x * image.getWidth() / width, y * image.getHeight() / height));
+			}
+		}
+
+		return bi;
 	}
 
+	/**
+	   * Determines if the image has transparent pixels.
+	   * 
+	   * @param image The image to check for transparent pixel.s
+	   * @return <code>true</code> of <code>false</code>, according to the result
+	   */
+	public static boolean hasAlpha(Image image) {
+		try {
+			PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
+			pg.grabPixels();
+
+			return pg.getColorModel().hasAlpha();
+		} catch (InterruptedException e) {
+			return false;
+		}
+	}
 }

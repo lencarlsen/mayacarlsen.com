@@ -20,4 +20,8 @@ public class File extends AuthObject {
     final @Getter Date update_dttm;
     final @Getter String first_name;
     final @Getter String last_name;
+
+	public String getPublish_file_string() {
+		return (publish_file == null ? "false" : publish_file.toString());
+	}
 }

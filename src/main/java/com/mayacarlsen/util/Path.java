@@ -32,6 +32,7 @@ public class Path {
         @Getter public static final String SAVE_USER = "/save_user/";
         @Getter public static final String DELETE_USER = "/delete_user/:userId";
 
+        @Getter public static final String GET_FILE_INFO = "/get_file_info/:fileId";
         @Getter public static final String GET_ALL_FILES = "/get_all_files/";
         @Getter public static final String GET_FILE = "/get_file/:fileId";
         @Getter public static final String SAVE_FILE = "/save_file/";

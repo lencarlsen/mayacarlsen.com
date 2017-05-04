@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
-import com.mayacarlsen.article.Article;
-import com.mayacarlsen.article.ArticleDAO;
 import com.mayacarlsen.security.AuthorizedList;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.util.ImageUtil;
@@ -34,6 +32,10 @@ public class FileController {
 
 	private static final Logger logger = Logger.getLogger(FileController.class.getCanonicalName());
 
+	private static final String FILE_DELETED_MSG       = "File '%1s' Successfully Deleted";
+	private static final String FILE_DELETED_ERROR_MSG = "File '%1s' Could Not be Deleted";
+	private static final String FILE_NOT_EXIST_MSG     = "File '%1s' Does Not Exist";
+
     public static Route serveImagesPage = (Request request, Response response) -> {
     	Map<String, Object> model = new HashMap<>();
 
@@ -47,27 +49,30 @@ public class FileController {
 
 	public static Route uploadFile = (Request request, Response response) -> {
 		User user = RequestUtil.getSessionUser(request);
-		String fileType = request.queryParams("file_type");
 		String fileTitle = request.queryParams("file_title");
 		String publishFile = request.queryParams("publish_file");
-
+try {
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(".");
 		request.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
 
 		for (Part part : request.raw().getParts()) {
 			String fileName = part.getSubmittedFileName();
-			logger.info("File Upload: Name=" + part.getName() + ", size=" + part.getSize() + ", filename=" + fileName);
+			logger.info("File Upload: Name=" + part.getName() + ", size=" + part.getSize() 
+				+ ", filename=" + fileName + ", content-type=" + part.getContentType());
 
 			InputStream is = part.getInputStream();
 			DataInputStream data = new DataInputStream(is);
 			byte[] bytes = new byte[is.available()];
 			data.readFully(bytes);
 
+			String fType = ImageUtil.getFileType(new ByteArrayInputStream(bytes));
+			String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
+
 			File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, bytes,
 					Boolean.valueOf(publishFile), null, null, null, null);
 			FileDAO.createFile(file);
 		}
-
+}catch(Exception e) {e.printStackTrace();}
 		Map<String, Object> model = new HashMap<>();
 		return ViewUtil.render(request, model, Path.Template.ADMIN);
 	};
@@ -81,8 +86,10 @@ public class FileController {
 
 		File file = FileDAO.getFile(Integer.valueOf(fileId));
 		byte[] imageBytes = file.file;
+		
+		InputStream is = new ByteArrayInputStream(imageBytes);
+		BufferedImage bi = ImageIO.read(is);
 
-		BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
 		if (width != null) {
 			ratioInt = widthInt / bi.getWidth();
 		}
@@ -98,6 +105,18 @@ public class FileController {
 		return null;
 	};
 
+	public static Route getFileInfo = (Request request, Response response) -> {
+		String fileId = request.params("fileId");
+
+		File file = FileDAO.getFileInfo(Integer.valueOf(fileId));
+		String json = JSONUtil.dataToJson(file);
+
+		response.status(200);
+		response.type("application/json");
+
+		return json;
+	};
+	
 	public static Route getFile = (Request request, Response response) -> {
 		String fileId = request.params("fileId");
 
@@ -124,4 +143,26 @@ public class FileController {
 		return json;
 	};
 
+	public static Route deleteFileAsJSON = (Request request, Response response) -> {
+		Integer fileId = Integer.valueOf(request.params("fileId"));
+
+		String json = JSONUtil.dataToJson("Error");
+		if (FileDAO.fileExist(fileId)) {
+			Integer count = FileDAO.deleteFile(fileId);
+			if (count > 0) {
+				response.status(200);
+				json = JSONUtil.dataToJson(String.format(FILE_DELETED_MSG, fileId));
+			} else {
+				response.status(404);
+				json = JSONUtil.dataToJson(String.format(FILE_DELETED_ERROR_MSG, fileId));
+			}
+		} else {
+			response.status(404);
+			json = JSONUtil.dataToJson(String.format(FILE_NOT_EXIST_MSG, fileId));
+		}
+
+		response.type("application/json");
+
+		return json;
+	};
 }

@@ -15,8 +15,8 @@ public class CodesDAO {
 		);
 	
 	@Getter
-	public static final List<CodeDescription> PUBLISH_ARTICLE = ImmutableList.of(
-			new CodeDescription("true", "Publish Article"),
-			new CodeDescription("false", "Do Not Publish Article")
+	public static final List<CodeDescription> PUBLISH = ImmutableList.of(
+			new CodeDescription("true", "True - Publish"),
+			new CodeDescription("false", "False - Do Not Publish")
 		);
 }

@@ -9,9 +9,25 @@
                     <div class="panel-body">
                         <form id="fileForm1" action="$WebPath.getSAVE_FILE()" method="post" enctype="multipart/form-data">
                             <div class="form-group row">
+                                <label for="file_title1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_DESCRIPTION")</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="file_title1" name="file_title" value="" placeholder="$msg.get("ARTICLE_LABEL_DESCRIPTION")" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="publish_file1" class="col-sm-2 form-control-label">$msg.get("ARTICLE_LABEL_PUBLISH")</label>
+                                <div class="col-sm-2">
+                                    <select id="publish_file1" name="publish_file" required class="form-control">
+                                        #foreach( $item in $codes.getPUBLISH() )
+                                            <option value="$item.getCode()">$!item.getDescription()</option>
+                                        #end
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-sm-3">
-	                                <label for="chooseFile" class="form-control-label btn btn-default">Select file to upload:
-	                                    <input type="file" id="chooseFile" name="file" style="display: none;"/>
+	                                <label for="chooseFile1" class="form-control-label btn btn-default">Select file to upload:
+	                                    <input type="file" id="chooseFile1" name="file" style="display: none;"/>
 	                                </label>
                                 </div>
                             </div>
@@ -47,6 +63,34 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <form id="fileForm2">
+		                            <div class="form-group row">
+		                                <label for="file_title2" class="col-sm-2 form-control-label">$msg.get("FILE_LABEL_TITLE")</label>
+		                                <div class="col-sm-10">
+		                                    <input type="text" id="file_title2" name="file_title" value="" placeholder="$msg.get("FILE_LABEL_TITLE")" required class="form-control">
+		                                </div>
+		                            </div>
+		                            <div class="form-group row">
+		                                <label for="publish_file2" class="col-sm-2 form-control-label">$msg.get("FILE_LABEL_PUBLISH")</label>
+		                                <div class="col-sm-2">
+		                                    <select id="publish_file2" name="publish_file" required class="form-control">
+		                                        #foreach( $item in $codes.getPUBLISH() )
+		                                            <option value="$item.getCode()">$!item.getDescription()</option>
+		                                        #end
+		                                    </select>
+		                                </div>
+		                            </div>
+		                            <div class="form-group row">
+		                                <div class="col-sm-3">
+		                                    <label for="chooseFile2" class="form-control-label btn btn-default">Select file to upload:
+		                                        <input type="file" id="chooseFile2" name="file" style="display: none;"/>
+		                                    </label>
+		                                </div>
+		                            </div>
+		                            <div class="form-group row">
+		                                <div class="col-sm-3">
+		                                    <input type="submit" value="$msg.get("FILE_FORM_BUTTON_SAVE")" class="btn btn-primary btn-block"/>
+		                                </div>
+		                            </div>
                                 </form>
                             </div> <!-- end of panel-body -->
                         </div> <!-- end of panel -->
@@ -169,8 +213,8 @@
 
         fileTable.on( 'select', function ( e, dt, type, indexes ) {
             var data = dt.row(".selected").data();
-            var fileId = data.user_id;
-            var fileUrl = "/get_file/" + fileId;
+            var fileId = data.file_id;
+            var fileUrl = "/get_file_info/" + fileId;
 
             $.ajax({
               type: 'GET',
@@ -183,15 +227,8 @@
               dataType: 'json',
               success: function (result) {                              
                 //Set the JSON data to each of the fields on the interface form
-/*                $("#user_id2").val( result.user_id );
-                $("#username2").val( result.username );
-                $("#firstname2").val( result.first_name );
-                $("#lastname2").val( result.last_name );
-                $("#alias2").val( result.alias );
-                $("#email2").val( result.email );
-                $("#role2").val( result.role );
-                $("#user_create_dttm2").val( getDateTime( result.create_dttm ) );
-                $("#user_update_dttm2").val( getDateTime( result.update_dttm ) );*/
+                $("#file_title2").val( result.file_title );
+                $("#publish_file2").val( result.publish_file_string );
               }
             });
         });
