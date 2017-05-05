@@ -93,6 +93,7 @@ public class DatabaseCreator {
 			+ "file_name VARCHAR(100),"
 			+ "file_type VARCHAR(20),"
 			+ "file_title VARCHAR(100),"
+			+ "thumbnail BYTEA,"
 			+ "file BYTEA,"
 			+ "publish_file BOOLEAN,"
 			+ "create_dttm TIMESTAMP,"
@@ -100,7 +101,7 @@ public class DatabaseCreator {
 	
 	private static final String FILE_TABLE_INSERT_SQL =
 			"INSERT INTO files (user_id, file_name, file_type, file_title, file, publish_file, create_dttm) "
-			+ "VALUES (1, ?, 'PNG', 'My Image', ?, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+			+ "VALUES (1, ?, 'PNG', 'My Image', ?, TRUE, CURRENT_TIMESTAMP)";
 
 	private void updateUser() {
 		try (Connection conn = DAOUtil.getConnection()) {
@@ -136,6 +137,7 @@ public class DatabaseCreator {
 //			createPreparedStatement(conn, ARTICLE_TABLE_DROP_SQL);
 //			createPreparedStatement(conn, ARTICLE_TABLE_CREATE_SQL);
 //			createPreparedStatement(conn, ARTICLE_TABLE_INSERT_SQL);
+			createPreparedStatement(conn, FILE_TABLE_DROP_SQL);
 			createPreparedStatement(conn, FILE_TABLE_CREATE_SQL);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

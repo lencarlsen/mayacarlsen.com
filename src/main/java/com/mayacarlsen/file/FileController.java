@@ -48,60 +48,84 @@ public class FileController {
 
     public static Route uploadFile = (Request request, Response response) -> {
 	User user = RequestUtil.getSessionUser(request);
-	String fileTitle = request.queryParams("file_title");
-	String publishFile = request.queryParams("publish_file");
+	try {
+	    MultipartConfigElement multipartConfigElement = new MultipartConfigElement(".");
+	    request.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
 
-	MultipartConfigElement multipartConfigElement = new MultipartConfigElement(".");
-	request.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+	    Part filePart = request.raw().getPart("file");
+	    String fileName = filePart.getSubmittedFileName();
+	    logger.info("File Upload: Name=" + filePart.getName() + ", size=" + filePart.getSize() + ", filename="
+		    + fileName + ", content-type=" + filePart.getContentType());
 
-	for (Part part : request.raw().getParts()) {
-	    String fileName = part.getSubmittedFileName();
-	    logger.info("File Upload: Name=" + part.getName() + ", size=" + part.getSize() + ", filename=" + fileName
-		    + ", content-type=" + part.getContentType());
-
-	    InputStream is = part.getInputStream();
+	    InputStream is = filePart.getInputStream();
 	    DataInputStream data = new DataInputStream(is);
-	    byte[] bytes = new byte[is.available()];
-	    data.readFully(bytes);
+	    byte[] fileBytes = new byte[is.available()];
+	    data.readFully(fileBytes);
 
-	    String fType = ImageUtil.getFileType(new ByteArrayInputStream(bytes));
+	    String fType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
 	    String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
 
-	    File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, bytes,
-		    Boolean.valueOf(publishFile), null, null, null, null);
-	    FileDAO.createFile(file);
-	}
+	    byte[] thumbnail = getScaledImage(fileBytes, 200);
 
-	Map<String, Object> model = new HashMap<>();
-	return ViewUtil.render(request, model, Path.Template.ADMIN);
+	    // For some reason request.queryParams must come last otherwise file upload will fail
+	    String fileTitle = request.queryParams("file_title");
+	    String publishFile = request.queryParams("publish_file");
+
+	    File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, fileBytes, Boolean
+		    .valueOf(publishFile), null, null, null, null);
+	    FileDAO.createFile(file);
+
+	    Map<String, Object> model = new HashMap<>();
+	    return ViewUtil.render(request, model, Path.Template.ADMIN);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    throw e;
+	}
     };
 
-    public static Route getScaledImage = (Request request, Response response) -> {
+    public static Route getPublishedThumbnail = (Request request, Response response) -> {
 	String fileId = request.params("fileId");
-	String ratio = request.queryParams("ratio");
-	String width = request.queryParams("width");
-	double ratioInt = (ratio == null ? 1 : Double.parseDouble(ratio));
-	double widthInt = (width == null ? 1 : Double.parseDouble(width));
 
-	File file = FileDAO.getFile(Integer.valueOf(fileId));
-	byte[] imageBytes = file.file;
-
-	InputStream is = new ByteArrayInputStream(imageBytes);
-	BufferedImage bi = ImageIO.read(is);
-
-	if (width != null) {
-	    ratioInt = widthInt / bi.getWidth();
-	}
-
-	byte[] scaledImageBytes = ImageUtil.scaleImageAsBytes(bi, ratioInt);
+	File file = FileDAO.getPublishedThumbnail(Integer.valueOf(fileId));
+	byte[] imageBytes = file.thumbnail;
 
 	try (OutputStream outputStream = response.raw().getOutputStream()) {
-	    outputStream.write(scaledImageBytes);
+	    outputStream.write(imageBytes);
 	} catch (IOException e) {
 	    throw new RuntimeException(e);
 	}
 
 	return null;
+    };
+
+    public static Route getPublishedImage = (Request request, Response response) -> {
+	String fileId = request.params("fileId");
+
+	File file = FileDAO.getPublishedFile(Integer.valueOf(fileId));
+	byte[] imageBytes = file.file;
+
+	try (OutputStream outputStream = response.raw().getOutputStream()) {
+	    outputStream.write(imageBytes);
+	} catch (IOException e) {
+	    throw new RuntimeException(e);
+	}
+
+	return null;
+    };
+
+    private static byte[] getScaledImage(byte[] imageBytes, double width) {
+	try {
+	    InputStream is = new ByteArrayInputStream(imageBytes);
+	    BufferedImage bi = ImageIO.read(is);
+
+	    double ratioInt = width / bi.getWidth();
+
+	    byte[] scaledImageBytes = ImageUtil.scaleImageAsBytes(bi, ratioInt);
+
+	    return scaledImageBytes;
+	} catch (IOException e) {
+	    throw new RuntimeException(e);
+	}
     };
 
     public static Route getFileInfo = (Request request, Response response) -> {

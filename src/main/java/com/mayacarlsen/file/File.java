@@ -14,6 +14,7 @@ public class File extends AuthObject {
     final @Getter String file_name;
     final @Getter String file_type;
     final @Getter String file_title;
+    final @Getter byte[] thumbnail;
     final @Getter byte[] file;
     final @Getter Boolean publish_file;
     final @Getter Date create_dttm;
@@ -21,7 +22,7 @@ public class File extends AuthObject {
     final @Getter String first_name;
     final @Getter String last_name;
 
-	public String getPublish_file_string() {
-		return (publish_file == null ? "false" : publish_file.toString());
-	}
+    public String getPublish_file_string() {
+	return (publish_file == null ? "false" : publish_file.toString());
+    }
 }

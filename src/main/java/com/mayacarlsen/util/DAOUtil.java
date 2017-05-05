@@ -46,7 +46,7 @@ public class DAOUtil {
 	p.setJmxEnabled(false);
 	p.setTestWhileIdle(false);
 	p.setTestOnBorrow(true);
-	p.setValidationQuery("SELECT 1L");
+	p.setValidationQuery("SELECT 1");
 	p.setTestOnReturn(false);
 	p.setValidationInterval(30000);
 	p.setTimeBetweenEvictionRunsMillis(30000);
@@ -55,7 +55,7 @@ public class DAOUtil {
 	p.setMaxIdle(2);
 	p.setMinIdle(1);
 	p.setInitialSize(2);
-	p.setMaxWait(10000);
+	p.setMaxWait(30000);
 	p.setRemoveAbandonedTimeout(60);
 	p.setMinEvictableIdleTimeMillis(30000);
 

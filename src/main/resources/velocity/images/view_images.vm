@@ -8,8 +8,8 @@
             <div class="row">
         #else
 			<div class="col-sm-2">
-				<a href="/get_image/$file.getFile_id()" class="thumbnail inline-block nowrap">
-	    			<img alt="$!file.getFile_title()" src="/get_image/$!file.getFile_id()?width=200">
+				<a href="/get_published_image/$file.getFile_id()" class="thumbnail inline-block nowrap">
+	    			<img alt="$!file.getFile_title()" src="/get_published_thumbnail_image/$!file.getFile_id()">
 				</a>
 			</div>
         #end

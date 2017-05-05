@@ -34,17 +34,17 @@ public class ACL {
 	    Path.Web.INDEX, Path.Web.ABOUT, Path.Web.LOGIN, Path.Web.VIEW_IMAGES);
 
     // List of public paths that do not require authorization
-    private final static List<String> PUBLIC_STARTS_WITH = ImmutableList.of("/article/", "/get_image/");
+    private final static List<String> PUBLIC_STARTS_WITH = ImmutableList.of("/article/", "/get_published_image/");
 
     private final static Map<UserRoleEnum, List<HttpMethodEnum>> priviledgeMap = ImmutableMap.of(UserRoleEnum.ADMIN,
 	    ImmutableList.of(HttpMethodEnum.GET, HttpMethodEnum.POST, HttpMethodEnum.DELETE), UserRoleEnum.USER,
 	    ImmutableList.of(HttpMethodEnum.GET));
 
-    private final static Map<UserRoleEnum, List<String>> ATTRIBUTE_LIST = ImmutableMap.of(UserRoleEnum.ADMIN,
-	    ImmutableList.of("userAdmin", "createUser", "editUser", "articleAdmin", "createArticle", "editArticle",
-		    "fileAdmin", "createFile", "editFile"),
-	    UserRoleEnum.USER,
-	    ImmutableList.of("articleAdmin", "createArticle", "editArticle", "fileAdmin", "createFile", "editFile"));
+    private final static Map<UserRoleEnum, List<String>> ATTRIBUTE_LIST = ImmutableMap.of(
+	    UserRoleEnum.ADMIN, ImmutableList.of("userAdmin", "createUser", "editUser", "articleAdmin", "createArticle", "editArticle",
+		    "fileAdmin", "createFile", "editFile"), 
+	    UserRoleEnum.USER, ImmutableList.of("articleAdmin",
+			    "createArticle", "editArticle", "fileAdmin", "createFile", "editFile"));
 
     /**
      * Determines if a <code>path</code> is public.
