@@ -25,10 +25,23 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-3">
-	                                <label for="chooseFile1" class="form-control-label btn btn-default">Select file to upload:
-	                                    <input type="file" id="chooseFile1" name="file" style="display: none;"/>
-	                                </label>
+                                <label for="file1" class="col-sm-2 form-control-label">$msg.get("FILE_LABEL_FILE")</label>
+                                <div class="col-sm-4">
+						            <div class="input-group image-preview">
+						                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+						                <span class="input-group-btn">
+						                    <!-- image-preview-clear button -->
+						                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+						                        <span class="glyphicon glyphicon-remove"></span> Clear
+						                    </button>
+						                    <!-- image-preview-input -->
+						                    <div class="btn btn-default image-preview-input">
+						                        <span class="glyphicon glyphicon-folder-open"></span>
+						                        <span class="image-preview-input-title">Browse</span>
+						                        <input type="file" id="file1" name="file" accept="image/png, image/jpeg, image/gif"/> <!-- rename it -->
+						                    </div>
+						                </span>
+						            </div> 
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -80,10 +93,23 @@
 		                                </div>
 		                            </div>
 		                            <div class="form-group row">
-		                                <div class="col-sm-3">
-		                                    <label for="chooseFile2" class="form-control-label btn btn-default">Select file to upload:
-		                                        <input type="file" id="chooseFile2" name="file" style="display: none;"/>
-		                                    </label>
+                                        <label for="file2" class="col-sm-2 form-control-label">$msg.get("FILE_LABEL_FILE")</label>
+		                                <div class="col-sm-4">
+		                                    <div class="input-group image-preview">
+		                                        <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+		                                        <span class="input-group-btn">
+		                                            <!-- image-preview-clear button -->
+		                                            <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+		                                                <span class="glyphicon glyphicon-remove"></span> Clear
+		                                            </button>
+		                                            <!-- image-preview-input -->
+		                                            <div class="btn btn-default image-preview-input">
+		                                                <span class="glyphicon glyphicon-folder-open"></span>
+		                                                <span class="image-preview-input-title">Browse</span>
+		                                                <input type="file" id="file2" name="file" accept="image/png, image/jpeg, image/gif"/> <!-- rename it -->
+		                                            </div>
+		                                        </span>
+		                                    </div> 
 		                                </div>
 		                            </div>
 		                            <div class="form-group row">
