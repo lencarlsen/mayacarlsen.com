@@ -17,8 +17,8 @@
             <li><a href="$WebPath.getABOUT()">About</a></li>
             #if($currentUser)
                 <li><a href="$WebPath.getCHAT()">Chat</a></li>
-                <li><a href="$WebPath.getVIEW_IMAGES()">Image Gallary</a></li>
             #end
+                <li><a href="$WebPath.getVIEW_IMAGES()">Image Gallary</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right text-right">
             #if($currentUser)
