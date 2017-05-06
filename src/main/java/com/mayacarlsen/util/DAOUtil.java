@@ -44,30 +44,28 @@ public class DAOUtil {
 
 	p.setDefaultAutoCommit(false);
 	p.setJmxEnabled(false);
-	p.setTestWhileIdle(false);
+	p.setTestWhileIdle(true);
 	p.setTestOnBorrow(true);
+	p.setTestOnReturn(true);
 	p.setValidationQuery("SELECT 1");
-	p.setTestOnReturn(false);
 	p.setValidationInterval(30000);
-	p.setTimeBetweenEvictionRunsMillis(30000);
+	p.setTimeBetweenEvictionRunsMillis(60000);
 
 	p.setMaxActive(5);
-	p.setMaxIdle(2);
+	p.setMaxIdle(1);
 	p.setMinIdle(1);
-	p.setInitialSize(2);
-	p.setMaxWait(30000);
-	p.setRemoveAbandonedTimeout(60);
+	p.setInitialSize(1);
+	p.setMaxWait(10000);
+	// p.setRemoveAbandoned(true);
+	// p.setRemoveAbandonedTimeout(60);
+	// p.setLogAbandoned(false);
 	p.setMinEvictableIdleTimeMillis(30000);
-
-	p.setLogAbandoned(true);
-	p.setRemoveAbandoned(true);
 
 	p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
 		+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
 
 	dataSource = new XADataSource();
 	dataSource.setPoolProperties(p);
-
     }
 
     public static void closeDatasource() {

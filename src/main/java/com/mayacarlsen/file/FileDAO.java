@@ -40,6 +40,11 @@ public class FileDAO {
     private static final String INSERT_FILE_SQL = "INSERT INTO files (user_id, file_name, file_type, file_title, thumbnail, file, publish_file, create_dttm) "
 	    + "VALUES (:user_id, :file_name, :file_type, :file_title, :thumbnail, :file, :publish_file, CURRENT_TIMESTAMP)";
 
+    private static final String UPDATE_FILE_SQL = "UPDATE files SET " + "user_id = :user_id, "
+	    + "file_name = :file_name, " + "file_type = :file_type, " + "file_title = :file_title, "
+	    + "thumbnail = :thumbnail, " + "file = :file, " + "publish_file = :publish_file, "
+	    + "update_dttm = CURRENT_TIMESTAMP " + "WHERE file_id = :file_id";
+
     private static final String DELETE_FILE_SQL = "DELETE FROM FILES WHERE file_id = :file_id ";
 
     public static List<File> getAllFiles() {
@@ -99,14 +104,28 @@ public class FileDAO {
 
     public static Integer createFile(File file) {
 	try (Connection conn = sql2o.beginTransaction()) {
-	    int count = conn.createQuery(INSERT_FILE_SQL).addParameter("user_id", file.getUser_id()).addParameter(
+	    Integer fileId = (Integer) conn.createQuery(INSERT_FILE_SQL, true).addParameter("user_id", file
+		    .getUser_id()).addParameter("file_name", file.getFile_name()).addParameter("file_type", file
+			    .getFile_type()).addParameter("file_title", file.getFile_title()).addParameter("thumbnail",
+				    file.getThumbnail()).addParameter("file", file.getFile()).addParameter(
+					    "publish_file", file.getPublish_file()).executeUpdate().getKey();
+
+	    conn.commit();
+	    logger.info("Create File fileId = " + fileId);
+	    return fileId;
+	}
+    }
+
+    public static Integer updateFile(File file) {
+	try (Connection conn = sql2o.beginTransaction()) {
+	    int count = conn.createQuery(UPDATE_FILE_SQL).addParameter("user_id", file.getUser_id()).addParameter(
 		    "file_name", file.getFile_name()).addParameter("file_type", file.getFile_type()).addParameter(
 			    "file_title", file.getFile_title()).addParameter("thumbnail", file.getThumbnail())
 		    .addParameter("file", file.getFile()).addParameter("publish_file", file.getPublish_file())
-		    .executeUpdate().getResult();
+		    .addParameter("file_id", file.getFile_id()).executeUpdate().getResult();
 
 	    conn.commit();
-	    logger.info("Create File Count: " + count);
+	    logger.info("Update File Count: " + count);
 	    return count;
 	}
     }

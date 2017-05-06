@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.MultipartConfigElement;
@@ -67,17 +68,25 @@ public class FileController {
 	    byte[] thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
 
 	    // For some reason request.queryParams must come last otherwise file upload will fail
+	    String id = request.queryParams("file_id");
+	    Integer fileId = (id == null ? null : Integer.valueOf(id));
 	    String fileTitle = request.queryParams("file_title");
 	    String publishFile = request.queryParams("publish_file");
 
-	    File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
+	    File file = new File(fileId, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
 		    Boolean.valueOf(publishFile), null, null, null, null);
-	    FileDAO.createFile(file);
+
+	    if (fileId != null && FileDAO.fileExist(fileId)) {
+		FileDAO.updateFile(file);
+	    } else {
+		FileDAO.createFile(file);
+	    }
 
 	    Map<String, Object> model = new HashMap<>();
 	    return ViewUtil.render(request, model, Path.Template.ADMIN);
 	} catch (Exception e) {
 	    e.printStackTrace();
+	    logger.log(Level.SEVERE, e.getMessage(), e);
 	    throw e;
 	}
     };

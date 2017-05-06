@@ -38,6 +38,7 @@ import com.mayacarlsen.registration.RegistrationController;
 import com.mayacarlsen.security.SecurityController;
 import com.mayacarlsen.user.User;
 import com.mayacarlsen.user.UserController;
+import com.mayacarlsen.util.DAOUtil;
 import com.mayacarlsen.util.Filters;
 import com.mayacarlsen.util.Path;
 
@@ -49,6 +50,8 @@ public class MayaCarlsen {
 
     public static void main(String[] args) {
 	logger.info("Starting MayaCarlsen.com...");
+
+	addShutdownHook();
 
 	port(getHerokuAssignedPort());
 
@@ -162,5 +165,16 @@ public class MayaCarlsen {
 	    return Integer.parseInt(processBuilder.environment().get("PORT"));
 	}
 	return 4567; // return default port if heroku-port isn't set (i.e. on localhost)
+    }
+
+    private static final Thread shutdownThread = new Thread() {
+	public void run() {
+	    DAOUtil.closeDatasource();
+	}
+    };
+
+    private static void addShutdownHook() {
+	Runtime.getRuntime().addShutdownHook(shutdownThread);
+	logger.info("Shudown hook added.");
     }
 }

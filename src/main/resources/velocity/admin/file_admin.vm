@@ -75,7 +75,8 @@
                         </table>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <form id="fileForm2">
+                                <form id="fileForm2" action="$WebPath.getSAVE_FILE()" method="post" enctype="multipart/form-data">
+		                            <input hidden="hidden" type="text" id="file_id2" name="file_id">
 		                            <div class="form-group row">
 		                                <label for="file_title2" class="col-sm-2 form-control-label">$msg.get("FILE_LABEL_TITLE")</label>
 		                                <div class="col-sm-10">
@@ -168,7 +169,9 @@
                 },
                 { data: "update_dttm",
                     render: function ( data, type, row, meta ) {
-                        return getDateTime( row.update_dttm );
+                        var dateStr = getDateTime( row.update_dttm );
+                        console.log("file_id="+row.file_id + ", dateStr="+dateStr + "=" + row.update_dttm);
+                        return dateStr;
                       }
                 }
             ],
@@ -253,6 +256,7 @@
               dataType: 'json',
               success: function (result) {                              
                 //Set the JSON data to each of the fields on the interface form
+                $("#file_id2").val( result.file_id );
                 $("#file_title2").val( result.file_title );
                 $("#publish_file2").val( result.publish_file_string );
               }
