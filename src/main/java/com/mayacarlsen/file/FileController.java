@@ -1,6 +1,5 @@
 package com.mayacarlsen.file;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
@@ -65,14 +63,15 @@ public class FileController {
 	    String fType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
 	    String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
 
-	    byte[] thumbnail = getScaledImage(fileBytes, 200);
+	    byte[] scaledImageBytes = ImageUtil.scaleImage(fileBytes, 1920, true);
+	    byte[] thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
 
 	    // For some reason request.queryParams must come last otherwise file upload will fail
 	    String fileTitle = request.queryParams("file_title");
 	    String publishFile = request.queryParams("publish_file");
 
-	    File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, fileBytes, Boolean
-		    .valueOf(publishFile), null, null, null, null);
+	    File file = new File(null, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
+		    Boolean.valueOf(publishFile), null, null, null, null);
 	    FileDAO.createFile(file);
 
 	    Map<String, Object> model = new HashMap<>();
@@ -111,21 +110,6 @@ public class FileController {
 	}
 
 	return null;
-    };
-
-    private static byte[] getScaledImage(byte[] imageBytes, double width) {
-	try {
-	    InputStream is = new ByteArrayInputStream(imageBytes);
-	    BufferedImage bi = ImageIO.read(is);
-
-	    double ratioInt = width / bi.getWidth();
-
-	    byte[] scaledImageBytes = ImageUtil.scaleImageAsBytes(bi, ratioInt);
-
-	    return scaledImageBytes;
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
-	}
     };
 
     public static Route getFileInfo = (Request request, Response response) -> {

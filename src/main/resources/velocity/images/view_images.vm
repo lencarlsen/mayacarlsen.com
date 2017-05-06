@@ -1,21 +1,14 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-
-	#set( $columnCount = 0 )
-	#foreach( $file in $fileList )
-        #set( $columnCount = $columnCount + 1 )
-        #if( $columnCount > 6 )
-            <div class="row">
-        #else
-			<div class="col-sm-2">
-				<a href="/get_published_image/$file.getFile_id()" class="thumbnail inline-block nowrap">
-	    			<img alt="$!file.getFile_title()" src="/get_published_thumbnail_image/$!file.getFile_id()">
-				</a>
-			</div>
-        #end
-        #if( $columnCount > 6 )
-		  </div>
-		#end
-	#end
-
+	<div id="nanogallery2" data-nanogallery2='{
+	        "thumbnailL1GutterWidth": 10,
+	        "touchAnimation": true,
+	        "thumbnailDisplayInterval": 10,
+	        "thumbnailDisplayTransition": 'fadeIn',
+	        "thumbnailDisplayTransitionDuration": 10
+	      }'>
+	    #foreach( $file in $fileList )
+	    <a href="/get_published_image/$file.getFile_id()" data-ngthumb="/get_published_thumbnail_image/$!file.getFile_id()" data-ngdesc="$file.getFile_title()">$file.getFile_title()</a>
+	    #end
+	</div>
 #end
