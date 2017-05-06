@@ -170,7 +170,6 @@
                 { data: "update_dttm",
                     render: function ( data, type, row, meta ) {
                         var dateStr = getDateTime( row.update_dttm );
-                        console.log("file_id="+row.file_id + ", dateStr="+dateStr + "=" + row.update_dttm);
                         return dateStr;
                       }
                 }
