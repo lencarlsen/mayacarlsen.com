@@ -1,6 +1,8 @@
 package com.mayacarlsen.file;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
@@ -30,10 +33,27 @@ public class FileController {
 
     private static final Logger logger = Logger.getLogger(FileController.class.getCanonicalName());
 
-    private static final String FILE_DELETED_MSG       = "File '%1s' Successfully Deleted";
-    private static final String FILE_DELETED_ERROR_MSG = "File '%1s' Could Not be Deleted";
-    private static final String FILE_NOT_EXIST_MSG     = "File '%1s' Does Not Exist";
+    private static final String FILE_DELETED_MSG        = "File '%1s' Successfully Deleted";
+    private static final String FILE_DELETED_ERROR_MSG  = "File '%1s' Could Not be Deleted";
+    private static final String FILE_NOT_EXIST_MSG      = "File '%1s' Does Not Exist";
 
+    private static final byte[] noImageBytes;
+    
+    /**
+     * Cache the 
+     */
+    static {
+        try {
+            InputStream is = FileController.class.getResourceAsStream("/public/img/no-image-icon.jpg");
+            BufferedImage img = ImageIO.read(is);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img, "jpg", baos);
+            noImageBytes = ImageUtil.scaleImage(baos.toByteArray(), 100, false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public static Route serveImagesPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
 
@@ -59,35 +79,36 @@ public class FileController {
             InputStream is = filePart.getInputStream();
             DataInputStream data = new DataInputStream(is);
             byte[] fileBytes = new byte[is.available()];
-            data.readFully(fileBytes);
-
-            String fType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
-            String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
-
-            byte[] scaledImageBytes = ImageUtil.scaleImage(fileBytes, 1920, true);
-            byte[] thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
-
-            // For some reason request.queryParams must come last otherwise file upload will fail
-            String id = request.queryParams("file_id");
-            Integer fileId = (id == null ? null : Integer.valueOf(id));
-            String fileTitle = request.queryParams("file_title");
-            String publishFile = request.queryParams("publish_file");
-
-            File file = new File(fileId, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
-                    Boolean.valueOf(publishFile), null, null, null, null);
-
-            if (fileId != null && FileDAO.fileExist(fileId)) {
-                FileDAO.updateFile(file);
-            } else {
-                FileDAO.createFile(file);
+            
+            if(fileBytes.length > 0) {
+                data.readFully(fileBytes);
+    
+                String fType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
+                String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
+    
+                byte[] scaledImageBytes = ImageUtil.scaleImage(fileBytes, 1920, true);
+                byte[] thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
+    
+                // For some reason request.queryParams must come last otherwise file upload will fail
+                String id = request.queryParams("file_id");
+                Integer fileId = (id == null ? null : Integer.valueOf(id));
+                String fileTitle = request.queryParams("file_title");
+                String publishFile = request.queryParams("publish_file");
+    
+                File file = new File(fileId, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
+                        Boolean.valueOf(publishFile), null, null, null, null);
+    
+                if (fileId != null && FileDAO.fileExist(fileId)) {
+                    FileDAO.updateFile(file);
+                } else {
+                    FileDAO.createFile(file);
+                }
             }
-
             Map<String, Object> model = new HashMap<>();
             return ViewUtil.render(request, model, Path.Template.ADMIN);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.log(Level.SEVERE, e.getMessage(), e);
-            throw e;
+            throw new RuntimeException(e);
         }
     };
 
@@ -95,13 +116,8 @@ public class FileController {
         String fileId = request.params("fileId");
 
         File file = FileDAO.getThumbnail(Integer.valueOf(fileId));
-        byte[] imageBytes = file.thumbnail;
-
-        try (OutputStream outputStream = response.raw().getOutputStream()) {
-            outputStream.write(imageBytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] image = (file == null ? noImageBytes : file.thumbnail);
+        writeBytesToOutputStream(image, response.raw().getOutputStream());
 
         return null;
     };
@@ -110,13 +126,8 @@ public class FileController {
         String fileId = request.params("fileId");
 
         File file = FileDAO.getThumbnail(Integer.valueOf(fileId), true);
-        byte[] imageBytes = file.thumbnail;
-
-        try (OutputStream outputStream = response.raw().getOutputStream()) {
-            outputStream.write(imageBytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] image = (file == null ? noImageBytes : file.thumbnail);
+        writeBytesToOutputStream(image, response.raw().getOutputStream());
 
         return null;
     };
@@ -125,13 +136,8 @@ public class FileController {
         String fileId = request.params("fileId");
 
         File file = FileDAO.getPublishedFile(Integer.valueOf(fileId));
-        byte[] imageBytes = file.file;
-
-        try (OutputStream outputStream = response.raw().getOutputStream()) {
-            outputStream.write(imageBytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] image = (file == null ? noImageBytes : file.file);
+        writeBytesToOutputStream(image, response.raw().getOutputStream());
 
         return null;
     };
@@ -152,16 +158,23 @@ public class FileController {
         String fileId = request.params("fileId");
 
         File file = FileDAO.getFile(Integer.valueOf(fileId));
-        byte[] bytes = file.file;
-
-        try (OutputStream outputStream = response.raw().getOutputStream()) {
-            outputStream.write(bytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] image = (file == null ? noImageBytes : file.file);
+        writeBytesToOutputStream(image, response.raw().getOutputStream());
 
         return null;
     };
+    
+    private static void writeBytesToOutputStream(byte[] bytes, OutputStream outputStream) {
+        try (OutputStream os = outputStream) {
+            if (bytes == null) {
+                os.write(noImageBytes);
+            } else {
+                os.write(bytes);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Route getAllFilesAsJSON = (Request request, Response response) -> {
         List<File> fileList = FileDAO.getAllFiles();
