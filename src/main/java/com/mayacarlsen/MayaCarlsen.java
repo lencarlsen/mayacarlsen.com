@@ -107,7 +107,8 @@ public class MayaCarlsen {
 	post(Path.Web.SAVE_FILE, FileController.uploadFile);
 	delete(Path.Web.DELETE_FILE, FileController.deleteFileAsJSON);
 
-	get(Path.Web.GET_PUBLISHED_THUMBNAIL_IMAGE, FileController.getPublishedThumbnail);
+        get(Path.Web.GET_THUMBNAIL_IMAGE, FileController.getThumbnailImage);
+	get(Path.Web.GET_PUBLISHED_THUMBNAIL_IMAGE, FileController.getPublishedThumbnailImage);
 	get(Path.Web.GET_PUBLISHED_IMAGE, FileController.getPublishedImage);
 	get(Path.Web.VIEW_IMAGES, FileController.serveImagesPage);
 

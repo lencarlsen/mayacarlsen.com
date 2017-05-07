@@ -39,6 +39,7 @@ public class Path {
 	@Getter public static final String DELETE_FILE = "/delete_file/:fileId";
 
 	@Getter public static final String GET_IMAGE = "/get_image/:fileId";
+        @Getter public static final String GET_THUMBNAIL_IMAGE = "/get_thumbnail_image/:fileId";
 	@Getter public static final String GET_PUBLISHED_THUMBNAIL_IMAGE = "/get_published_thumbnail_image/:fileId";
 	@Getter public static final String GET_PUBLISHED_IMAGE = "/get_published_image/:fileId";
 	@Getter public static final String VIEW_IMAGES = "/view_images/";

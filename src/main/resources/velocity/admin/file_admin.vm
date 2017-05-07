@@ -151,7 +151,7 @@
             columns: [
                 { data: "file",
                     render: function ( data, type, row, meta ) {
-                        return "<img alt='' src='/get_published_thumbnail_image/" + row.file_id + "' width='30%' height='30%''>";
+                        return "<img alt='' src='/get_thumbnail_image/" + row.file_id + "' width='30%' height='30%''>";
                     }
                 },
                 { data: "file_id" },
