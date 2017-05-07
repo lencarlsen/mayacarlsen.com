@@ -177,8 +177,8 @@
             columnDefs: [
                 {
                    "targets": [1],
-                   "visible": false,
-                   "searchable": false
+                   "visible": true,
+                   "searchable": true
                 },
                 {
                     "targets": [2],

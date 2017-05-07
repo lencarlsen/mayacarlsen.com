@@ -40,7 +40,7 @@ public class FileController {
     private static final byte[] noImageBytes;
     
     /**
-     * Cache the 
+     * Cache the no-image-icon.jpg image
      */
     static {
         try {
@@ -57,7 +57,7 @@ public class FileController {
     public static Route serveImagesPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
 
-        List<File> fileList = FileDAO.getAllFiles();
+        List<File> fileList = FileDAO.getAllPublishFiles();
         if (fileList != null) {
             model.put("fileList", fileList);
         }
