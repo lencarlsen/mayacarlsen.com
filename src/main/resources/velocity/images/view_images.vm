@@ -8,7 +8,17 @@
 	        "thumbnailDisplayTransitionDuration": 10
 	      }'>
 	    #foreach( $file in $fileList )
-	    <a href="/get_published_image/$file.getFile_id()" data-ngthumb="/get_published_thumbnail_image/$!file.getFile_id()" data-ngdesc="$file.getFile_title()">$file.getFile_title()</a>
+            #if( $file.getFile_type() != "application/octet-stream")
+        	    <a href="/get_published_image/$file.getFile_id()" data-ngthumb="/get_published_thumbnail_image/$!file.getFile_id()" data-ngdesc="$file.getFile_title()">$file.getFile_title()</a>
+            #end
 	    #end
 	</div>
+
+        #foreach( $file in $fileList )
+	        #if( $file.getFile_type() == "application/octet-stream")
+				<video width="420" height="340" controls="controls" preload="metadata">
+				    <source src="/get_published_image/$file.getFile_id()" type="video/mp4">
+				</video>
+            #end
+        #end
 #end

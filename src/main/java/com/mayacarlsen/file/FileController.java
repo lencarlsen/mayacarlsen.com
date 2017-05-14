@@ -1,12 +1,12 @@
 package com.mayacarlsen.file;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +19,7 @@ import javax.servlet.http.Part;
 
 import com.mayacarlsen.security.AuthorizedList;
 import com.mayacarlsen.user.User;
+import com.mayacarlsen.util.IOUtil;
 import com.mayacarlsen.util.ImageUtil;
 import com.mayacarlsen.util.JSONUtil;
 import com.mayacarlsen.util.Path;
@@ -83,21 +84,29 @@ public class FileController {
             if(fileBytes.length > 0) {
                 data.readFully(fileBytes);
     
-                String fType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
-                String fileType = (fType == null || fType.trim().isEmpty() ? "UNKNOWN" : fType.toUpperCase());
-    
-                byte[] scaledImageBytes = ImageUtil.scaleImage(fileBytes, 1920, true);
-                byte[] thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
-    
                 // For some reason request.queryParams must come last otherwise file upload will fail
                 String id = request.queryParams("file_id");
                 Integer fileId = (id == null ? null : Integer.valueOf(id));
                 String fileTitle = request.queryParams("file_title");
                 String publishFile = request.queryParams("publish_file");
+                String fileType = IOUtil.getFileType(fileName);                
+                //String contentType = request.contentType();
+
+                File file = null;
+                byte[] thumbnail = null;
+                
+                if (Arrays.asList("image/jpeg", "image/gif", "image/png").contains(fileType)) {
+                    //String imageFileType = ImageUtil.getFileType(new ByteArrayInputStream(fileBytes));
+                    //String fileType = (imageFileType == null || imageFileType.trim().isEmpty() ? "UNKNOWN" : imageFileType.toUpperCase());
+
+                    fileBytes = ImageUtil.scaleImage(fileBytes, 1920, true);
+                    thumbnail = ImageUtil.scaleImage(fileBytes, 200, false);
     
-                File file = new File(fileId, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, scaledImageBytes,
+                }
+    
+                file = new File(fileId, user.getUser_id(), fileName, fileType, fileTitle, thumbnail, fileBytes,
                         Boolean.valueOf(publishFile), null, null, null, null);
-    
+
                 if (fileId != null && FileDAO.fileExist(fileId)) {
                     FileDAO.updateFile(file);
                 } else {
@@ -107,6 +116,7 @@ public class FileController {
             Map<String, Object> model = new HashMap<>();
             return ViewUtil.render(request, model, Path.Template.ADMIN);
         } catch (Exception e) {
+            e.printStackTrace();
             logger.log(Level.SEVERE, e.getMessage(), e);
             throw new RuntimeException(e);
         }
