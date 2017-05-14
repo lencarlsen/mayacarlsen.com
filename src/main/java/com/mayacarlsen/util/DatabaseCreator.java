@@ -3,17 +3,11 @@ package com.mayacarlsen.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-
-import org.sql2o.Sql2o;
-
-import com.mayacarlsen.file.FileDAO;
 
 public class DatabaseCreator {
 	private static final Logger logger = Logger.getLogger(DatabaseCreator.class.getCanonicalName());
@@ -34,6 +28,8 @@ public class DatabaseCreator {
 			+ "role VARCHAR(50),"
 			+ "create_dttm timestamp,"
 			+ "update_dttm timestamp)";
+	
+	private static final String USER_TABLE_INDEX = "CREATE UNIQUE INDEX username_idx ON users (username);";
 	
 	private static final String USER_TABLE_INSERT_SQL =
 			"INSERT INTO users (username, last_name, first_name, alias, email, salt, password, role, create_dttm, update_dttm) "
@@ -91,8 +87,8 @@ public class DatabaseCreator {
 			+ "file_id SERIAL,"
 			+ "user_id INTEGER,"
 			+ "file_name VARCHAR(100),"
-			+ "file_type VARCHAR(20),"
-			+ "file_title VARCHAR(100),"
+			+ "file_type VARCHAR(100),"
+			+ "file_title VARCHAR(200),"
 			+ "thumbnail BYTEA,"
 			+ "file BYTEA,"
 			+ "publish_file BOOLEAN,"
@@ -128,6 +124,14 @@ public class DatabaseCreator {
 			throw new RuntimeException(e);
 		}
 	}
+	
+        private void createIndexes() {
+            try (Connection conn = DAOUtil.getConnection()) {
+                createPreparedStatement(conn, USER_TABLE_INDEX);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }	
 	
 	private void createTables() {
 		try (Connection conn = DAOUtil.getConnection()) {
@@ -169,8 +173,9 @@ public class DatabaseCreator {
 		logger.info("Creating database...");
 		DatabaseCreator databaseCreator = new DatabaseCreator();
 		databaseCreator.createTables();
-		databaseCreator.createFile();
-		databaseCreator.executePreparedStatement(FileDAO.SELECT_ALL_FILES_SQL);
+		//databaseCreator.createIndexes();
+		//databaseCreator.createFile();
+		//databaseCreator.executePreparedStatement(FileDAO.SELECT_ALL_FILES_SQL);
 		logger.info("Creating database completed");
 	}
 
